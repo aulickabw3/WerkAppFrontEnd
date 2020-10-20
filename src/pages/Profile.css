@@ -1,0 +1,21 @@
+.title5 {
+    font-weight: bold;
+    justify-content: center;
+    text-align: center;
+}
+
+.profileTitle {
+    
+}
+
+.jobGrid {
+    justify-content: center;
+    text-align: center;
+}
+
+.listCol1 {
+    color: rgb(114, 103, 46);
+    font-weight: bold;
+    justify-content: center;
+    text-align: start;
+}
