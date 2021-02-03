@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Cookies from 'universal-cookie';
 import { Redirect, Route, Link } from "react-router-dom";
 import {
   IonItem,
@@ -19,24 +18,20 @@ import axios from "axios";
 import "./Login.css";
 
 const Login: React.FC = () => {
-
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const handleClick = (event: any) => {
-    
+  const handleSubmit = () => {
     const logProfile = {
       Email: email,
       Password: password,
     };
-
     axios
       .post("http://localhost:3000/users/tab10", {
         logProfile,
         withCredentials: true,
       })
       .then((response) => {
-        // WHERE ARE MY COOKIES!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         console.log(response);
       });
   };
@@ -59,7 +54,7 @@ const Login: React.FC = () => {
         <br></br>
         <br></br>
         <IonGrid className="wholeGrid">
-          <form>
+          <form onSubmit={handleSubmit}>
             <IonRow>
               <IonCol>
                 <h2></h2>
@@ -102,11 +97,11 @@ const Login: React.FC = () => {
               <IonCol>
                 <IonButton
                   href="/tab5"
+                  type="submit"
                   color="medium"
                   size="large"
                   expand="block"
                   fill="solid"
-                  onClick={handleClick}
                 >
                   Login
                 </IonButton>
@@ -135,3 +130,4 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+

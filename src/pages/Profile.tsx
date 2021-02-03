@@ -19,7 +19,6 @@ import { person, arrowBackCircle, people } from "ionicons/icons";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Profile.css";
-import { Component } from "ionicons/dist/types/stencil-public-runtime";
 
 // const checkboxList = [{ val: "Scheduler", isChecked: true }];
 
@@ -65,7 +64,7 @@ const Profile: React.FC = () => {
   });
 
     // console.log(profile);
-    React.useEffect(() => {
+  React.useEffect(() => {
     fetchProfile().then((data) => setProfile(data.personDataFound));
   }, []);
 
