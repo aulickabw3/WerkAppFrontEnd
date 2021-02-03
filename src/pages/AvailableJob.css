@@ -1,0 +1,13 @@
+.jobGrid {
+    font-weight: bold;
+    justify-content: center;
+    text-align: center;
+}
+
+.thing {
+    padding-top: 20px;
+}
+
+.money {
+    color: #188b46;
+}

@@ -1,0 +1,17 @@
+.title1 {
+    font-weight: bold;
+    justify-content: center;
+    text-align: center;
+}
+
+.grid1 {
+    /* background-color: gray; */
+    color: gray;
+    justify-content: center;
+    text-align: center;
+    padding: 15px;
+}
+
+.btns {
+    background-color: gray;
+}

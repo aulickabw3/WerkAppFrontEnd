@@ -1,0 +1,17 @@
+.title2 {
+    font-weight: bold;
+    justify-content: center;
+    text-align: center;
+}
+
+.listJobs {
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.listCol {
+    padding-left: 5px;
+    margin: 18px;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Link } from 'react-router-dom';
 import {
   IonApp,
   IonIcon,
@@ -10,10 +10,22 @@ import {
   IonTabs
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import { ellipse, square, triangle, home, person, notifications } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
+import ScheduleJob from './pages/ScheduleJob';
+import Profile from './pages/Profile';
+import AvailableJob from './pages/AvailableJob';
+import Notifications from './pages/Notifications';
+import MyJobSummary from './pages/MyJobSummary';
+import Associates from './pages/Associates';
+import Login from './pages/Login';
+import Logout from './pages/Logout';
+import CreateAccount from './pages/CreateAccount';
+// import ProfileData from './Interfaces/ProfileData';
+
+
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -42,20 +54,29 @@ const App: React.FC = () => (
           <Route path="/tab1" component={Tab1} exact={true} />
           <Route path="/tab2" component={Tab2} exact={true} />
           <Route path="/tab3" component={Tab3} />
-          <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
+          <Route path="/tab4" component={ScheduleJob} />
+          <Route path="/tab5" component={Profile} />
+          <Route path="/tab6" component={AvailableJob} />
+          <Route path="/tab7" component={Notifications} />
+          <Route path="/tab8" component={MyJobSummary} />
+          <Route path="/tab9" component={Associates} />
+          <Route path="/tab10" component={Login} />
+          <Route path="/tab11" component={Logout} />
+          <Route path="/tab12" component={CreateAccount} />
+          <Route path="/" render={() => <Redirect to="/tab10" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
+          <IonTabButton tab="tab5" href="/tab5">
+            <IonIcon icon={person} />
+            <IonLabel></IonLabel>
+          </IonTabButton>
           <IonTabButton tab="tab1" href="/tab1">
-            <IonIcon icon={triangle} />
-            <IonLabel>Tab 1</IonLabel>
+            <IonIcon icon={home} />
+            <IonLabel></IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
-            <IonIcon icon={ellipse} />
-            <IonLabel>Tab 2</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon icon={square} />
-            <IonLabel>Tab 3</IonLabel>
+          <IonTabButton tab="tab7" href="/tab7">
+            <IonIcon icon={notifications} />
+            <IonLabel></IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

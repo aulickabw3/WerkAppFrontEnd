@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  IonButton,
   IonContent,
+  IonLabel,
+  IonList,
+  IonItem,
+  IonIcon,
   IonHeader,
   IonPage,
   IonTitle,
@@ -9,29 +12,31 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonList,
-  IonIcon,
-  IonItem,
-  IonLabel,
+  IonImg,
+  IonCheckbox,
 } from "@ionic/react";
-import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
-import { Link } from "react-router-dom";
+import { person, arrowBackCircle, arrowBack, people } from "ionicons/icons";
 import ExploreContainer from "../components/ExploreContainer";
-import "./Tab3.css";
+import { Link } from "react-router-dom";
+import "./Associates.css";
 
-const Tab3: React.FC = () => {
+const checkboxList = [{ val: "Scheduler", isChecked: true }];
+
+const Associates: React.FC = () => {
+  const [checked, setChecked] = useState(false);
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar color="warning">
-          <IonTitle className="title2">My Jobs</IonTitle>
+          <IonTitle className="title2">Associates</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar color="warning">
-            <IonTitle className="title3" size="large">
-              My Jobs
+            <IonTitle className="title2" size="large">
+            Associates
             </IonTitle>
           </IonToolbar>
         </IonHeader>
@@ -42,128 +47,170 @@ const Tab3: React.FC = () => {
                 <IonIcon size="large" icon={arrowBackCircle} />
               </Link>
             </IonCol>
-            <IonCol>
-              <IonButton color="dark">Past</IonButton>
+          </IonRow>
+        </IonGrid>
+        <IonGrid>
+          
+          <IonRow className="">
+            <IonCol className="title2">
+              
+                <IonIcon size="large" icon={people} />
+                <br></br>
+                <IonLabel><h1>Associates</h1></IonLabel>
+             
             </IonCol>
-            <IonCol>
-              <IonButton color="medium">Future</IonButton>
-            </IonCol>
+          </IonRow>
+          <br></br>
+          <IonRow className="profileGrid">
             <IonCol></IonCol>
           </IonRow>
         </IonGrid>
+      
+
         <IonList>
           <IonItem className="listJobs">
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
-                  <Link to="/tab8">
+                  <Link to="/tab5">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/22</IonCol>
+                    <IonCol className="listCol">John Doe</IonCol>
+                    <IonCol className="listCol">FWC</IonCol>
                   </Link>
                 </IonRow>
               </IonGrid>
             </IonLabel>
           </IonItem>
+          <IonItem className="listJobs">
+            <IonLabel>
+              <IonGrid>
+                <IonRow className="listJobs">
+                  <Link to="/tab5">
+                    <IonCol className="listCol">
+                      <IonIcon icon={person} />
+                    </IonCol>
+                    <IonCol className="listCol">John Doe</IonCol>
+                    <IonCol className="listCol">FWC</IonCol>
+                  </Link>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonItem>
+          <IonItem className="listJobs">
+            <IonLabel>
+              <IonGrid>
+                <IonRow className="listJobs">
+                  <Link to="/tab5">
+                    <IonCol className="listCol">
+                      <IonIcon icon={person} />
+                    </IonCol>
+                    <IonCol className="listCol">John Doe</IonCol>
+                    <IonCol className="listCol">FWC</IonCol>
+                  </Link>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonItem>
+          <IonItem className="listJobs">
+            <IonLabel>
+              <IonGrid>
+                <IonRow className="listJobs">
+                  <Link to="/tab5">
+                    <IonCol className="listCol">
+                      <IonIcon icon={person} />
+                    </IonCol>
+                    <IonCol className="listCol">John Doe</IonCol>
+                    <IonCol className="listCol">FWC</IonCol>
+                  </Link>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonItem>
+          <IonItem className="listJobs">
+            <IonLabel>
+              <IonGrid>
+                <IonRow className="listJobs">
+                  <Link to="/tab5">
+                    <IonCol className="listCol">
+                      <IonIcon icon={person} />
+                    </IonCol>
+                    <IonCol className="listCol">John Doe</IonCol>
+                    <IonCol className="listCol">FWC</IonCol>
+                  </Link>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonItem>
+          <IonItem className="listJobs">
+            <IonLabel>
+              <IonGrid>
+                <IonRow className="listJobs">
+                  <Link to="/tab5">
+                    <IonCol className="listCol">
+                      <IonIcon icon={person} />
+                    </IonCol>
+                    <IonCol className="listCol">John Doe</IonCol>
+                    <IonCol className="listCol">FWC</IonCol>
+                  </Link>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonItem>
+          <IonItem className="listJobs">
+            <IonLabel>
+              <IonGrid>
+                <IonRow className="listJobs">
+                  <Link to="/tab5">
+                    <IonCol className="listCol">
+                      <IonIcon icon={person} />
+                    </IonCol>
+                    <IonCol className="listCol">John Doe</IonCol>
+                    <IonCol className="listCol">FWC</IonCol>
+                  </Link>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonItem>
+          <IonItem className="listJobs">
+            <IonLabel>
+              <IonGrid>
+                <IonRow className="listJobs">
+                  <Link to="/tab5">
+                    <IonCol className="listCol">
+                      <IonIcon icon={person} />
+                    </IonCol>
+                    <IonCol className="listCol">John Doe</IonCol>
+                    <IonCol className="listCol">FWC</IonCol>
+                  </Link>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonItem>
+          <IonItem className="listJobs">
+            <IonLabel>
+              <IonGrid>
+                <IonRow className="listJobs">
+                  <Link to="/tab5">
+                    <IonCol className="listCol">
+                      <IonIcon icon={person} />
+                    </IonCol>
+                    <IonCol className="listCol">John Doe</IonCol>
+                    <IonCol className="listCol">FWC</IonCol>
+                  </Link>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonItem>
+          
 
-          {/* fake */}
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/tab8">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">Archer Western</IonCol>
-                    <IonCol className="listCol">8/18</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/tab8">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/17</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/tab8">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">Chinchor</IonCol>
-                    <IonCol className="listCol">8/14</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/tab8">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/11</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/tab8">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/09</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/tab8">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/08</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
         </IonList>
-        {/* <ExploreContainer name="don" /> */}
+
+        {/* <ExploreContainer name="Tab 2 page" /> */}
       </IonContent>
     </IonPage>
   );
 };
 
-export default Tab3;
+export default Associates;
