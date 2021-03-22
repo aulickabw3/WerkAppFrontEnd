@@ -125,5 +125,4 @@ const MyJobSummary: React.FC = () => {
   );
 };
 
->>>>>>> 2d3b988821a7503d6f12ef6871795c29a6f9e81d
 export default MyJobSummary;

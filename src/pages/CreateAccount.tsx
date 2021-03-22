@@ -62,7 +62,7 @@ const CreateAccount: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonGrid>
-          <form onSubmit={handleSubmit}>
+          <form >
             <br></br>
             <IonRow className="jobGrid">
               <IonCol>
@@ -163,10 +163,11 @@ const CreateAccount: React.FC = () => {
               <IonCol>
                 <IonButton
                   href="/tab10"
-                  type="submit"
+                  // type="submit"
                   color="danger"
                   size="large"
                   fill="solid"
+                  onClick={handleSubmit}
                 >Submit
                 </IonButton>
               </IonCol>

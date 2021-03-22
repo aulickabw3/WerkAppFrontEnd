@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { Redirect, Route, Link } from "react-router-dom";
 import {
   IonItem,
@@ -20,8 +21,9 @@ import "./Login.css";
 const Login: React.FC = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [cookies, setCookie] = useCookies(["jwt"]);
 
-  const handleSubmit = () => {
+  const handleClick = () => {
     const logProfile = {
       Email: email,
       Password: password,
@@ -32,6 +34,7 @@ const Login: React.FC = () => {
         withCredentials: true,
       })
       .then((response) => {
+        setCookie("jwt", response.data, {path: "/"});
         console.log(response);
       });
   };
@@ -54,7 +57,7 @@ const Login: React.FC = () => {
         <br></br>
         <br></br>
         <IonGrid className="wholeGrid">
-          <form onSubmit={handleSubmit}>
+          <form >
             <IonRow>
               <IonCol>
                 <h2></h2>
@@ -96,8 +99,8 @@ const Login: React.FC = () => {
             <IonRow>
               <IonCol>
                 <IonButton
+                  onClick={handleClick}
                   href="/tab5"
-                  type="submit"
                   color="medium"
                   size="large"
                   expand="block"
