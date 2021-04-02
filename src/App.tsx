@@ -11,7 +11,7 @@ import {
   IonTabs
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle, home, person, notifications } from 'ionicons/icons';
+import { ellipse, square, triangle, home, person, notifications, searchCircle, searchOutline } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -24,6 +24,8 @@ import Associates from './pages/Associates';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
 import CreateAccount from './pages/CreateAccount';
+import Search from './pages/Search';
+import UserProfile from './pages/UserProfile';
 // import ProfileData from './Interfaces/ProfileData';
 
 
@@ -64,9 +66,15 @@ const App: React.FC = () => (
           <Route path="/tab10" component={Login} />
           <Route path="/tab11" component={Logout} />
           <Route path="/tab12" component={CreateAccount} />
+          <Route path="/tab13" component={Search} />
+          <Route path="/tab14/:id" component={UserProfile} />
           <Route path="/" render={() => <Redirect to="/tab10" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
+        <IonTabButton tab="tab13" href="/tab13">
+            <IonIcon icon={searchOutline} />
+            <IonLabel></IonLabel>
+          </IonTabButton>
           <IonTabButton tab="tab5" href="/tab5">
             <IonIcon icon={person} />
             <IonLabel></IonLabel>
