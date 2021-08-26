@@ -19,6 +19,8 @@ import { person, arrowBackCircle, people } from "ionicons/icons";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Profile.css";
+import "../components/GetUser";
+import GetUser from "../components/GetUser";
 
 // const checkboxList = [{ val: "Scheduler", isChecked: true }];
 
@@ -38,17 +40,6 @@ const Profile: React.FC = () => {
     associates: string;
   }
 
-  const fetchProfile = () => {
-    return axios
-      .get("http://localhost:3000/users/tab5", {
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log(response);
-        return response.data;
-      });
-  };
-
   const [profile, setProfile] = React.useState<ProfileData>({
     UserId: 0,
     FirstName: "",
@@ -65,7 +56,7 @@ const Profile: React.FC = () => {
 
     // console.log(profile);
   React.useEffect(() => {
-    fetchProfile().then((data) => setProfile(data.personDataFound));
+    GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
   console.log(profile);

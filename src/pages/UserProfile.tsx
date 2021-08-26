@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   IonContent,
+  IonButton,
   IonLabel,
   IonRouterLink,
   IonList,
@@ -20,7 +21,7 @@ import { person, arrowBackCircle, people } from "ionicons/icons";
 import axios from "axios";
 import { Link, matchPath, match, useRouteMatch, RouteComponentProps } from "react-router-dom";
 import "./UserProfile.css";
-import Search from "./Search";
+import GetUser from "../components/GetUser";
 
 // const checkboxList = [{ val: "Scheduler", isChecked: true }];
 
@@ -42,6 +43,7 @@ const UserProfile: React.FC<UserProfileProps> = ({match}) => {
     company: string;
     occupation: string;
     associates: string;
+    requests: string;
   }
 
   const [ListProfile, setListProfile] = React.useState<ProfileData>({
@@ -56,15 +58,16 @@ const UserProfile: React.FC<UserProfileProps> = ({match}) => {
     company: "",
     occupation: "",
     associates: "",
+    requests: "",
   });
 
-  console.log(match.params.id);
+  // console.log(match.params.id);
 
   const fetchProfile = () => {
     return axios
       .get("http://localhost:3000/users/tab14/" + match.params.id, {})
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         return response.data;
       });
   };
@@ -75,6 +78,31 @@ const UserProfile: React.FC<UserProfileProps> = ({match}) => {
   }, []);
 
   console.log(ListProfile);
+
+
+  interface SelfData {
+    UserId: number;
+  }
+
+  const [Self, setSelf] = React.useState<SelfData>({
+    UserId: 0,
+  });
+
+  React.useEffect(() => {
+    GetUser().then((data) => setSelf(data.personDataFound));
+  }, []);
+
+  console.log(Self);
+
+
+  const handleClick = () => {
+    axios
+      .put("http://localhost:3000/users/tab14/" + match.params.id, { Self, ListProfile })
+      .then((response) => {
+        console.log(response);
+      });
+  };
+
 
   return (
     <IonPage>
@@ -150,9 +178,17 @@ const UserProfile: React.FC<UserProfileProps> = ({match}) => {
           <IonRow className="listCol1">
             <IonCol className="listJobs">
               <Link to="/tab9">
-                <IonIcon size="large" icon={people} />
+              <IonButton
+                onClick={handleClick}
+                href="/tab3"
+                color="warning"
+                size="large"
+                expand="block"
+                fill="solid"
+              >
+                Add Associate
+              </IonButton>
                 <br></br>
-                <IonLabel>Associates</IonLabel>
               </Link>
             </IonCol>
           </IonRow>
