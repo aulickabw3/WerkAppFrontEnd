@@ -37,13 +37,11 @@ const UserProfile: React.FC<UserProfileProps> = ({match}) => {
     LastName: string;
     Email: string;
     Username: string;
-    Password: string;
     isScheduler: boolean;
     isDeleted: boolean;
     company: string;
     occupation: string;
     associates: string;
-    requests: string;
   }
 
   const [ListProfile, setListProfile] = React.useState<ProfileData>({
@@ -52,13 +50,11 @@ const UserProfile: React.FC<UserProfileProps> = ({match}) => {
     LastName: "",
     Email: "",
     Username: "",
-    Password: "",
     isScheduler: false,
     isDeleted: false,
     company: "",
     occupation: "",
     associates: "",
-    requests: "",
   });
 
   // console.log(match.params.id);

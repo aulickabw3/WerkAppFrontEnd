@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
-    IonIcon,
+  IonIcon,
   IonContent,
   IonHeader,
   IonPage,
@@ -13,12 +13,40 @@ import {
   IonRow,
   IonCol,
 } from "@ionic/react";
-import { person, arrowBackCircle, arrowBack } from 'ionicons/icons';
-import { Link } from "react-router-dom";
-import ExploreContainer from "../components/ExploreContainer";
+import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
+import { Link, RouteComponentProps } from "react-router-dom";
 import "./Notifications.css";
+import GetUser from "../components/GetUser";
 
-const Notifications: React.FC = () => {
+export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
+  interface ProfileData {
+    UserId: number;
+    FirstName: string;
+    LastName: string;
+    associates: string;
+    requests: string;
+  }
+
+  const [profile, setProfile] = React.useState<ProfileData>({
+    UserId: 0,
+    FirstName: "",
+    LastName: "",
+    associates: "",
+    requests: "",
+  });
+
+  // console.log(profile);
+  React.useEffect(() => {
+    GetUser().then((data) => setProfile(data.personDataFound));
+  }, []);
+
+  var requests = profile.requests;
+  var myRequestsArray = JSON.parse("[" + requests + "]");
+  console.log(myRequestsArray);
+  console.log(typeof myRequestsArray[0]);
+
+
+
   return (
     <IonPage>
       <IonHeader>
@@ -54,7 +82,20 @@ const Notifications: React.FC = () => {
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
-                    <IonCol className="listCol">A Thing Happened</IonCol>
+                    <IonCol className="listCol">
+                    <IonList className="searchBar">
+                {myRequestsArray
+                  .map(() => {
+                    return (
+                      <Link to={`/tab14/${requests}`}>
+                        <IonItem className="searchBar">
+                          <p>requests</p>
+                        </IonItem>
+                      </Link>
+                    );
+                  })}
+              </IonList>
+                    </IonCol>
                     <IonCol className="listCol"></IonCol>
                   </Link>
                   <IonCol></IonCol>
@@ -62,8 +103,9 @@ const Notifications: React.FC = () => {
               </IonGrid>
             </IonLabel>
           </IonItem>
+          {/* <h3>{profile.Email}</h3> */}
+          {/* Extra fake ones.. */}
 
-            {/* Extra fake ones.. */}
           <IonItem className="listJobs">
             <IonLabel>
               <IonGrid>
@@ -97,87 +139,8 @@ const Notifications: React.FC = () => {
                 </IonRow>
               </IonGrid>
             </IonLabel>
-          </IonItem><IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow>
-                  <IonCol></IonCol>
-                  <Link to="/tab1">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">A Thing Happened</IonCol>
-                    <IonCol className="listCol"></IonCol>
-                  </Link>
-                  <IonCol></IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem><IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow>
-                  <IonCol></IonCol>
-                  <Link to="/tab1">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">A Thing Happened</IonCol>
-                    <IonCol className="listCol"></IonCol>
-                  </Link>
-                  <IonCol></IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem><IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow>
-                  <IonCol></IonCol>
-                  <Link to="/tab1">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">A Thing Happened</IonCol>
-                    <IonCol className="listCol"></IonCol>
-                  </Link>
-                  <IonCol></IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem><IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow>
-                  <IonCol></IonCol>
-                  <Link to="/tab1">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">A Thing Happened</IonCol>
-                    <IonCol className="listCol"></IonCol>
-                  </Link>
-                  <IonCol></IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem><IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow>
-                  <IonCol></IonCol>
-                  <Link to="/tab1">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">A Thing Happened</IonCol>
-                    <IonCol className="listCol"></IonCol>
-                  </Link>
-                  <IonCol></IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem><IonItem className="listJobs">
+          </IonItem>
+          <IonItem className="listJobs">
             <IonLabel>
               <IonGrid>
                 <IonRow>
@@ -194,7 +157,91 @@ const Notifications: React.FC = () => {
               </IonGrid>
             </IonLabel>
           </IonItem>
-
+          <IonItem className="listJobs">
+            <IonLabel>
+              <IonGrid>
+                <IonRow>
+                  <IonCol></IonCol>
+                  <Link to="/tab1">
+                    <IonCol className="listCol">
+                      <IonIcon icon={person} />
+                    </IonCol>
+                    <IonCol className="listCol">A Thing Happened</IonCol>
+                    <IonCol className="listCol"></IonCol>
+                  </Link>
+                  <IonCol></IonCol>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonItem>
+          <IonItem className="listJobs">
+            <IonLabel>
+              <IonGrid>
+                <IonRow>
+                  <IonCol></IonCol>
+                  <Link to="/tab1">
+                    <IonCol className="listCol">
+                      <IonIcon icon={person} />
+                    </IonCol>
+                    <IonCol className="listCol">A Thing Happened</IonCol>
+                    <IonCol className="listCol"></IonCol>
+                  </Link>
+                  <IonCol></IonCol>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonItem>
+          <IonItem className="listJobs">
+            <IonLabel>
+              <IonGrid>
+                <IonRow>
+                  <IonCol></IonCol>
+                  <Link to="/tab1">
+                    <IonCol className="listCol">
+                      <IonIcon icon={person} />
+                    </IonCol>
+                    <IonCol className="listCol">A Thing Happened</IonCol>
+                    <IonCol className="listCol"></IonCol>
+                  </Link>
+                  <IonCol></IonCol>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonItem>
+          <IonItem className="listJobs">
+            <IonLabel>
+              <IonGrid>
+                <IonRow>
+                  <IonCol></IonCol>
+                  <Link to="/tab1">
+                    <IonCol className="listCol">
+                      <IonIcon icon={person} />
+                    </IonCol>
+                    <IonCol className="listCol">A Thing Happened</IonCol>
+                    <IonCol className="listCol"></IonCol>
+                  </Link>
+                  <IonCol></IonCol>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonItem>
+          <IonItem className="listJobs">
+            <IonLabel>
+              <IonGrid>
+                <IonRow>
+                  <IonCol></IonCol>
+                  <Link to="/tab1">
+                    <IonCol className="listCol">
+                      <IonIcon icon={person} />
+                    </IonCol>
+                    <IonCol className="listCol">A Thing Happened</IonCol>
+                    <IonCol className="listCol"></IonCol>
+                  </Link>
+                  <IonCol></IonCol>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonItem>
         </IonList>
         {/* <ExploreContainer name="don" /> */}
       </IonContent>

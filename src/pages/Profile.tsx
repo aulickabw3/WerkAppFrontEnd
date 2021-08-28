@@ -32,7 +32,6 @@ const Profile: React.FC = () => {
     LastName: string;
     Email: string;
     Username: string;
-    Password: string;
     isScheduler: boolean;
     isDeleted: boolean;
     company: string;
@@ -46,7 +45,6 @@ const Profile: React.FC = () => {
     LastName: "",
     Email: "",
     Username: "",
-    Password: "",
     isScheduler: false,
     isDeleted: false,
     company: "",

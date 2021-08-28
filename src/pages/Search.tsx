@@ -70,6 +70,8 @@ export const Search: React.FC<RouteComponentProps> = ({match}) => {
   }, []);
 
   console.log(users);
+  console.log(typeof users);
+
 
   const [searchText, setSearchText] = useState("");
 
