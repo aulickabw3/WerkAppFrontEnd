@@ -93,7 +93,7 @@ const UserProfile: React.FC<UserProfileProps> = ({match}) => {
 
   const handleClick = () => {
     axios
-      .put("http://localhost:3000/users/tab14/" + match.params.id, { Self, ListProfile })
+      .post("http://localhost:3000/associates/tab14/" + match.params.id, { Self, ListProfile })
       .then((response) => {
         console.log(response);
       });

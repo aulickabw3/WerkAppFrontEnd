@@ -13,6 +13,7 @@ import {
   IonRow,
   IonCol,
 } from "@ionic/react";
+import axios from "axios";
 import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
 import { Link, RouteComponentProps } from "react-router-dom";
 import "./Notifications.css";
@@ -40,10 +41,22 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
-  var requests = profile.requests;
-  var myRequestsArray = JSON.parse("[" + requests + "]");
-  console.log(myRequestsArray);
-  console.log(typeof myRequestsArray[0]);
+
+  console.log(profile);
+
+
+  React.useEffect(() => {
+    axios
+      .post("http://localhost:3000/associates/tab7", { profile })
+      .then((response) => {
+        console.log(response);
+      });
+  })
+
+  // var requests = profile.requests;
+  // var myRequestsArray = JSON.parse("[" + requests + "]");
+  // console.log(myRequestsArray);
+  // console.log(typeof myRequestsArray[0]);
 
 
 
@@ -84,7 +97,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
                     </IonCol>
                     <IonCol className="listCol">
                     <IonList className="searchBar">
-                {myRequestsArray
+                {/* {myRequestsArray
                   .map(() => {
                     return (
                       <Link to={`/tab14/${requests}`}>
@@ -93,7 +106,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
                         </IonItem>
                       </Link>
                     );
-                  })}
+                  })} */}
               </IonList>
                     </IonCol>
                     <IonCol className="listCol"></IonCol>
