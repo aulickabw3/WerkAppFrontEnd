@@ -29,7 +29,7 @@ const Login: React.FC = () => {
       Password: password,
     };
     axios
-      .post("http://localhost:3000/users/tab10", {
+      .post("http://localhost:3000/users/Login", {
         logProfile,
         withCredentials: true,
       })
@@ -100,7 +100,7 @@ const Login: React.FC = () => {
               <IonCol>
                 <IonButton
                   onClick={handleClick}
-                  href="/tab5"
+                  href="/Profile"
                   color="medium"
                   size="large"
                   expand="block"
@@ -115,7 +115,7 @@ const Login: React.FC = () => {
             <IonRow>
               <IonCol>
                 <IonButton
-                  href="/tab12"
+                  href="/CreateAccount"
                   color="warning"
                   size="large"
                   expand="block"

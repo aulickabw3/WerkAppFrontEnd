@@ -14,14 +14,14 @@ import {
   IonRow,
 } from "@ionic/react";
 import axios from "axios";
-import "./Tab1.css";
+import "./Main.css";
 
-export const Tab1: React.FC = () => {
+export const Main: React.FC = () => {
   const [searchText, setSearchText] = useState("");
 
   const handleClick = () => {
     axios 
-      .get("http://localhost:3000/users/tab11", {
+      .get("http://localhost:3000/users/Logout", {
         withCredentials: true,
       })
       .then((response) => {
@@ -59,7 +59,7 @@ export const Tab1: React.FC = () => {
           <IonRow className="grid1">
             <IonCol>
               <IonButton
-                href="/tab2"
+                href="/AvailableJobs"
                 color="warning"
                 size="large"
                 expand="block"
@@ -72,7 +72,7 @@ export const Tab1: React.FC = () => {
           <IonRow className="grid1"> 
             <IonCol>
               <IonButton
-                href="/tab3"
+                href="/MyJobs"
                 color="warning"
                 size="large"
                 expand="block"
@@ -85,7 +85,7 @@ export const Tab1: React.FC = () => {
           <IonRow className="grid1">
             <IonCol>
               <IonButton
-                href="/tab4"
+                href="/ScheduleJob"
                 color="warning"
                 size="large"
                 expand="block"
@@ -98,7 +98,7 @@ export const Tab1: React.FC = () => {
           <IonRow className="grid1">
             <IonCol>
               <IonButton
-                href="/tab5"
+                href="/Profile"
                 color="warning"
                 size="large"
                 expand="block"
@@ -112,7 +112,7 @@ export const Tab1: React.FC = () => {
             <IonCol>
               <IonButton
                 onClick={handleClick}
-                href="/tab10"
+                href="/Login"
                 color="medium"
                 size="large"
                 expand="block"
@@ -128,4 +128,4 @@ export const Tab1: React.FC = () => {
   );
 };
 
-export default Tab1;
+export default Main;

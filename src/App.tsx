@@ -12,9 +12,9 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, square, triangle, home, person, notifications, searchCircle, searchOutline } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
+import Main from './pages/Main';
+import AvailableJobs from './pages/AvailableJobs';
+import MyJobs from './pages/MyJobs';
 import ScheduleJob from './pages/ScheduleJob';
 import Profile from './pages/Profile';
 import AvailableJob from './pages/AvailableJob';
@@ -25,7 +25,7 @@ import Login from './pages/Login';
 import Logout from './pages/Logout';
 import CreateAccount from './pages/CreateAccount';
 import Search from './pages/Search';
-import UserProfile from './pages/UserProfile';
+import AssociateProfile from './pages/AssociateProfile';
 // import ProfileData from './Interfaces/ProfileData';
 
 
@@ -54,36 +54,36 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route path="/tab1" component={Tab1} exact={true} />
-          <Route path="/tab2" component={Tab2} exact={true} />
-          <Route path="/tab3" component={Tab3} />
-          <Route path="/tab4" component={ScheduleJob} />
-          <Route path="/tab5" component={Profile} />
-          <Route path="/tab6" component={AvailableJob} />
-          <Route path="/tab7" component={Notifications} />
-          <Route path="/tab8" component={MyJobSummary} />
-          <Route path="/tab9" component={Associates} />
-          <Route path="/tab10" component={Login} />
-          <Route path="/tab11" component={Logout} />
-          <Route path="/tab12" component={CreateAccount} />
-          <Route path="/tab13" component={Search} />
-          <Route path="/tab14/:id" component={UserProfile} />
-          <Route path="/" render={() => <Redirect to="/tab10" />} exact={true} />
+          <Route path="/Main" component={Main} exact={true} />
+          <Route path="/AvailableJobs" component={AvailableJobs} exact={true} />
+          <Route path="/MyJobs" component={MyJobs} />
+          <Route path="/ScheduleJob" component={ScheduleJob} />
+          <Route path="/Profile" component={Profile} />
+          <Route path="/AvailableJob" component={AvailableJob} />
+          <Route path="/Notifications" component={Notifications} />
+          <Route path="/MyJobSummary" component={MyJobSummary} />
+          <Route path="/Associates" component={Associates} />
+          <Route path="/Login" component={Login} />
+          <Route path="/Logout" component={Logout} />
+          <Route path="/CreateAccount" component={CreateAccount} />
+          <Route path="/Search" component={Search} />
+          <Route path="/AssociateProfile/:id" component={AssociateProfile} />
+          <Route path="/" render={() => <Redirect to="/Login" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-        <IonTabButton tab="tab13" href="/tab13">
+        <IonTabButton tab="Search" href="/Search">
             <IonIcon icon={searchOutline} />
             <IonLabel></IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab5" href="/tab5">
+          <IonTabButton tab="Profile" href="/Profile">
             <IonIcon icon={person} />
             <IonLabel></IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab1" href="/tab1">
+          <IonTabButton tab="Main" href="/Main">
             <IonIcon icon={home} />
             <IonLabel></IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab7" href="/tab7">
+          <IonTabButton tab="Notifications" href="/Notifications">
             <IonIcon icon={notifications} />
             <IonLabel></IonLabel>
           </IonTabButton>

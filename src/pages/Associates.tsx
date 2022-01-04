@@ -43,7 +43,7 @@ const Associates: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-              <Link to="/tab1">
+              <Link to="/Main">
                 <IonIcon size="large" icon={arrowBackCircle} />
               </Link>
             </IonCol>
@@ -72,7 +72,7 @@ const Associates: React.FC = () => {
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
-                  <Link to="/tab5">
+                  <Link to="/Profile">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -87,7 +87,7 @@ const Associates: React.FC = () => {
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
-                  <Link to="/tab5">
+                  <Link to="/Profile">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -102,7 +102,7 @@ const Associates: React.FC = () => {
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
-                  <Link to="/tab5">
+                  <Link to="/Profile">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -117,7 +117,7 @@ const Associates: React.FC = () => {
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
-                  <Link to="/tab5">
+                  <Link to="/Profile">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -132,7 +132,7 @@ const Associates: React.FC = () => {
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
-                  <Link to="/tab5">
+                  <Link to="/Profile">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -147,7 +147,7 @@ const Associates: React.FC = () => {
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
-                  <Link to="/tab5">
+                  <Link to="/Profile">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -162,7 +162,7 @@ const Associates: React.FC = () => {
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
-                  <Link to="/tab5">
+                  <Link to="/Profile">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -177,7 +177,7 @@ const Associates: React.FC = () => {
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
-                  <Link to="/tab5">
+                  <Link to="/Profile">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -192,7 +192,7 @@ const Associates: React.FC = () => {
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
-                  <Link to="/tab5">
+                  <Link to="/Profile">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>

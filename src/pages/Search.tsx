@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import UserProfile from "./UserProfile";
+import AssociateProfile from "./AssociateProfile";
 import {
   person,
   personCircleOutline,
@@ -42,7 +42,7 @@ export const Search: React.FC<RouteComponentProps> = ({match}) => {
 
   const fetchUsers = () => {
     return axios
-      .get("http://localhost:3000/users/tab13", {})
+      .get("http://localhost:3000/users/Search", {})
       .then((response) => {
         console.log(response);
         return response.data;
@@ -92,7 +92,7 @@ export const Search: React.FC<RouteComponentProps> = ({match}) => {
         </IonHeader>
         <IonRow>
           <IonCol>
-            <Link to="/tab1">
+            <Link to="/Main">
               <IonIcon size="large" icon={arrowBackCircle} />
             </Link>
           </IonCol>
@@ -126,7 +126,7 @@ export const Search: React.FC<RouteComponentProps> = ({match}) => {
                   })
                   .map((val, key) => {
                     return (
-                      <Link to={`/tab14/${val.UserId}`}>
+                      <Link to={`/AssociateProfile/${val.UserId}`}>
                         <IonItem className="searchBar">
                           <p>{val.FirstName}</p>
                         </IonItem>

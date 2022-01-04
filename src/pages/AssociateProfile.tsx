@@ -20,16 +20,16 @@ import {
 import { person, arrowBackCircle, people } from "ionicons/icons";
 import axios from "axios";
 import { Link, matchPath, match, useRouteMatch, RouteComponentProps } from "react-router-dom";
-import "./UserProfile.css";
+import "./AssociateProfile.css";
 import GetUser from "../components/GetUser";
 
 // const checkboxList = [{ val: "Scheduler", isChecked: true }];
 
-interface UserProfileProps extends RouteComponentProps<{
+interface AssociateProfileProps extends RouteComponentProps<{
     id: string;
   }> {};
 
-const UserProfile: React.FC<UserProfileProps> = ({match}) => {
+const AssociateProfile: React.FC<AssociateProfileProps> = ({match}) => {
 
   interface ProfileData {
     UserId: number;
@@ -61,7 +61,7 @@ const UserProfile: React.FC<UserProfileProps> = ({match}) => {
 
   const fetchProfile = () => {
     return axios
-      .get("http://localhost:3000/users/tab14/" + match.params.id, {})
+      .get("http://localhost:3000/users/AssociateProfile/" + match.params.id, {})
       .then((response) => {
         // console.log(response);
         return response.data;
@@ -93,7 +93,7 @@ const UserProfile: React.FC<UserProfileProps> = ({match}) => {
 
   const handleClick = () => {
     axios
-      .post("http://localhost:3000/associates/tab14/" + match.params.id, { Self, ListProfile })
+      .post("http://localhost:3000/associates/AssociateProfile/" + match.params.id, { Self, ListProfile })
       .then((response) => {
         console.log(response);
       });
@@ -118,7 +118,7 @@ const UserProfile: React.FC<UserProfileProps> = ({match}) => {
         <IonGrid>
           <IonRow>
             <IonCol>
-              <Link to="/tab13">
+              <Link to="/Search">
                 <IonIcon size="large" icon={arrowBackCircle} />
               </Link>
             </IonCol>
@@ -173,10 +173,10 @@ const UserProfile: React.FC<UserProfileProps> = ({match}) => {
           <br></br>
           <IonRow className="listCol1">
             <IonCol className="listJobs">
-              <Link to="/tab9">
+              <Link to="/Associates">
               <IonButton
                 onClick={handleClick}
-                href="/tab3"
+                href="/MyJobs"
                 color="warning"
                 size="large"
                 expand="block"
@@ -199,4 +199,4 @@ const UserProfile: React.FC<UserProfileProps> = ({match}) => {
     </IonPage>
   );
 };
-export default UserProfile;
+export default AssociateProfile;

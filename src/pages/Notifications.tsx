@@ -36,6 +36,19 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
     requests: "",
   });
 
+
+  interface RequestsData {
+    id: number;
+    a_UserID: number;
+    a_AssociateID: number;
+  }
+
+  const [requests, setRequests] = React.useState<RequestsData>({
+    id: 0,
+    a_UserID: 0,
+    a_AssociateID: 0,
+  });
+
   // console.log(profile);
   React.useEffect(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
@@ -45,16 +58,25 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
   console.log(profile);
 
 
+  // React.useEffect(() => {
+  //   axios
+  //     .post("http://localhost:3000/associates/Notifications", { profile })
+  //     .then((data) => setRequests(data.myRequests));
+  // }, []);
+
+
   React.useEffect(() => {
     axios
-      .post("http://localhost:3000/associates/tab7", { profile })
+      .get("http://localhost:3000/associates/tab")
       .then((response) => {
         console.log(response);
       });
   })
 
-  // var requests = profile.requests;
-  // var myRequestsArray = JSON.parse("[" + requests + "]");
+
+
+  // var requests = response;
+  // var myRequestsArray = JSON.parse("[" + response + "]");
   // console.log(myRequestsArray);
   // console.log(typeof myRequestsArray[0]);
 
@@ -78,7 +100,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
         <IonGrid>
           <IonRow>
             <IonCol>
-              <Link to="/tab1">
+              <Link to="/Main">
                 <IonIcon size="large" icon={arrowBackCircle} />
               </Link>
             </IonCol>
@@ -91,7 +113,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
               <IonGrid>
                 <IonRow>
                   <IonCol></IonCol>
-                  <Link to="/tab1">
+                  <Link to="/Main">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -100,7 +122,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
                 {/* {myRequestsArray
                   .map(() => {
                     return (
-                      <Link to={`/tab14/${requests}`}>
+                      <Link to={`/AssociateProfile/${requests}`}>
                         <IonItem className="searchBar">
                           <p>requests</p>
                         </IonItem>
@@ -124,7 +146,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
               <IonGrid>
                 <IonRow>
                   <IonCol></IonCol>
-                  <Link to="/tab1">
+                  <Link to="/Main">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -141,7 +163,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
               <IonGrid>
                 <IonRow>
                   <IonCol></IonCol>
-                  <Link to="/tab1">
+                  <Link to="/Main">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -158,7 +180,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
               <IonGrid>
                 <IonRow>
                   <IonCol></IonCol>
-                  <Link to="/tab1">
+                  <Link to="/Main">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -175,7 +197,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
               <IonGrid>
                 <IonRow>
                   <IonCol></IonCol>
-                  <Link to="/tab1">
+                  <Link to="/Main">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -192,7 +214,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
               <IonGrid>
                 <IonRow>
                   <IonCol></IonCol>
-                  <Link to="/tab1">
+                  <Link to="/Main">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -209,7 +231,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
               <IonGrid>
                 <IonRow>
                   <IonCol></IonCol>
-                  <Link to="/tab1">
+                  <Link to="/Main">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -226,7 +248,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
               <IonGrid>
                 <IonRow>
                   <IonCol></IonCol>
-                  <Link to="/tab1">
+                  <Link to="/Main">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -243,7 +265,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
               <IonGrid>
                 <IonRow>
                   <IonCol></IonCol>
-                  <Link to="/tab1">
+                  <Link to="/Main">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
