@@ -40,7 +40,7 @@ const AvailableJob: React.FC = () => {
           <IonRow className="">
             <IonRow>
               <IonCol>
-                <Link to="/tab2">
+                <Link to="/AvailableJobs">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
               </IonCol>
@@ -89,7 +89,7 @@ const AvailableJob: React.FC = () => {
           <IonRow>
             <IonCol></IonCol>
             <IonCol>
-              <IonButton href="/tab8" color="danger" size="large" fill="solid">
+              <IonButton href="/MyJobSummary" color="danger" size="large" fill="solid">
                 Werk It
               </IonButton>
             </IonCol>

@@ -40,7 +40,7 @@ const MyJobSummary: React.FC = () => {
           <IonRow className="">
             <IonRow>
               <IonCol>
-                <Link to="/tab3">
+                <Link to="/MyJobs">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
               </IonCol>
@@ -89,12 +89,12 @@ const MyJobSummary: React.FC = () => {
           <IonRow>
             <IonCol></IonCol>
             <IonCol>
-              <IonButton href="/tab1" color="success" size="large" fill="solid">
+              <IonButton href="/Main" color="success" size="large" fill="solid">
                 Werked
               </IonButton>
             </IonCol>
             <IonCol>
-              <IonButton href="/tab1" color="danger" size="large" fill="solid">
+              <IonButton href="/Main" color="danger" size="large" fill="solid">
                 Cancel 
               </IonButton>
             </IonCol>

@@ -77,7 +77,7 @@ const Profile: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-              <Link to="/tab1">
+              <Link to="/Main">
                 <IonIcon size="large" icon={arrowBackCircle} />
               </Link>
             </IonCol>
@@ -132,7 +132,7 @@ const Profile: React.FC = () => {
           <br></br>
           <IonRow className="listCol1">
             <IonCol className="listJobs">
-              <Link to="/tab9">
+              <Link to="/Associates">
                 <IonIcon size="large" icon={people} />
                 <br></br>
                 <IonLabel>Associates</IonLabel>
@@ -150,7 +150,7 @@ const Profile: React.FC = () => {
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
-                  <Link to="/tab5">
+                  <Link to="/Profile">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -166,7 +166,7 @@ const Profile: React.FC = () => {
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
-                  <Link to="/tab5">
+                  <Link to="/Profile">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -182,7 +182,7 @@ const Profile: React.FC = () => {
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
-                  <Link to="/tab5">
+                  <Link to="/Profile">
                     <IonCol className="listCol">
                       <IonIcon icon={person} />
                     </IonCol>
@@ -198,7 +198,7 @@ const Profile: React.FC = () => {
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
-                  <Link to="/tab9">
+                  <Link to="/Associates">
                     <IonCol className="listCol">See All</IonCol>
                   </Link>
                 </IonRow>

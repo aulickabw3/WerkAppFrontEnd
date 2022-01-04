@@ -40,7 +40,7 @@ const ScheduleForm: React.FC = () => {
           <IonRow className="">
             <IonRow>
               <IonCol>
-                <Link to="/tab1">
+                <Link to="/Main">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
               </IonCol>

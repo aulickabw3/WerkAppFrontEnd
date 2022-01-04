@@ -4,7 +4,7 @@ import axios from "axios";
 export default function GetUser() {
 
     return axios
-      .get("http://localhost:3000/users/tab5", {
+      .get("http://localhost:3000/users/Profile", {
         withCredentials: true,
       })
       .then((response) => {

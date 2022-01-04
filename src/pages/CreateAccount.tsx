@@ -40,7 +40,7 @@ const CreateAccount: React.FC = () => {
     };
 
     axios
-      .post("http://localhost:3000/users/tab12", { newProfile })
+      .post("http://localhost:3000/users/CreateAccount", { newProfile })
       .then((response) => {
         console.log(response);
       });
@@ -162,7 +162,7 @@ const CreateAccount: React.FC = () => {
               <IonCol></IonCol>
               <IonCol>
                 <IonButton
-                  href="/tab10"
+                  href="/Login"
                   // type="submit"
                   color="danger"
                   size="large"
