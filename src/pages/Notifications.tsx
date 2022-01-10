@@ -19,7 +19,7 @@ import { Link, RouteComponentProps } from "react-router-dom";
 import "./Notifications.css";
 import GetUser from "../components/GetUser";
 
-export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
+export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
   interface ProfileData {
     UserId: number;
     FirstName: string;
@@ -27,7 +27,6 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
     associates: string;
     requests: string;
   }
-
   const [profile, setProfile] = React.useState<ProfileData>({
     UserId: 0,
     FirstName: "",
@@ -36,50 +35,68 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
     requests: "",
   });
 
+  React.useEffect(() => {
+    GetUser().then((data) => setProfile(data.personDataFound));
+  }, []);
+  console.log(profile);
 
+  // GET ARRAY OF ALL NEW REQUESTS
   interface RequestsData {
     id: number;
     a_UserID: number;
     a_AssociateID: number;
   }
 
-  const [requests, setRequests] = React.useState<RequestsData>({
-    id: 0,
-    a_UserID: 0,
-    a_AssociateID: 0,
-  });
+  const [requests, setRequests] = React.useState<RequestsData[]>([
+    {
+      id: 0,
+      a_UserID: 0,
+      a_AssociateID: 0,
+    },
+  ]);
 
-  // console.log(profile);
-  React.useEffect(() => {
-    GetUser().then((data) => setProfile(data.personDataFound));
-  }, []);
-
-
-  console.log(profile);
-
-
-  // React.useEffect(() => {
-  //   axios
-  //     .post("http://localhost:3000/associates/Notifications", { profile })
-  //     .then((data) => setRequests(data.myRequests));
-  // }, []);
-
-
-  React.useEffect(() => {
-    axios
-      .get("http://localhost:3000/associates/tab")
+  const fetchRequests = () => {
+    return axios
+      .post("http://localhost:3000/associates/Notifications", { profile })
       .then((response) => {
         console.log(response);
+        return response.data;
       });
-  })
+  };
 
+  React.useEffect(() => {
+    fetchRequests().then((data) => setRequests(data.myRequests));
+  }, [profile]);
 
+  console.log(requests);
+  console.log(typeof requests);
 
-  // var requests = response;
-  // var myRequestsArray = JSON.parse("[" + response + "]");
-  // console.log(myRequestsArray);
-  // console.log(typeof myRequestsArray[0]);
+  // interface RequestProfileData {
+  //   UserId: number;
+  //   FirstName: string;
+  //   LastName: string;
+  // }
 
+  // const [requestProfile, setRequestProfile] = React.useState<RequestProfileData>({
+  //   UserId: 0,
+  //   FirstName: "",
+  //   LastName: "",
+  // });
+
+  // const fetchRequestProfiles = () => {
+  //   return axios
+  //     .post("http://localhost:3000/associates/Requests", { requests })
+  //     .then((response) => {
+  //       console.log(response);
+  //       return response.data;
+  //     });
+  // };
+
+  // React.useEffect(() => {
+  //   fetchRequestProfiles().then((data) => setRequests(data.myRequestProfiles));
+  // }, [requests]);
+
+  // console.log(requestProfile);
 
 
   return (
@@ -108,57 +125,39 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
           </IonRow>
         </IonGrid>
         <IonList>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow>
-                  <IonCol></IonCol>
-                  <Link to="/Main">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">
-                    <IonList className="searchBar">
-                {/* {myRequestsArray
-                  .map(() => {
-                    return (
-                      <Link to={`/AssociateProfile/${requests}`}>
-                        <IonItem className="searchBar">
-                          <p>requests</p>
-                        </IonItem>
-                      </Link>
-                    );
-                  })} */}
-              </IonList>
-                    </IonCol>
-                    <IonCol className="listCol"></IonCol>
-                  </Link>
-                  <IonCol></IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          {/* <h3>{profile.Email}</h3> */}
-          {/* Extra fake ones.. */}
 
           <IonItem className="listJobs">
             <IonLabel>
               <IonGrid>
                 <IonRow>
-                  <IonCol></IonCol>
-                  <Link to="/Main">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">A Thing Happened</IonCol>
-                    <IonCol className="listCol"></IonCol>
-                  </Link>
+                  
+                  <IonList className="searchBar">
+                    {requests.map((val, key) => {
+                      return (
+                        <Link to={`/AssociateProfile/${val.a_UserID}`}>
+                          <IonItem className="searchBar">
+                            <IonCol className="listCol">
+                              <IonIcon icon={person} />
+                            </IonCol>
+                            <IonCol className="listCol">
+                              User {val.a_UserID} has requested you!
+                            </IonCol>
+                            <IonCol className="listCol"></IonCol>
+                            <IonCol></IonCol>
+                          </IonItem>
+                        </Link>
+                      );
+                    })}
+                  </IonList>
+
+                  <IonCol className="listCol"></IonCol>
                   <IonCol></IonCol>
                 </IonRow>
               </IonGrid>
             </IonLabel>
           </IonItem>
-          <IonItem className="listJobs">
+
+          {/* <IonItem className="listJobs">
             <IonLabel>
               <IonGrid>
                 <IonRow>
@@ -174,111 +173,9 @@ export const Notifications: React.FC<RouteComponentProps> = ({match}) => {
                 </IonRow>
               </IonGrid>
             </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow>
-                  <IonCol></IonCol>
-                  <Link to="/Main">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">A Thing Happened</IonCol>
-                    <IonCol className="listCol"></IonCol>
-                  </Link>
-                  <IonCol></IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow>
-                  <IonCol></IonCol>
-                  <Link to="/Main">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">A Thing Happened</IonCol>
-                    <IonCol className="listCol"></IonCol>
-                  </Link>
-                  <IonCol></IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow>
-                  <IonCol></IonCol>
-                  <Link to="/Main">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">A Thing Happened</IonCol>
-                    <IonCol className="listCol"></IonCol>
-                  </Link>
-                  <IonCol></IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow>
-                  <IonCol></IonCol>
-                  <Link to="/Main">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">A Thing Happened</IonCol>
-                    <IonCol className="listCol"></IonCol>
-                  </Link>
-                  <IonCol></IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow>
-                  <IonCol></IonCol>
-                  <Link to="/Main">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">A Thing Happened</IonCol>
-                    <IonCol className="listCol"></IonCol>
-                  </Link>
-                  <IonCol></IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow>
-                  <IonCol></IonCol>
-                  <Link to="/Main">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">A Thing Happened</IonCol>
-                    <IonCol className="listCol"></IonCol>
-                  </Link>
-                  <IonCol></IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
+          </IonItem> */}
+
         </IonList>
-        {/* <ExploreContainer name="don" /> */}
       </IonContent>
     </IonPage>
   );
