@@ -29,7 +29,7 @@ const Login: React.FC = () => {
       Password: password,
     };
     axios
-      .post("http://localhost:3000/users/Login", {
+      .post("http://localhost:3000/user/Login", {
         logProfile,
         withCredentials: true,
       })

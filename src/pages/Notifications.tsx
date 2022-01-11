@@ -42,22 +42,22 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
 
   // GET ARRAY OF ALL NEW REQUESTS
   interface RequestsData {
-    id: number;
-    a_UserID: number;
-    a_AssociateID: number;
+    BusinessAssociateId: number;
+    RequestStatus: string;
+    User: string;
   }
 
   const [requests, setRequests] = React.useState<RequestsData[]>([
     {
-      id: 0,
-      a_UserID: 0,
-      a_AssociateID: 0,
+      BusinessAssociateId: 0,
+      RequestStatus: "",
+      User: "",
     },
   ]);
 
   const fetchRequests = () => {
     return axios
-      .post("http://localhost:3000/associates/Notifications", { profile })
+      .post("http://localhost:3000/businessassociate/Notifications", { profile })
       .then((response) => {
         console.log(response);
         return response.data;
@@ -65,7 +65,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
   };
 
   React.useEffect(() => {
-    fetchRequests().then((data) => setRequests(data.myRequests));
+    fetchRequests().then((data) => setRequests(data.happyResult));
   }, [profile]);
 
   console.log(requests);
@@ -134,13 +134,13 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
                   <IonList className="searchBar">
                     {requests.map((val, key) => {
                       return (
-                        <Link to={`/AssociateProfile/${val.a_UserID}`}>
+                        <Link to={`/AssociateProfile/${val.BusinessAssociateId}`}>
                           <IonItem className="searchBar">
                             <IonCol className="listCol">
                               <IonIcon icon={person} />
                             </IonCol>
                             <IonCol className="listCol">
-                              User {val.a_UserID} has requested you!
+                              User {val.BusinessAssociateId} has requested you!
                             </IonCol>
                             <IonCol className="listCol"></IonCol>
                             <IonCol></IonCol>

@@ -21,7 +21,7 @@ export const Main: React.FC = () => {
 
   const handleClick = () => {
     axios 
-      .get("http://localhost:3000/users/Logout", {
+      .get("http://localhost:3000/user/Logout", {
         withCredentials: true,
       })
       .then((response) => {
