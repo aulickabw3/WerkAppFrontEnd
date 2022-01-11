@@ -33,11 +33,11 @@ export const Search: React.FC<RouteComponentProps> = ({match}) => {
     Email: string;
     Username: string;
     Password: string;
-    isScheduler: boolean;
-    isDeleted: boolean;
-    company: string;
-    occupation: string;
-    associates: string;
+    IsScheduler: boolean;
+    IsDeleted: boolean;
+    Company: string;
+    Occupation: string;
+    Associates: string;
   }
 
   const fetchUsers = () => {
@@ -57,11 +57,11 @@ export const Search: React.FC<RouteComponentProps> = ({match}) => {
       Email: "",
       Username: "",
       Password: "",
-      isScheduler: false,
-      isDeleted: false,
-      company: "",
-      occupation: "",
-      associates: "",
+      IsScheduler: false,
+      IsDeleted: false,
+      Company: "",
+      Occupation: "",
+      Associates: "",
     },
   ]);
 

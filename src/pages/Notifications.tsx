@@ -24,15 +24,15 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
     UserId: number;
     FirstName: string;
     LastName: string;
-    associates: string;
-    requests: string;
+    Associates: string;
+    Requests: string;
   }
   const [profile, setProfile] = React.useState<ProfileData>({
     UserId: 0,
     FirstName: "",
     LastName: "",
-    associates: "",
-    requests: "",
+    Associates: "",
+    Requests: "",
   });
 
   React.useEffect(() => {
@@ -45,6 +45,8 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
     BusinessAssociateId: number;
     RequestStatus: string;
     User: string;
+    a_Users_UserId: number;
+    b_Users_UserId: number;
   }
 
   const [requests, setRequests] = React.useState<RequestsData[]>([
@@ -52,6 +54,8 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
       BusinessAssociateId: 0,
       RequestStatus: "",
       User: "",
+      a_Users_UserId: 0,
+      b_Users_UserId: 0,
     },
   ]);
 
@@ -71,32 +75,10 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
   console.log(requests);
   console.log(typeof requests);
 
-  // interface RequestProfileData {
-  //   UserId: number;
-  //   FirstName: string;
-  //   LastName: string;
-  // }
-
-  // const [requestProfile, setRequestProfile] = React.useState<RequestProfileData>({
-  //   UserId: 0,
-  //   FirstName: "",
-  //   LastName: "",
-  // });
-
-  // const fetchRequestProfiles = () => {
-  //   return axios
-  //     .post("http://localhost:3000/associates/Requests", { requests })
-  //     .then((response) => {
-  //       console.log(response);
-  //       return response.data;
-  //     });
-  // };
-
-  // React.useEffect(() => {
-  //   fetchRequestProfiles().then((data) => setRequests(data.myRequestProfiles));
-  // }, [requests]);
-
-  // console.log(requestProfile);
+  // var NewRequests = requests.User;
+  // var myRequestsArray = JSON.parse("[" + NewRequests + "]");
+  // console.log(myRequestsArray);
+  // console.log(typeof myRequestsArray[0]);
 
 
   return (
@@ -134,13 +116,13 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
                   <IonList className="searchBar">
                     {requests.map((val, key) => {
                       return (
-                        <Link to={`/AssociateProfile/${val.BusinessAssociateId}`}>
+                        <Link to={`/AssociateProfile/${val.a_Users_UserId}`}>
                           <IonItem className="searchBar">
                             <IonCol className="listCol">
                               <IonIcon icon={person} />
                             </IonCol>
                             <IonCol className="listCol">
-                              User {val.BusinessAssociateId} has requested you!
+                              User {val.a_Users_UserId} has requested you!
                             </IonCol>
                             <IonCol className="listCol"></IonCol>
                             <IonCol></IonCol>
