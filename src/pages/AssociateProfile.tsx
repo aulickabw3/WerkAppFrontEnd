@@ -61,7 +61,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({match}) => {
 
   const fetchProfile = () => {
     return axios
-      .get("http://localhost:3000/users/AssociateProfile/" + match.params.id, {})
+      .get("http://localhost:3000/user/AssociateProfile/" + match.params.id, {})
       .then((response) => {
         // console.log(response);
         return response.data;
@@ -93,7 +93,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({match}) => {
 
   const handleClick = () => {
     axios
-      .post("http://localhost:3000/associates/AssociateProfile/" + match.params.id, { Self, ListProfile })
+      .post("http://localhost:3000/businessassociate/AssociateProfile/" + match.params.id, { Self, ListProfile })
       .then((response) => {
         console.log(response);
       });

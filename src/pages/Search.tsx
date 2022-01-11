@@ -42,7 +42,7 @@ export const Search: React.FC<RouteComponentProps> = ({match}) => {
 
   const fetchUsers = () => {
     return axios
-      .get("http://localhost:3000/users/Search", {})
+      .get("http://localhost:3000/user/Search", {})
       .then((response) => {
         console.log(response);
         return response.data;

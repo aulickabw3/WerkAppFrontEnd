@@ -40,7 +40,7 @@ const CreateAccount: React.FC = () => {
     };
 
     axios
-      .post("http://localhost:3000/users/CreateAccount", { newProfile })
+      .post("http://localhost:3000/user/CreateAccount", { newProfile })
       .then((response) => {
         console.log(response);
       });
