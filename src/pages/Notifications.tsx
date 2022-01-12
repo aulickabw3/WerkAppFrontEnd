@@ -42,26 +42,28 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
 
   // GET ARRAY OF ALL NEW REQUESTS
   interface RequestsData {
-    BusinessAssociateId: number;
-    RequestStatus: string;
-    User: string;
-    a_Users_UserId: number;
-    b_Users_UserId: number;
+    company: string;
+    FirstName: string;
+    Lastname: string;
+    occupation: string;
+    UserId: number;
   }
 
   const [requests, setRequests] = React.useState<RequestsData[]>([
     {
-      BusinessAssociateId: 0,
-      RequestStatus: "",
-      User: "",
-      a_Users_UserId: 0,
-      b_Users_UserId: 0,
+      company: "",
+      FirstName: "",
+      Lastname: "",
+      occupation: "",
+      UserId: 0,
     },
   ]);
 
   const fetchRequests = () => {
     return axios
-      .post("http://localhost:3000/businessassociate/Notifications", { profile })
+      .post("http://localhost:3000/businessassociate/Notifications", {
+        profile,
+      })
       .then((response) => {
         console.log(response);
         return response.data;
@@ -69,7 +71,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
   };
 
   React.useEffect(() => {
-    fetchRequests().then((data) => setRequests(data.happyResult));
+    fetchRequests().then((data) => setRequests(data.happyResult2));
   }, [profile]);
 
   console.log(requests);
@@ -79,7 +81,6 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
   // var myRequestsArray = JSON.parse("[" + NewRequests + "]");
   // console.log(myRequestsArray);
   // console.log(typeof myRequestsArray[0]);
-
 
   return (
     <IonPage>
@@ -107,22 +108,20 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
           </IonRow>
         </IonGrid>
         <IonList>
-
           <IonItem className="listJobs">
             <IonLabel>
               <IonGrid>
                 <IonRow>
-                  
                   <IonList className="searchBar">
                     {requests.map((val, key) => {
                       return (
-                        <Link to={`/AssociateProfile/${val.a_Users_UserId}`}>
+                        <Link to={`/AssociateRequestProfile/${val.UserId}`}>
                           <IonItem className="searchBar">
                             <IonCol className="listCol">
                               <IonIcon icon={person} />
                             </IonCol>
                             <IonCol className="listCol">
-                              User {val.a_Users_UserId} has requested you!
+                              {val.FirstName} has requested you!
                             </IonCol>
                             <IonCol className="listCol"></IonCol>
                             <IonCol></IonCol>
@@ -156,7 +155,6 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
               </IonGrid>
             </IonLabel>
           </IonItem> */}
-
         </IonList>
       </IonContent>
     </IonPage>

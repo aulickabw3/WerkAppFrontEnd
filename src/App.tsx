@@ -26,7 +26,7 @@ import Logout from './pages/Logout';
 import CreateAccount from './pages/CreateAccount';
 import Search from './pages/Search';
 import AssociateProfile from './pages/AssociateProfile';
-// import ProfileData from './Interfaces/ProfileData';
+import AssociateRequestProfile from './pages/AssociateRequestProfile';
 
 
 
@@ -68,6 +68,8 @@ const App: React.FC = () => (
           <Route path="/CreateAccount" component={CreateAccount} />
           <Route path="/Search" component={Search} />
           <Route path="/AssociateProfile/:id" component={AssociateProfile} />
+          <Route path="/AssociateRequestProfile/:id" component={AssociateRequestProfile} />
+
           <Route path="/" render={() => <Redirect to="/Login" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
