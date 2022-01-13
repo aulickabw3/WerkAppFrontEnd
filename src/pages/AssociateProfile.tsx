@@ -19,18 +19,24 @@ import {
 } from "@ionic/react";
 import { person, arrowBackCircle, people } from "ionicons/icons";
 import axios from "axios";
-import { Link, matchPath, match, useRouteMatch, RouteComponentProps } from "react-router-dom";
+import {
+  Link,
+  matchPath,
+  match,
+  useRouteMatch,
+  RouteComponentProps,
+} from "react-router-dom";
 import "./AssociateProfile.css";
 import GetUser from "../components/GetUser";
 
 // const checkboxList = [{ val: "Scheduler", isChecked: true }];
 
-interface AssociateProfileProps extends RouteComponentProps<{
+interface AssociateProfileProps
+  extends RouteComponentProps<{
     id: string;
-  }> {};
+  }> {}
 
-const AssociateProfile: React.FC<AssociateProfileProps> = ({match}) => {
-
+const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   interface ProfileData {
     UserId: number;
     FirstName: string;
@@ -55,24 +61,19 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({match}) => {
     Occupation: "",
   });
 
-  // console.log(match.params.id);
-
   const fetchProfile = () => {
     return axios
       .get("http://localhost:3000/user/AssociateProfile/" + match.params.id, {})
       .then((response) => {
-        // console.log(response);
         return response.data;
       });
   };
 
-    // console.log(profile);
   React.useEffect(() => {
     fetchProfile().then((data) => setListProfile(data.user));
   }, []);
 
   console.log(ListProfile);
-
 
   interface SelfData {
     UserId: number;
@@ -88,15 +89,17 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({match}) => {
 
   console.log(Self);
 
-
   const handleClick = () => {
     axios
-      .post("http://localhost:3000/businessassociate/AssociateProfile/" + match.params.id, { Self, ListProfile })
+      .post(
+        "http://localhost:3000/businessassociate/AssociateProfile/" +
+          match.params.id,
+        { Self, ListProfile }
+      )
       .then((response) => {
         console.log(response);
       });
   };
-
 
   return (
     <IonPage>
@@ -172,16 +175,16 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({match}) => {
           <IonRow className="listCol1">
             <IonCol className="listJobs">
               <Link to="/Associates">
-              <IonButton
-                onClick={handleClick}
-                href="/MyJobs"
-                color="warning"
-                size="large"
-                expand="block"
-                fill="solid"
-              >
-                Add Associate
-              </IonButton>
+                <IonButton
+                  onClick={handleClick}
+                  href="/MyJobs"
+                  color="warning"
+                  size="large"
+                  expand="block"
+                  fill="solid"
+                >
+                  Add Associate
+                </IonButton>
                 <br></br>
               </Link>
             </IonCol>
@@ -192,7 +195,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({match}) => {
           </IonRow>
         </IonGrid>
         ​
-        
       </IonContent>
     </IonPage>
   );

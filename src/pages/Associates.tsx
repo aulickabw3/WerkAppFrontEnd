@@ -15,15 +15,67 @@ import {
   IonImg,
   IonCheckbox,
 } from "@ionic/react";
+import axios from "axios";
 import { person, arrowBackCircle, arrowBack, people } from "ionicons/icons";
 import ExploreContainer from "../components/ExploreContainer";
 import { Link } from "react-router-dom";
 import "./Associates.css";
+import GetUser from "../components/GetUser";
 
-const checkboxList = [{ val: "Scheduler", isChecked: true }];
+
 
 const Associates: React.FC = () => {
-  const [checked, setChecked] = useState(false);
+
+  interface ProfileData {
+    UserId: number;
+    FirstName: string;
+    LastName: string;
+  }
+  const [profile, setProfile] = React.useState<ProfileData>({
+    UserId: 0,
+    FirstName: "",
+    LastName: "",
+  });
+
+  React.useEffect(() => {
+    GetUser().then((data) => setProfile(data.personDataFound));
+  }, []);
+  console.log(profile);
+
+  // Get Array Of All My Associates
+  interface AssociatesData {
+    UserId: number;
+    FirstName: string;
+    LastName: string;
+    Company: string;
+    Occupation: string;
+  }
+
+  const [associates, setAssociates] = React.useState<AssociatesData[]>([
+    {
+      UserId: 0,
+      FirstName: "",
+      LastName: "",
+      Company: "",
+      Occupation: "",
+    },
+  ]);
+
+  const fetchAssociates = () => {
+    return axios
+      .get("http://localhost:3000/businessassociate/ListOfAssociates/" + profile.UserId, {})
+      .then((response) => {
+        console.log(response);
+        return response.data;
+      });
+  };
+
+  React.useEffect(() => {
+    fetchAssociates().then((data) => setAssociates(data.listOfAssociates2));
+  }, [profile]);
+
+  console.log(associates);
+  console.log(typeof associates);
 
   return (
     <IonPage>
@@ -66,9 +118,40 @@ const Associates: React.FC = () => {
           </IonRow>
         </IonGrid>
       
+          <IonList>
 
-        <IonList>
           <IonItem className="listJobs">
+            <IonLabel>
+              <IonGrid>
+                <IonRow>
+
+                  <IonList className="searchBar">
+                    {associates.map((val, key) => {
+                      return (
+                        <Link to={`/AssociateRequestProfile/${val.UserId}`}>
+                          <IonItem className="searchBar">
+                            <IonCol className="listCol">
+                              <IonIcon icon={person} />
+                            </IonCol>
+                            <IonCol className="listCol">
+                              {val.FirstName} {val.LastName} 
+                            </IonCol>
+                            <IonCol className="listCol">FWC</IonCol>
+                            <IonCol></IonCol>
+                          </IonItem>
+                        </Link>
+                      );
+                    })}
+                  </IonList>
+
+                  <IonCol className="listCol"></IonCol>
+                  <IonCol></IonCol>
+                </IonRow>
+              </IonGrid>
+            </IonLabel>
+          </IonItem>
+
+          {/* <IonItem className="listJobs">
             <IonLabel>
               <IonGrid>
                 <IonRow className="listJobs">
@@ -82,128 +165,7 @@ const Associates: React.FC = () => {
                 </IonRow>
               </IonGrid>
             </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/Profile">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">John Doe</IonCol>
-                    <IonCol className="listCol">FWC</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/Profile">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">John Doe</IonCol>
-                    <IonCol className="listCol">FWC</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/Profile">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">John Doe</IonCol>
-                    <IonCol className="listCol">FWC</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/Profile">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">John Doe</IonCol>
-                    <IonCol className="listCol">FWC</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/Profile">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">John Doe</IonCol>
-                    <IonCol className="listCol">FWC</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/Profile">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">John Doe</IonCol>
-                    <IonCol className="listCol">FWC</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/Profile">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">John Doe</IonCol>
-                    <IonCol className="listCol">FWC</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/Profile">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">John Doe</IonCol>
-                    <IonCol className="listCol">FWC</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          
+          </IonItem> */}
 
         </IonList>
 
