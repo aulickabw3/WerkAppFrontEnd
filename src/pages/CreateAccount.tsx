@@ -35,8 +35,8 @@ const CreateAccount: React.FC = () => {
       LastName: lastName,
       Email: email,
       Password: password,
-      company: company,
-      occupation: occupation,
+      Company: company,
+      Occupation: occupation,
     };
 
     axios

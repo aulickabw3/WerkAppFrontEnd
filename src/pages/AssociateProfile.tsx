@@ -37,11 +37,10 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({match}) => {
     LastName: string;
     Email: string;
     Username: string;
-    isScheduler: boolean;
-    isDeleted: boolean;
-    company: string;
-    occupation: string;
-    associates: string;
+    IsScheduler: boolean;
+    IsDeleted: boolean;
+    Company: string;
+    Occupation: string;
   }
 
   const [ListProfile, setListProfile] = React.useState<ProfileData>({
@@ -50,11 +49,10 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({match}) => {
     LastName: "",
     Email: "",
     Username: "",
-    isScheduler: false,
-    isDeleted: false,
-    company: "",
-    occupation: "",
-    associates: "",
+    IsScheduler: false,
+    IsDeleted: false,
+    Company: "",
+    Occupation: "",
   });
 
   // console.log(match.params.id);
@@ -140,7 +138,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({match}) => {
               <h3>Company/Agency:</h3>
             </IonCol>
             <IonCol className="listCol1">
-              <h3>{ListProfile.company}</h3>
+              <h3>{ListProfile.Company}</h3>
             </IonCol>
           </IonRow>
           <IonRow className="profileGrid">
@@ -148,7 +146,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({match}) => {
               <h3>Occupation:</h3>
             </IonCol>
             <IonCol className="listCol1">
-              <h3>{ListProfile.occupation}</h3>
+              <h3>{ListProfile.Occupation}</h3>
             </IonCol>
           </IonRow>
           <IonRow className="profileGrid">

@@ -32,11 +32,10 @@ const Profile: React.FC = () => {
     LastName: string;
     Email: string;
     Username: string;
-    isScheduler: boolean;
-    isDeleted: boolean;
-    company: string;
-    occupation: string;
-    associates: string;
+    IsScheduler: boolean;
+    IsDeleted: boolean;
+    Company: string;
+    Occupation: string;
   }
 
   const [profile, setProfile] = React.useState<ProfileData>({
@@ -45,11 +44,10 @@ const Profile: React.FC = () => {
     LastName: "",
     Email: "",
     Username: "",
-    isScheduler: false,
-    isDeleted: false,
-    company: "",
-    occupation: "",
-    associates: "",
+    IsScheduler: false,
+    IsDeleted: false,
+    Company: "",
+    Occupation: "",
   });
 
     // console.log(profile);
@@ -99,7 +97,7 @@ const Profile: React.FC = () => {
               <h3>Company/Agency:</h3>
             </IonCol>
             <IonCol className="listCol1">
-              <h3>{profile.company}</h3>
+              <h3>{profile.Company}</h3>
             </IonCol>
           </IonRow>
           <IonRow className="profileGrid">
@@ -107,7 +105,7 @@ const Profile: React.FC = () => {
               <h3>Occupation:</h3>
             </IonCol>
             <IonCol className="listCol1">
-              <h3>{profile.occupation}</h3>
+              <h3>{profile.Occupation}</h3>
             </IonCol>
           </IonRow>
           <IonRow className="profileGrid">

@@ -24,15 +24,11 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
     UserId: number;
     FirstName: string;
     LastName: string;
-    Associates: string;
-    Requests: string;
   }
   const [profile, setProfile] = React.useState<ProfileData>({
     UserId: 0,
     FirstName: "",
     LastName: "",
-    Associates: "",
-    Requests: "",
   });
 
   React.useEffect(() => {
@@ -42,26 +38,26 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
 
   // GET ARRAY OF ALL NEW REQUESTS
   interface RequestsData {
-    company: string;
+    Company: string;
     FirstName: string;
     Lastname: string;
-    occupation: string;
+    Occupation: string;
     UserId: number;
   }
 
   const [requests, setRequests] = React.useState<RequestsData[]>([
     {
-      company: "",
+      Company: "",
       FirstName: "",
       Lastname: "",
-      occupation: "",
+      Occupation: "",
       UserId: 0,
     },
   ]);
 
   const fetchRequests = () => {
     return axios
-      .post("http://localhost:3000/businessassociate/Notifications", {
+      .post("http://localhost:3000/businessassociate/Notifications/RequestsReceived", {
         profile,
       })
       .then((response) => {

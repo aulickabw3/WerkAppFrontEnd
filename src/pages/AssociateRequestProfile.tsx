@@ -97,12 +97,14 @@ const AssociateRequestProfile: React.FC<AssociateProfileProps> = ({
 
   console.log(Self);
 
+  var requestResponse = {};
+
   const handleClick = () => {
+    requestResponse = {"RequestStatus":"RequestAccepted"};
     axios
-      .post(
-        "http://localhost:3000/businessassociate/AcceptRequest/" +
-          match.params.id,
-        { Self, ListProfile }
+      .put(
+        "http://localhost:3000/businessassociate/UpdateRequest",
+        { Self, ListProfile, requestResponse }
       )
       .then((response) => {
         console.log(response);
@@ -110,11 +112,11 @@ const AssociateRequestProfile: React.FC<AssociateProfileProps> = ({
   };
 
   const handleClick2 = () => {
+    requestResponse = {"RequestStatus":"RequestDeclined"};
     axios
-      .post(
-        "http://localhost:3000/businessassociate/DenyRequest/" +
-          match.params.id,
-        { Self, ListProfile }
+      .put(
+        "http://localhost:3000/businessassociate/UpdateRequest",
+        { Self, ListProfile, requestResponse }
       )
       .then((response) => {
         console.log(response);
