@@ -6,7 +6,14 @@ import {
   arrowBackCircle,
   arrowBack,
 } from "ionicons/icons";
-import { Redirect, Route, Link, matchPath, useRouteMatch, RouteComponentProps } from "react-router-dom";
+import {
+  Redirect,
+  Route,
+  Link,
+  matchPath,
+  useRouteMatch,
+  RouteComponentProps,
+} from "react-router-dom";
 import {
   IonIcon,
   IonSearchbar,
@@ -23,31 +30,35 @@ import {
   IonItem,
 } from "@ionic/react";
 import axios from "axios";
+import GetUser from "../components/GetUser";
 import "./Search.css";
 
-export const Search: React.FC<RouteComponentProps> = ({match}) => {
+export const Search: React.FC<RouteComponentProps> = ({ match }) => {
+  interface ProfileData {
+    UserId: number;
+    FirstName: string;
+    LastName: string;
+  }
+  const [profile, setProfile] = React.useState<ProfileData>({
+    UserId: 0,
+    FirstName: "",
+    LastName: "",
+  });
+
+  React.useEffect(() => {
+    GetUser().then((data) => setProfile(data.personDataFound));
+  }, []);
+  console.log(profile);
+
   interface UsersData {
     UserId: number;
     FirstName: string;
     LastName: string;
     Email: string;
-    Username: string;
-    Password: string;
     IsScheduler: boolean;
-    IsDeleted: boolean;
     Company: string;
     Occupation: string;
-    Associates: string;
   }
-
-  const fetchUsers = () => {
-    return axios
-      .get("http://localhost:3000/user/Search", {})
-      .then((response) => {
-        console.log(response);
-        return response.data;
-      });
-  };
 
   const [users, setUsers] = React.useState<UsersData[]>([
     {
@@ -55,23 +66,29 @@ export const Search: React.FC<RouteComponentProps> = ({match}) => {
       FirstName: "",
       LastName: "",
       Email: "",
-      Username: "",
-      Password: "",
       IsScheduler: false,
-      IsDeleted: false,
       Company: "",
       Occupation: "",
-      Associates: "",
     },
   ]);
 
+  const fetchUsers = () => {
+    return axios
+      .get("http://localhost:3000/user/Search/" + profile.UserId, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        return response.data;
+      });
+  };
+
   React.useEffect(() => {
-    fetchUsers().then((data) => setUsers(data.person));
-  }, []);
+    fetchUsers().then((data) => setUsers(data.personArray));
+  }, [profile]);
 
   console.log(users);
   console.log(typeof users);
-
 
   const [searchText, setSearchText] = useState("");
 

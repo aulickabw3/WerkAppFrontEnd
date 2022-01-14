@@ -23,9 +23,8 @@ import "./Associates.css";
 import GetUser from "../components/GetUser";
 
 
-
 const Associates: React.FC = () => {
-
+  //GET MY PROFILE DATA
   interface ProfileData {
     UserId: number;
     FirstName: string;
@@ -84,6 +83,7 @@ const Associates: React.FC = () => {
           <IonTitle className="title2">Associates</IonTitle>
         </IonToolbar>
       </IonHeader>
+
       <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar color="warning">
@@ -92,6 +92,7 @@ const Associates: React.FC = () => {
             </IonTitle>
           </IonToolbar>
         </IonHeader>
+
         <IonGrid>
           <IonRow>
             <IonCol>
@@ -101,15 +102,13 @@ const Associates: React.FC = () => {
             </IonCol>
           </IonRow>
         </IonGrid>
+
         <IonGrid>
-          
           <IonRow className="">
-            <IonCol className="title2">
-              
+            <IonCol className="title2">    
                 <IonIcon size="large" icon={people} />
                 <br></br>
                 <IonLabel><h1>Associates</h1></IonLabel>
-             
             </IonCol>
           </IonRow>
           <br></br>
@@ -117,9 +116,8 @@ const Associates: React.FC = () => {
             <IonCol></IonCol>
           </IonRow>
         </IonGrid>
-      
-          <IonList>
 
+          <IonList>
           <IonItem className="listJobs">
             <IonLabel>
               <IonGrid>
@@ -128,7 +126,7 @@ const Associates: React.FC = () => {
                   <IonList className="searchBar">
                     {associates.map((val, key) => {
                       return (
-                        <Link to={`/AssociateRequestProfile/${val.UserId}`}>
+                        <Link to={`/MyAssociateProfile/${val.UserId}`}>
                           <IonItem className="searchBar">
                             <IonCol className="listCol">
                               <IonIcon icon={person} />
@@ -150,30 +148,11 @@ const Associates: React.FC = () => {
               </IonGrid>
             </IonLabel>
           </IonItem>
-
-          {/* <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/Profile">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">John Doe</IonCol>
-                    <IonCol className="listCol">FWC</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem> */}
-
         </IonList>
 
-        {/* <ExploreContainer name="Tab 2 page" /> */}
       </IonContent>
     </IonPage>
   );
 };
-
 
 export default Associates;

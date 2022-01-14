@@ -11,7 +11,7 @@ import {
   IonTabs
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle, home, person, notifications, searchCircle, searchOutline } from 'ionicons/icons';
+import { ellipse, square, triangle, home, person, notifications, searchCircle, searchOutline, people } from 'ionicons/icons';
 import Main from './pages/Main';
 import AvailableJobs from './pages/AvailableJobs';
 import MyJobs from './pages/MyJobs';
@@ -27,6 +27,7 @@ import CreateAccount from './pages/CreateAccount';
 import Search from './pages/Search';
 import AssociateProfile from './pages/AssociateProfile';
 import AssociateRequestProfile from './pages/AssociateRequestProfile';
+import MyAssociateProfile from './pages/MyAssociateProfile';
 
 
 
@@ -69,6 +70,7 @@ const App: React.FC = () => (
           <Route path="/Search" component={Search} />
           <Route path="/AssociateProfile/:id" component={AssociateProfile} />
           <Route path="/AssociateRequestProfile/:id" component={AssociateRequestProfile} />
+          <Route path="/MyAssociateProfile/:id" component={MyAssociateProfile} />
 
           <Route path="/" render={() => <Redirect to="/Login" />} exact={true} />
         </IonRouterOutlet>
@@ -83,6 +85,10 @@ const App: React.FC = () => (
           </IonTabButton>
           <IonTabButton tab="Main" href="/Main">
             <IonIcon icon={home} />
+            <IonLabel></IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="Associates" href="/Associates">
+            <IonIcon icon={people} />
             <IonLabel></IonLabel>
           </IonTabButton>
           <IonTabButton tab="Notifications" href="/Notifications">

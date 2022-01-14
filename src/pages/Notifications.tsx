@@ -20,6 +20,7 @@ import "./Notifications.css";
 import GetUser from "../components/GetUser";
 
 export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
+  //GET MY PROFILE DATA
   interface ProfileData {
     UserId: number;
     FirstName: string;
@@ -40,7 +41,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
   interface RequestsData {
     Company: string;
     FirstName: string;
-    Lastname: string;
+    LastName: string;
     Occupation: string;
     UserId: number;
   }
@@ -49,7 +50,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
     {
       Company: "",
       FirstName: "",
-      Lastname: "",
+      LastName: "",
       Occupation: "",
       UserId: 0,
     },
@@ -57,9 +58,12 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
 
   const fetchRequests = () => {
     return axios
-      .post("http://localhost:3000/businessassociate/Notifications/RequestsReceived", {
-        profile,
-      })
+      .post(
+        "http://localhost:3000/businessassociate/Notifications/RequestsReceived",
+        {
+          profile,
+        }
+      )
       .then((response) => {
         console.log(response);
         return response.data;
@@ -73,26 +77,24 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
   console.log(requests);
   console.log(typeof requests);
 
-  // var NewRequests = requests.User;
-  // var myRequestsArray = JSON.parse("[" + NewRequests + "]");
-  // console.log(myRequestsArray);
-  // console.log(typeof myRequestsArray[0]);
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar color="warning">
-          <IonTitle className="titleNoti">Notifications</IonTitle>
+          <IonTitle className="title2">Notifications</IonTitle>
         </IonToolbar>
       </IonHeader>
+
       <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar color="warning">
-            <IonTitle className="titleNotif" size="large">
+            <IonTitle className="title2" size="large">
               Notifications
             </IonTitle>
           </IonToolbar>
         </IonHeader>
+
         <IonGrid>
           <IonRow>
             <IonCol>
@@ -100,9 +102,19 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
                 <IonIcon size="large" icon={arrowBackCircle} />
               </Link>
             </IonCol>
+          </IonRow>
+        </IonGrid>
+
+        <IonGrid>
+          <IonRow className="">
+            <IonCol className="title2"></IonCol>
+          </IonRow>
+          <br></br>
+          <IonRow className="profileGrid">
             <IonCol></IonCol>
           </IonRow>
         </IonGrid>
+
         <IonList>
           <IonItem className="listJobs">
             <IonLabel>
@@ -117,41 +129,21 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
                               <IonIcon icon={person} />
                             </IonCol>
                             <IonCol className="listCol">
-                              {val.FirstName} has requested you!
+                              {val.FirstName} {val.LastName} Requested You
                             </IonCol>
-                            <IonCol className="listCol"></IonCol>
+                            <IonCol className="listCol">{}</IonCol>
                             <IonCol></IonCol>
                           </IonItem>
                         </Link>
                       );
                     })}
                   </IonList>
-
-                  <IonCol className="listCol"></IonCol>
-                  <IonCol></IonCol>
                 </IonRow>
               </IonGrid>
             </IonLabel>
           </IonItem>
-
-          {/* <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow>
-                  <IonCol></IonCol>
-                  <Link to="/Main">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">A Thing Happened</IonCol>
-                    <IonCol className="listCol"></IonCol>
-                  </Link>
-                  <IonCol></IonCol>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem> */}
         </IonList>
+
       </IonContent>
     </IonPage>
   );
