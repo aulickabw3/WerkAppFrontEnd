@@ -95,9 +95,12 @@ const MyAssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
 
   console.log(Self);
 
+  var requestResponse = {};
+
   const handleClick = () => {
+    requestResponse = {"RequestStatus":"Fired"};
     axios
-      .put("http://localhost:3000/businessassociate/?", { Self, ListProfile })
+      .put("http://localhost:3000/businessassociate/UpdateRequest", { Self, ListProfile, requestResponse })
       .then((response) => {
         console.log(response);
       });
