@@ -145,7 +145,7 @@ export const Search: React.FC<RouteComponentProps> = ({ match }) => {
                     return (
                       <Link to={`/AssociateProfile/${val.UserId}`}>
                         <IonItem className="searchBar">
-                          <p>{val.FirstName}</p>
+                          <p>{val.FirstName} {val.LastName}</p>
                         </IonItem>
                       </Link>
                     );

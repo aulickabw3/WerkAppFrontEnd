@@ -47,7 +47,7 @@ const MyAssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     isDeleted: boolean;
     Company: string;
     Occupation: string;
-    associates: string;
+    ProfilePicURL: string;
   }
 
   const [ListProfile, setListProfile] = React.useState<ProfileData>({
@@ -60,14 +60,16 @@ const MyAssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     isDeleted: false,
     Company: "",
     Occupation: "",
-    associates: "",
+    ProfilePicURL: ""
   });
 
   // console.log(match.params.id);
 
   const fetchProfile = () => {
     return axios
-      .get("http://localhost:3000/user/AssociateProfile/" + match.params.id, {})
+      .get("http://localhost:3000/user/AssociateProfile/" + match.params.id, {
+        withCredentials: true,
+      })
       .then((response) => {
         // console.log(response);
         return response.data;
@@ -133,7 +135,7 @@ const MyAssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
         <IonGrid>
           <IonRow className="profileGrid">
             <IonCol>
-              <IonImg src="../assets/profilePic.png"></IonImg>
+              <IonImg src={ListProfile.ProfilePicURL}></IonImg>
             </IonCol>
             <IonCol className="title2">
               <h1>{ListProfile.FirstName}</h1>
@@ -194,29 +196,11 @@ const MyAssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
               </Link>
             </IonCol>
           </IonRow>
-          {/* <IonRow className="listCol1">
-            <IonCol className="listJobs">
-              <Link to="/Associates">
-              <IonButton
-                onClick={handleClick2}
-                href="/MyJobs"
-                color="danger"
-                size="large"
-                expand="block"
-                fill="solid"
-              >
-                Deny Request
-              </IonButton>
-                <br></br>
-              </Link>
-            </IonCol>
-          </IonRow> */}
           <br></br>
           <IonRow className="profileGrid">
             <IonCol></IonCol>
           </IonRow>
         </IonGrid>
-        ​
       </IonContent>
     </IonPage>
   );

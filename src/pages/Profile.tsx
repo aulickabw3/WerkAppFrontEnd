@@ -36,6 +36,7 @@ const Profile: React.FC = () => {
     IsDeleted: boolean;
     Company: string;
     Occupation: string;
+    ProfilePicURL: string;
   }
 
   const [profile, setProfile] = React.useState<ProfileData>({
@@ -48,6 +49,7 @@ const Profile: React.FC = () => {
     IsDeleted: false,
     Company: "",
     Occupation: "",
+    ProfilePicURL: ""
   });
 
     // console.log(profile);
@@ -84,7 +86,7 @@ const Profile: React.FC = () => {
         <IonGrid>
           <IonRow className="profileGrid">
             <IonCol>
-              <IonImg src="../assets/profilePic.png"></IonImg>
+              <IonImg src={profile.ProfilePicURL}></IonImg>
             </IonCol>
             <IonCol className="title2">
               <h1>{profile.FirstName}</h1>

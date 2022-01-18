@@ -47,6 +47,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     IsDeleted: boolean;
     Company: string;
     Occupation: string;
+    ProfilePicURL: string;
   }
 
   const [ListProfile, setListProfile] = React.useState<ProfileData>({
@@ -59,11 +60,14 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     IsDeleted: false,
     Company: "",
     Occupation: "",
+    ProfilePicURL: ""
   });
 
   const fetchProfile = () => {
     return axios
-      .get("http://localhost:3000/user/AssociateProfile/" + match.params.id, {})
+      .get("http://localhost:3000/user/AssociateProfile/" + match.params.id, {
+        withCredentials: true,
+      })
       .then((response) => {
         return response.data;
       });
@@ -128,7 +132,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
         <IonGrid>
           <IonRow className="profileGrid">
             <IonCol>
-              <IonImg src="../assets/profilePic.png"></IonImg>
+              <IonImg src={ListProfile.ProfilePicURL}></IonImg>
             </IonCol>
             <IonCol className="title2">
               <h1>{ListProfile.FirstName}</h1>
