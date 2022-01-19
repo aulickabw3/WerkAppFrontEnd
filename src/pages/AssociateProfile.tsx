@@ -98,7 +98,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       .post(
         "http://localhost:3000/businessassociate/AssociateProfile/" +
           match.params.id,
-        { Self, ListProfile }
+        { withCredentials: true, Self, ListProfile }
       )
       .then((response) => {
         console.log(response);

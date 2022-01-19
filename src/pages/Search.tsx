@@ -132,12 +132,18 @@ export const Search: React.FC<RouteComponentProps> = ({ match }) => {
                 {users
                   .filter((value) => {
                     if (searchText == "") {
-                      return value;
+                      return "";
                     } else if (
                       value.FirstName.toLowerCase().includes(
                         searchText.toLowerCase()
                       )
-                    ) {
+                    )  {
+                      return value;
+                    } else if (
+                      value.LastName.toLowerCase().includes(
+                        searchText.toLowerCase()
+                      )
+                    )  {
                       return value;
                     }
                   })
