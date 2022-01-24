@@ -37,6 +37,7 @@ interface AssociateProfileProps
   }> {}
 
 const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
+  // Get selected user data
   interface ProfileData {
     UserId: number;
     FirstName: string;
@@ -60,7 +61,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     IsDeleted: false,
     Company: "",
     Occupation: "",
-    ProfilePicURL: ""
+    ProfilePicURL: "",
   });
 
   const fetchProfile = () => {
@@ -76,9 +77,9 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   React.useEffect(() => {
     fetchProfile().then((data) => setListProfile(data.user));
   }, []);
-
   console.log(ListProfile);
 
+  // Get Self Data
   interface SelfData {
     UserId: number;
   }
@@ -90,10 +91,10 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   React.useEffect(() => {
     GetUser().then((data) => setSelf(data.personDataFound));
   }, []);
-
   console.log(Self);
 
-  const handleClick = () => {
+  // Request Associate component and handler
+  const handleAssociateRequest = () => {
     axios
       .post(
         "http://localhost:3000/businessassociate/AssociateProfile/" +
@@ -105,6 +106,214 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       });
   };
 
+  const NotMyAssociateProfile: React.FC = () => {
+    return (
+      <IonRow className="listCol1">
+        <IonCol className="listJobs">
+          <Link to="/Associates">
+            <IonButton
+              onClick={handleAssociateRequest}
+              href="/MyJobs"
+              color="warning"
+              size="large"
+              expand="block"
+              fill="solid"
+            >
+              Add Associate
+            </IonButton>
+            <br></br>
+          </Link>
+        </IonCol>
+      </IonRow>
+    );
+  };
+
+  // Accept or Decline Request component and handlers
+  var requestResponse = {};
+
+  const handleAcceptRequest = () => {
+    requestResponse = { RequestStatus: "RequestAccepted" };
+    axios
+      .put("http://localhost:3000/businessassociate/UpdateRequest", {
+        Self,
+        ListProfile,
+        requestResponse,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  };
+
+  const handleDeclineRequest = () => {
+    requestResponse = { RequestStatus: "RequestDeclined" };
+    axios
+      .put("http://localhost:3000/businessassociate/UpdateRequest", {
+        Self,
+        ListProfile,
+        requestResponse,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  };
+
+  const PendingAssociateProfile: React.FC = () => {
+    return (
+      <IonRow className="listCol1">
+        <IonCol className="listJobs">
+          <Link to="/Associates">
+            <IonButton
+              onClick={handleAcceptRequest}
+              href="/MyJobs"
+              color="success"
+              size="large"
+              expand="block"
+              fill="solid"
+            >
+              Accept Request
+            </IonButton>
+            <br></br>
+          </Link>
+        </IonCol>
+        <IonCol className="listJobs">
+          <Link to="/Associates">
+            <IonButton
+              onClick={handleDeclineRequest}
+              href="/MyJobs"
+              color="danger"
+              size="large"
+              expand="block"
+              fill="solid"
+            >
+              Deny Request
+            </IonButton>
+            <br></br>
+          </Link>
+        </IonCol>
+      </IonRow>
+    );
+  };
+
+  // PendingSent cancel request component and handler
+  const handleCancelRequest = () => {
+    requestResponse = { RequestStatus: "Cancelled" };
+    axios
+      .put("http://localhost:3000/businessassociate/UpdateRequest", {
+        Self,
+        ListProfile,
+        requestResponse,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  };
+
+  const PendingSentAssociateProfile: React.FC = () => {
+    return (
+      <IonRow className="listCol1">
+        <IonCol className="listJobs">
+          <Link to="/Associates">
+            <IonButton
+              onClick={handleCancelRequest}
+              href="/MyJobs"
+              color="danger"
+              size="large"
+              expand="block"
+              fill="solid"
+            >
+              Cancel Request
+            </IonButton>
+            <br></br>
+          </Link>
+        </IonCol>
+      </IonRow>
+    );
+  };
+
+  // My Associate component and handler
+  const handleFireAssociate = () => {
+    requestResponse = { RequestStatus: "Fired" };
+    axios
+      .put("http://localhost:3000/businessassociate/UpdateRequest", {
+        Self,
+        ListProfile,
+        requestResponse,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  };
+
+  const MyAssociateProfile: React.FC = () => {
+    return (
+      <IonRow className="listCol1">
+        <IonCol className="listJobs">
+          <Link to="/Associates">
+            <IonButton
+              onClick={handleFireAssociate}
+              href="/MyJobs"
+              color="danger"
+              size="large"
+              expand="block"
+              fill="solid"
+            >
+              Fire Associate
+            </IonButton>
+            <br></br>
+          </Link>
+        </IonCol>
+      </IonRow>
+    );
+  };
+
+  // Request Status of Selected Associate
+  interface AssociationData {
+    associationStatus: string;
+  }
+
+  const [association, setAssociation] = React.useState<AssociationData>({
+    associationStatus: "",
+  });
+
+  const associateRequest = () => {
+    return axios
+      .post(
+        "http://localhost:3000/businessassociate/AssociateRelationshipStatus",
+        {
+          withCredentials: true,
+          Self,
+          ListProfile,
+        }
+      )
+      .then((response) => {
+        return response.data;
+      });
+  };
+
+  React.useEffect(() => {
+    associateRequest().then((data) => setAssociation(data.associationStatus));
+  }, [Self, ListProfile]);
+
+  console.log( association);
+
+  // Render Conditional Associate Profile Action Button
+  const AssociateProfileActions: React.FC = () => {
+    console.log(association.associationStatus);
+    if (association.associationStatus == "RequestAccepted") {
+      return <MyAssociateProfile />;
+    }
+    if (association.associationStatus == "RequestReceived") {
+      return <PendingAssociateProfile />;
+    }
+    if (association.associationStatus == "RequestSent") {
+      return <PendingSentAssociateProfile />;
+    }
+    return <NotMyAssociateProfile />;
+  };
+
+
+
+  // Page
   return (
     <IonPage>
       <IonHeader>
@@ -176,29 +385,12 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
           </IonRow>
           <br></br>
           <br></br>
-          <IonRow className="listCol1">
-            <IonCol className="listJobs">
-              <Link to="/Associates">
-                <IonButton
-                  onClick={handleClick}
-                  href="/MyJobs"
-                  color="warning"
-                  size="large"
-                  expand="block"
-                  fill="solid"
-                >
-                  Add Associate
-                </IonButton>
-                <br></br>
-              </Link>
-            </IonCol>
-          </IonRow>
+          <AssociateProfileActions />
           <br></br>
           <IonRow className="profileGrid">
             <IonCol></IonCol>
           </IonRow>
         </IonGrid>
-        ​
       </IonContent>
     </IonPage>
   );

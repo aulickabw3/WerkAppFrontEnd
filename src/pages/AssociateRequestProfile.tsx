@@ -101,7 +101,7 @@ const AssociateRequestProfile: React.FC<AssociateProfileProps> = ({
 
   var requestResponse = {};
 
-  const handleClick = () => {
+  const handleAcceptRequest = () => {
     requestResponse = {"RequestStatus":"RequestAccepted"};
     axios
       .put(
@@ -113,7 +113,7 @@ const AssociateRequestProfile: React.FC<AssociateProfileProps> = ({
       });
   };
 
-  const handleClick2 = () => {
+  const handleDeclineRequest = () => {
     requestResponse = {"RequestStatus":"RequestDeclined"};
     axios
       .put(
@@ -200,7 +200,7 @@ const AssociateRequestProfile: React.FC<AssociateProfileProps> = ({
             <IonCol className="listJobs">
               <Link to="/Associates">
                 <IonButton
-                  onClick={handleClick}
+                  onClick={handleAcceptRequest}
                   href="/MyJobs"
                   color="success"
                   size="large"
@@ -215,7 +215,7 @@ const AssociateRequestProfile: React.FC<AssociateProfileProps> = ({
             <IonCol className="listJobs">
               <Link to="/Associates">
                 <IonButton
-                  onClick={handleClick2}
+                  onClick={handleDeclineRequest}
                   href="/MyJobs"
                   color="danger"
                   size="large"

@@ -19,7 +19,7 @@ import { person, arrowBackCircle, people } from "ionicons/icons";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Profile.css";
-import "../components/GetUser";
+// import "../components/GetUser";
 import GetUser from "../components/GetUser";
 
 // const checkboxList = [{ val: "Scheduler", isChecked: true }];

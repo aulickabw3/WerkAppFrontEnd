@@ -29,6 +29,7 @@ import {
 import "./AssociateProfile.css";
 import GetUser from "../components/GetUser";
 
+
 // const checkboxList = [{ val: "Scheduler", isChecked: true }];
 
 interface AssociateProfileProps
@@ -99,7 +100,7 @@ const MyAssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
 
   var requestResponse = {};
 
-  const handleClick = () => {
+  const handleFireAssociate = () => {
     requestResponse = {"RequestStatus":"Fired"};
     axios
       .put("http://localhost:3000/businessassociate/UpdateRequest", { Self, ListProfile, requestResponse })
@@ -183,7 +184,7 @@ const MyAssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
             <IonCol className="listJobs">
               <Link to="/Associates">
                 <IonButton
-                  onClick={handleClick}
+                  onClick={handleFireAssociate}
                   href="/MyJobs"
                   color="danger"
                   size="large"
