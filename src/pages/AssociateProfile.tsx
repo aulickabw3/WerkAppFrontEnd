@@ -268,11 +268,11 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
 
   // Request Status of Selected Associate
   interface AssociationData {
-    associationStatus: string;
+    RequestStatus: string;
   }
 
   const [association, setAssociation] = React.useState<AssociationData>({
-    associationStatus: "",
+    RequestStatus: "",
   });
 
   const associateRequest = () => {
@@ -298,19 +298,18 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
 
   // Render Conditional Associate Profile Action Button
   const AssociateProfileActions: React.FC = () => {
-    console.log(association.associationStatus);
-    if (association.associationStatus == "RequestAccepted") {
+    console.log(association.RequestStatus);
+    if (association.RequestStatus == "RequestAccepted") {
       return <MyAssociateProfile />;
     }
-    if (association.associationStatus == "RequestReceived") {
+    if (association.RequestStatus == "RequestReceived") {
       return <PendingAssociateProfile />;
     }
-    if (association.associationStatus == "RequestSent") {
+    if (association.RequestStatus == "RequestSent") {
       return <PendingSentAssociateProfile />;
     }
     return <NotMyAssociateProfile />;
   };
-
 
 
   // Page
