@@ -75,13 +75,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   };
 
   React.useEffect(() => {
-    let isCancelled = false;
-    if (!isCancelled) {
     fetchProfile().then((data) => setListProfile(data.user));
-    } 
-    return () => {
-      isCancelled = true;
-    }
   }, []);
   console.log(ListProfile);
 
@@ -95,13 +89,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   });
 
   React.useEffect(() => {
-    let isCancelled = false;
-    if (!isCancelled) {
     GetUser().then((data) => setSelf(data.personDataFound));
-    }
-    return () => {
-      isCancelled = true;
-    }
   }, []);
   console.log(Self);
 
@@ -303,13 +291,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   };
 
   React.useEffect(() => {
-    let isCancelled = false;
-    if (!isCancelled) {
       associateRequest().then((data) => setAssociation(data.associationStatus));
-    }
-    return () => {
-      isCancelled = true;
-    };
   }, [Self, ListProfile]);
   console.log(association);
 

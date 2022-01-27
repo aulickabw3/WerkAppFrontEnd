@@ -69,14 +69,8 @@ const Associates: React.FC = () => {
       });
   };
 
-  let isCancelled = false;
   React.useEffect(() => {
-    if (!isCancelled) {
     fetchAssociates().then((data) => setAssociates(data.listOfAssociates2));
-    } 
-    return ()=> {
-      isCancelled = true;
-    }
   }, [profile]);
 
   console.log(associates);
