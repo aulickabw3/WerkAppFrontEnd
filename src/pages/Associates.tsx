@@ -69,8 +69,14 @@ const Associates: React.FC = () => {
       });
   };
 
+  let isCancelled = false;
   React.useEffect(() => {
+    if (!isCancelled) {
     fetchAssociates().then((data) => setAssociates(data.listOfAssociates2));
+    } 
+    return ()=> {
+      isCancelled = true;
+    }
   }, [profile]);
 
   console.log(associates);
@@ -126,7 +132,7 @@ const Associates: React.FC = () => {
                   <IonList className="searchBar">
                     {associates.map((val, key) => {
                       return (
-                        <Link to={`/MyAssociateProfile/${val.UserId}`}>
+                        <Link to={`/AssociateProfile/${val.UserId}`}>
                           <IonItem className="searchBar">
                             <IonCol className="listCol">
                               <IonIcon icon={person} />
@@ -134,7 +140,7 @@ const Associates: React.FC = () => {
                             <IonCol className="listCol">
                               {val.FirstName} {val.LastName} 
                             </IonCol>
-                            <IonCol className="listCol">FWC</IonCol>
+                            <IonCol className="listCol">{val.Company}</IonCol>
                             <IonCol></IonCol>
                           </IonItem>
                         </Link>

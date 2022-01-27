@@ -84,7 +84,13 @@ export const Search: React.FC<RouteComponentProps> = ({ match }) => {
   };
 
   React.useEffect(() => {
+    let isCancelled = false;
+    if (!isCancelled) {
     fetchUsers().then((data) => setUsers(data.personArray));
+    } 
+    return () => {
+      isCancelled = true;
+    }
   }, [profile]);
 
   console.log(users);

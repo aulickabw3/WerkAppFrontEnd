@@ -123,7 +123,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
                   <IonList className="searchBar">
                     {requests.map((val, key) => {
                       return (
-                        <Link to={`/AssociateRequestProfile/${val.UserId}`}>
+                        <Link to={`/AssociateProfile/${val.UserId}`}>
                           <IonItem className="searchBar">
                             <IonCol className="listCol">
                               <IonIcon icon={person} />

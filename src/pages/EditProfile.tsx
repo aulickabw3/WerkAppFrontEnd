@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   IonContent,
-  IonButton,
   IonLabel,
-  IonRouterLink,
   IonList,
   IonItem,
   IonIcon,
@@ -19,95 +17,47 @@ import {
 } from "@ionic/react";
 import { person, arrowBackCircle, people } from "ionicons/icons";
 import axios from "axios";
-import {
-  Link,
-  matchPath,
-  match,
-  useRouteMatch,
-  RouteComponentProps,
-} from "react-router-dom";
-import "./AssociateProfile.css";
+import { Link } from "react-router-dom";
+import "./Profile.css";
+// import "../components/GetUser";
 import GetUser from "../components/GetUser";
-
 
 // const checkboxList = [{ val: "Scheduler", isChecked: true }];
 
-interface AssociateProfileProps
-  extends RouteComponentProps<{
-    id: string;
-  }> {}
+const EditProfile: React.FC = () => {
 
-const MyAssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   interface ProfileData {
     UserId: number;
     FirstName: string;
     LastName: string;
     Email: string;
     Username: string;
-    isScheduler: boolean;
-    isDeleted: boolean;
+    IsScheduler: boolean;
+    IsDeleted: boolean;
     Company: string;
     Occupation: string;
     ProfilePicURL: string;
   }
 
-  const [ListProfile, setListProfile] = React.useState<ProfileData>({
+  const [profile, setProfile] = React.useState<ProfileData>({
     UserId: 0,
     FirstName: "",
     LastName: "",
     Email: "",
     Username: "",
-    isScheduler: false,
-    isDeleted: false,
+    IsScheduler: false,
+    IsDeleted: false,
     Company: "",
     Occupation: "",
     ProfilePicURL: ""
   });
 
-  // console.log(match.params.id);
-
-  const fetchProfile = () => {
-    return axios
-      .get("http://localhost:3000/user/AssociateProfile/" + match.params.id, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        // console.log(response);
-        return response.data;
-      });
-  };
-
-  // console.log(profile);
+    // console.log(profile);
   React.useEffect(() => {
-    fetchProfile().then((data) => setListProfile(data.user));
+    GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
-  console.log(ListProfile);
-
-  interface SelfData {
-    UserId: number;
-  }
-
-  const [Self, setSelf] = React.useState<SelfData>({
-    UserId: 0,
-  });
-
-  React.useEffect(() => {
-    GetUser().then((data) => setSelf(data.personDataFound));
-  }, []);
-
-  console.log(Self);
-
-  var requestResponse = {};
-
-  const handleFireAssociate = () => {
-    requestResponse = {"RequestStatus":"Fired"};
-    axios
-      .put("http://localhost:3000/businessassociate/UpdateRequest", { Self, ListProfile, requestResponse })
-      .then((response) => {
-        console.log(response);
-      });
-  };
+  console.log(profile);
 
   return (
     <IonPage>
@@ -127,7 +77,7 @@ const MyAssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
         <IonGrid>
           <IonRow>
             <IonCol>
-              <Link to="/Notifications">
+              <Link to="/Main">
                 <IonIcon size="large" icon={arrowBackCircle} />
               </Link>
             </IonCol>
@@ -136,11 +86,11 @@ const MyAssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
         <IonGrid>
           <IonRow className="profileGrid">
             <IonCol>
-              <IonImg src={ListProfile.ProfilePicURL}></IonImg>
+              <IonImg src={profile.ProfilePicURL}></IonImg>
             </IonCol>
             <IonCol className="title2">
-              <h1>{ListProfile.FirstName}</h1>
-              <h1>{ListProfile.LastName}</h1>
+              <h1>{profile.FirstName}</h1>
+              <h1>{profile.LastName}</h1>
             </IonCol>
           </IonRow>
           <br></br>
@@ -149,7 +99,7 @@ const MyAssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
               <h3>Company/Agency:</h3>
             </IonCol>
             <IonCol className="listCol1">
-              <h3>{ListProfile.Company}</h3>
+              <h3>{profile.Company}</h3>
             </IonCol>
           </IonRow>
           <IonRow className="profileGrid">
@@ -157,7 +107,7 @@ const MyAssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
               <h3>Occupation:</h3>
             </IonCol>
             <IonCol className="listCol1">
-              <h3>{ListProfile.Occupation}</h3>
+              <h3>{profile.Occupation}</h3>
             </IonCol>
           </IonRow>
           <IonRow className="profileGrid">
@@ -165,7 +115,7 @@ const MyAssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
               <h3>Email:</h3>
             </IonCol>
             <IonCol className="listCol1">
-              <h3>{ListProfile.Email}</h3>
+              <h3>{profile.Email}</h3>
             </IonCol>
           </IonRow>
           <IonRow>
@@ -178,32 +128,12 @@ const MyAssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
               />
             </IonCol>
           </IonRow>
+          </IonGrid>
           <br></br>
           <br></br>
-          <IonRow className="listCol1">
-            <IonCol className="listJobs">
-              <Link to="/Associates">
-                <IonButton
-                  onClick={handleFireAssociate}
-                  href="/MyJobs"
-                  color="danger"
-                  size="large"
-                  expand="block"
-                  fill="solid"
-                >
-                  Fire Associate
-                </IonButton>
-                <br></br>
-              </Link>
-            </IonCol>
-          </IonRow>
-          <br></br>
-          <IonRow className="profileGrid">
-            <IonCol></IonCol>
-          </IonRow>
-        </IonGrid>
+          
       </IonContent>
     </IonPage>
   );
 };
-export default MyAssociateProfile;
+export default EditProfile;

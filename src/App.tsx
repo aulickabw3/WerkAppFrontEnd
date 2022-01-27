@@ -26,9 +26,7 @@ import Logout from './pages/Logout';
 import CreateAccount from './pages/CreateAccount';
 import Search from './pages/Search';
 import AssociateProfile from './pages/AssociateProfile';
-import AssociateRequestProfile from './pages/AssociateRequestProfile';
-import MyAssociateProfile from './pages/MyAssociateProfile';
-
+import EditProfile from './pages/EditProfile';
 
 
 /* Core CSS required for Ionic components to work properly */
@@ -69,8 +67,8 @@ const App: React.FC = () => (
           <Route path="/CreateAccount" component={CreateAccount} />
           <Route path="/Search" component={Search} />
           <Route path="/AssociateProfile/:id" component={AssociateProfile} />
-          <Route path="/AssociateRequestProfile/:id" component={AssociateRequestProfile} />
-          <Route path="/MyAssociateProfile/:id" component={MyAssociateProfile} />
+          <Route path="/EditProfile" component={EditProfile} />
+
 
           <Route path="/" render={() => <Redirect to="/Login" />} exact={true} />
         </IonRouterOutlet>
