@@ -4,7 +4,6 @@ import {
   IonButton,
   IonLabel,
   IonRouterLink,
-  useIonViewDidLeave,
   useIonViewWillEnter,
   useIonViewDidEnter,
   IonList,
@@ -19,8 +18,6 @@ import {
   IonCol,
   IonImg,
   IonCheckbox,
-  IonSpinner,
-  useIonViewWillLeave,
 } from "@ionic/react";
 import { person, arrowBackCircle, people } from "ionicons/icons";
 import axios from "axios";
@@ -34,8 +31,6 @@ import {
 } from "react-router-dom";
 import "./AssociateProfile.css";
 import GetUser from "../components/GetUser";
-import { render } from "@testing-library/react";
-import MyLoadingScreen from "../components/LoadingScreen";
 
 // const checkboxList = [{ val: "Scheduler", isChecked: true }];
 
@@ -46,23 +41,7 @@ interface AssociateProfileProps
 
 const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
 
-  interface SelfData {
-    UserId: number;
-  }
-
-  const [Self, setSelf] = React.useState<SelfData>({
-    UserId: 0,
-  });
-
-  // const [loading, setLoading] = React.useState<boolean>(false);
-  // console.log("loading status 1: " + loading);
-
-
-  const cancelTokenSource = axios.CancelToken.source();
-
-
-  // Get other user profile data
-  ///////////////////////////////////////
+  // Get selected user data
   interface ProfileData {
     UserId: number;
     FirstName: string;
@@ -70,6 +49,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     Email: string;
     Username: string;
     IsScheduler: boolean;
+    IsDeleted: boolean;
     Company: string;
     Occupation: string;
     ProfilePicURL: string;
@@ -82,67 +62,43 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     Email: "",
     Username: "",
     IsScheduler: false,
+    IsDeleted: false,
     Company: "",
     Occupation: "",
     ProfilePicURL: "",
   });
-  
+
+  console.log("match.params.id: " + match.params.id)
   const fetchProfile = () => {
     return axios
       .get("http://localhost:3000/user/AssociateProfile/" + match.params.id, {
         withCredentials: true,
-        cancelToken: cancelTokenSource.token,
       })
       .then((response) => {
         return response.data;
       });
   };
 
-
-    // Request Status of Selected Associate
-  //////////////////////////////////////
-  interface AssociationData {
-    RequestStatus: string;
-  }
-
-  const [association, setAssociation] = React.useState<AssociationData>({
-    RequestStatus: "",
-  });
-
-  const associateRequest = () => {
-    return axios
-      .post(
-        "http://localhost:3000/businessassociate/AssociateRelationshipStatus",
-        {
-          withCredentials: true,
-          Self,
-          ListProfile,
-          cancelToken: cancelTokenSource.token,
-        }
-      )
-      .then((response) => {
-        return response.data;
-      });
-  };
-  
-
   useIonViewDidEnter(() => {
-    // setLoading(true);
-    fetchProfile().then((data) => setListProfile(data.user));
-    GetUser().then((data) => setSelf(data.personDataFound));
-    associateRequest().then((data) => setAssociation(data.associationStatus));
-  }, [match, Self, ListProfile]);
+    fetchProfile().then((data) => setListProfile(data.user))
+  }, [match]);
   console.log(ListProfile);
 
+  // Get Self Data
+  interface SelfData {
+    UserId: number;
+  }
 
-  useIonViewDidLeave(() => {
-    cancelTokenSource.cancel();
-    console.log("Cancel Token Here!");
+  const [Self, setSelf] = React.useState<SelfData>({
+    UserId: 0,
   });
 
+  useIonViewDidEnter(() => {
+    GetUser().then((data) => setSelf(data.personDataFound));
+  }, []);
+  console.log(Self);
 
   // Request Associate component and handler
-  /////////////////////////////////////////
   const handleAssociateRequest = () => {
     axios
       .post(
@@ -178,7 +134,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   };
 
   // Accept or Decline Request component and handlers
-  ////////////////////////////////////////////////////
   var requestResponse = {};
 
   const handleAcceptRequest = () => {
@@ -245,7 +200,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   };
 
   // PendingSent cancel request component and handler
-  //////////////////////////////////////////////////////
   const handleCancelRequest = () => {
     requestResponse = { RequestStatus: "Cancelled" };
     axios
@@ -282,7 +236,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   };
 
   // My Associate component and handler
-  ///////////////////////////////////////
   const handleFireAssociate = () => {
     requestResponse = { RequestStatus: "Fired" };
     axios
@@ -318,9 +271,36 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     );
   };
 
+  // Request Status of Selected Associate
+  interface AssociationData {
+    RequestStatus: string;
+  }
+
+  const [association, setAssociation] = React.useState<AssociationData>({
+    RequestStatus: "",
+  });
+
+  const associateRequest = () => {
+    return axios
+      .post(
+        "http://localhost:3000/businessassociate/AssociateRelationshipStatus",
+        {
+          withCredentials: true,
+          Self,
+          ListProfile,
+        }
+      )
+      .then((response) => {
+        return response.data;
+      });
+  };
+
+  useIonViewDidEnter(() => {
+    associateRequest().then((data) => setAssociation(data.associationStatus));
+  }, [Self, ListProfile]);
+  console.log(association);
 
   // Render Conditional Associate Profile Action Button
-  /////////////////////////////////////////////////////////
   const AssociateProfileActions: React.FC = () => {
     console.log(association.RequestStatus);
     if (association.RequestStatus == "RequestAccepted") {
@@ -335,10 +315,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     return <NotMyAssociateProfile />;
   };
 
-  // const RenderView: React.FC = () => {
-  //   if (loading) {
-  //     return <MyLoadingScreen />;
-  //   }
+  // Page
   return (
     <IonPage>
       <IonHeader>
@@ -420,9 +397,4 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     </IonPage>
   );
 };
-
-// Page
-//   return <RenderView />;
-// };
-
 export default AssociateProfile;
