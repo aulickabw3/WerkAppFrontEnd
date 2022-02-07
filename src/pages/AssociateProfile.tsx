@@ -4,8 +4,6 @@ import {
   IonButton,
   IonLabel,
   IonRouterLink,
-  useIonViewWillEnter,
-  useIonViewDidEnter,
   IonList,
   IonItem,
   IonIcon,
@@ -27,7 +25,6 @@ import {
   match,
   useRouteMatch,
   RouteComponentProps,
-  useParams,
 } from "react-router-dom";
 import "./AssociateProfile.css";
 import GetUser from "../components/GetUser";
@@ -40,7 +37,6 @@ interface AssociateProfileProps
   }> {}
 
 const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
-
   // Get selected user data
   interface ProfileData {
     UserId: number;
@@ -68,7 +64,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     ProfilePicURL: "",
   });
 
-  console.log("match.params.id: " + match.params.id)
   const fetchProfile = () => {
     return axios
       .get("http://localhost:3000/user/AssociateProfile/" + match.params.id, {
@@ -79,9 +74,9 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       });
   };
 
-  useIonViewDidEnter(() => {
-    fetchProfile().then((data) => setListProfile(data.user))
-  }, [match]);
+  React.useEffect(() => {
+    fetchProfile().then((data) => setListProfile(data.user));
+  }, []);
   console.log(ListProfile);
 
   // Get Self Data
@@ -93,7 +88,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     UserId: 0,
   });
 
-  useIonViewDidEnter(() => {
+  React.useEffect(() => {
     GetUser().then((data) => setSelf(data.personDataFound));
   }, []);
   console.log(Self);
@@ -295,8 +290,8 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       });
   };
 
-  useIonViewDidEnter(() => {
-    associateRequest().then((data) => setAssociation(data.associationStatus));
+  React.useEffect(() => {
+      associateRequest().then((data) => setAssociation(data.associationStatus));
   }, [Self, ListProfile]);
   console.log(association);
 
