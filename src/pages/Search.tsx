@@ -28,6 +28,7 @@ import {
   IonCol,
   IonRow,
   IonItem,
+  IonThumbnail,
 } from "@ionic/react";
 import axios from "axios";
 import GetUser from "../components/GetUser";
@@ -58,6 +59,7 @@ export const Search: React.FC<RouteComponentProps> = ({ match }) => {
     IsScheduler: boolean;
     Company: string;
     Occupation: string;
+    ProfilePicURL: string;
   }
 
   const [users, setUsers] = React.useState<UsersData[]>([
@@ -69,6 +71,7 @@ export const Search: React.FC<RouteComponentProps> = ({ match }) => {
       IsScheduler: false,
       Company: "",
       Occupation: "",
+      ProfilePicURL: ""
     },
   ]);
 
@@ -150,11 +153,20 @@ export const Search: React.FC<RouteComponentProps> = ({ match }) => {
                   .map((val, key) => {
                     return (
                       <Link to={`/AssociateProfile/${val.UserId}`}>
-                        <IonItem className="searchBar">
-                          <p>{val.FirstName} {val.LastName}</p>
-                        </IonItem>
-                      </Link>
-                    );
+                          <IonItem className="searchBar">
+                            <IonCol className="listCol">
+                              <IonThumbnail>
+                                <img src={val.ProfilePicURL} />
+                              </IonThumbnail>
+                            </IonCol>
+                            <IonCol className="listCol">
+                              {val.FirstName} {val.LastName}
+                            </IonCol>
+                            <IonCol className="listCol">{val.Company}</IonCol>
+                            <IonCol></IonCol>
+                          </IonItem>
+                        </Link>
+                      );
                   })}
               </IonList>
             </IonCol>

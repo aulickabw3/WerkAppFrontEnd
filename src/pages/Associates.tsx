@@ -12,16 +12,14 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonThumbnail,
   IonImg,
-  IonCheckbox,
 } from "@ionic/react";
 import axios from "axios";
 import { person, arrowBackCircle, arrowBack, people } from "ionicons/icons";
-import ExploreContainer from "../components/ExploreContainer";
 import { Link } from "react-router-dom";
 import "./Associates.css";
 import GetUser from "../components/GetUser";
-
 
 const Associates: React.FC = () => {
   //GET MY PROFILE DATA
@@ -48,6 +46,7 @@ const Associates: React.FC = () => {
     LastName: string;
     Company: string;
     Occupation: string;
+    ProfilePicURL: string;
   }
 
   const [associates, setAssociates] = React.useState<AssociatesData[]>([
@@ -57,12 +56,17 @@ const Associates: React.FC = () => {
       LastName: "",
       Company: "",
       Occupation: "",
+      ProfilePicURL: "",
     },
   ]);
 
   const fetchAssociates = () => {
     return axios
-      .get("http://localhost:3000/businessassociate/ListOfAssociates/" + profile.UserId, {})
+      .get(
+        "http://localhost:3000/businessassociate/ListOfAssociates/" +
+          profile.UserId,
+        {}
+      )
       .then((response) => {
         console.log(response);
         return response.data;
@@ -88,7 +92,7 @@ const Associates: React.FC = () => {
         <IonHeader collapse="condense">
           <IonToolbar color="warning">
             <IonTitle className="title2" size="large">
-            Associates
+              Associates
             </IonTitle>
           </IonToolbar>
         </IonHeader>
@@ -105,10 +109,12 @@ const Associates: React.FC = () => {
 
         <IonGrid>
           <IonRow className="">
-            <IonCol className="title2">    
-                <IonIcon size="large" icon={people} />
-                <br></br>
-                <IonLabel><h1>Associates</h1></IonLabel>
+            <IonCol className="title2">
+              <IonIcon size="large" icon={people} />
+              <br></br>
+              <IonLabel>
+                <h1>Associates</h1>
+              </IonLabel>
             </IonCol>
           </IonRow>
           <br></br>
@@ -117,22 +123,23 @@ const Associates: React.FC = () => {
           </IonRow>
         </IonGrid>
 
-          <IonList>
+        <IonList>
           <IonItem className="listJobs">
             <IonLabel>
-              <IonGrid>
-                <IonRow>
-
+ 
                   <IonList className="searchBar">
                     {associates.map((val, key) => {
+                      console.log(val.ProfilePicURL);
                       return (
                         <Link to={`/AssociateProfile/${val.UserId}`}>
                           <IonItem className="searchBar">
                             <IonCol className="listCol">
-                              <IonIcon icon={person} />
+                              <IonThumbnail>
+                                <img src={val.ProfilePicURL} />
+                              </IonThumbnail>
                             </IonCol>
                             <IonCol className="listCol">
-                              {val.FirstName} {val.LastName} 
+                              {val.FirstName} {val.LastName}
                             </IonCol>
                             <IonCol className="listCol">{val.Company}</IonCol>
                             <IonCol></IonCol>
@@ -144,12 +151,10 @@ const Associates: React.FC = () => {
 
                   <IonCol className="listCol"></IonCol>
                   <IonCol></IonCol>
-                </IonRow>
-              </IonGrid>
+
             </IonLabel>
           </IonItem>
         </IonList>
-
       </IonContent>
     </IonPage>
   );

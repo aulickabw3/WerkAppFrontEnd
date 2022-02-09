@@ -12,6 +12,7 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonThumbnail,
 } from "@ionic/react";
 import axios from "axios";
 import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
@@ -26,6 +27,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
     FirstName: string;
     LastName: string;
   }
+
   const [profile, setProfile] = React.useState<ProfileData>({
     UserId: 0,
     FirstName: "",
@@ -44,6 +46,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
     LastName: string;
     Occupation: string;
     UserId: number;
+    ProfilePicURL: string;
   }
 
   const [requests, setRequests] = React.useState<RequestsData[]>([
@@ -53,6 +56,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
       LastName: "",
       Occupation: "",
       UserId: 0,
+      ProfilePicURL: "",
     },
   ]);
 
@@ -118,15 +122,16 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
         <IonList>
           <IonItem className="listJobs">
             <IonLabel>
-              <IonGrid>
-                <IonRow>
+
                   <IonList className="searchBar">
                     {requests.map((val, key) => {
                       return (
                         <Link to={`/AssociateProfile/${val.UserId}`}>
                           <IonItem className="searchBar">
                             <IonCol className="listCol">
-                              <IonIcon icon={person} />
+                            <IonThumbnail>
+                                <img src={val.ProfilePicURL} />
+                              </IonThumbnail>
                             </IonCol>
                             <IonCol className="listCol">
                               {val.FirstName} {val.LastName} Requested You
@@ -138,8 +143,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
                       );
                     })}
                   </IonList>
-                </IonRow>
-              </IonGrid>
+
             </IonLabel>
           </IonItem>
         </IonList>

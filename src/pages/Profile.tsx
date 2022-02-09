@@ -14,6 +14,7 @@ import {
   IonCol,
   IonImg,
   IonCheckbox,
+  IonButton
 } from "@ionic/react";
 import { person, arrowBackCircle, people } from "ionicons/icons";
 import axios from "axios";
@@ -81,6 +82,15 @@ const Profile: React.FC = () => {
                 <IonIcon size="large" icon={arrowBackCircle} />
               </Link>
             </IonCol>
+            <IonCol>
+              
+            </IonCol>
+            <IonCol>
+              <Link to="/EditProfile">
+                <IonButton color="medium">Edit Profile</IonButton>
+              </Link>
+            </IonCol>
+  
           </IonRow>
         </IonGrid>
         <IonGrid>

@@ -6,6 +6,7 @@ import {
   IonRouterLink,
   IonList,
   IonItem,
+  IonSpinner,
   useIonViewDidEnter,
   useIonViewDidLeave,
   useIonViewWillEnter,
@@ -41,6 +42,8 @@ interface AssociateProfileProps
   }> {}
 
 const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
+
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
   
   // Get Self Data
   interface SelfData {
@@ -134,7 +137,9 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       });
       setListProfile(profileData.user);
     });
-  }, [match, ListProfile, association]);
+    setIsLoading(false);
+  }, [match, ListProfile, Self, association]);
+
 
   // Request Associate component and handler
   const handleAssociateRequest = () => {
@@ -324,86 +329,121 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     return <NotMyAssociateProfile />;
   };
 
-  // Page
-  return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar color="warning">
-          <IonTitle className="title2">Profile</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <IonHeader collapse="condense">
+
+
+  // const MyLoadingScreen: React.FC = () => {
+  //   return (
+  //     <IonPage>
+  //       <IonGrid>
+  //         <IonRow>
+  //           <IonCol>
+  //             <IonContent>
+
+  //               <IonSpinner />
+
+  //             </IonContent>
+  //           </IonCol>
+  //         </IonRow>
+  //       </IonGrid>
+  //     </IonPage>
+  //   )
+  // };
+
+  // const RenderPage: React.FC = () => {
+  //   if (isLoading == true) {
+  //     return <MyLoadingScreen />;
+  //   }
+  //   return <MyPage />;
+  // };
+
+
+
+  // const MyPage: React.FC = () => {
+    return (
+      <IonPage>
+        <IonHeader>
           <IonToolbar color="warning">
-            <IonTitle className="title2" size="large">
-              Profile
-            </IonTitle>
+            <IonTitle className="title2">Profile</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonGrid>
-          <IonRow>
-            <IonCol>
-              <Link to="/Search">
-                <IonIcon size="large" icon={arrowBackCircle} />
-              </Link>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-        <IonGrid>
-          <IonRow className="profileGrid">
-            <IonCol>
-              <IonImg src={ListProfile.ProfilePicURL}></IonImg>
-            </IonCol>
-            <IonCol className="title2">
-              <h1>{ListProfile.FirstName}</h1>
-              <h1>{ListProfile.LastName}</h1>
-            </IonCol>
-          </IonRow>
-          <br></br>
-          <IonRow className="profileGrid">
-            <IonCol>
-              <h3>Company/Agency:</h3>
-            </IonCol>
-            <IonCol className="listCol1">
-              <h3>{ListProfile.Company}</h3>
-            </IonCol>
-          </IonRow>
-          <IonRow className="profileGrid">
-            <IonCol>
-              <h3>Occupation:</h3>
-            </IonCol>
-            <IonCol className="listCol1">
-              <h3>{ListProfile.Occupation}</h3>
-            </IonCol>
-          </IonRow>
-          <IonRow className="profileGrid">
-            <IonCol>
-              <h3>Email:</h3>
-            </IonCol>
-            <IonCol className="listCol1">
-              <h3>{ListProfile.Email}</h3>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonLabel>Scheduler: </IonLabel>
-              <IonCheckbox
-                className="listCol1"
-                // checked={checked}
-                // onIonChange={(e) => setChecked(e.detail.checked)}
-              />
-            </IonCol>
-          </IonRow>
-          <br></br>
-          <br></br>
-          <AssociateProfileActions />
-          <br></br>
-          <IonRow className="profileGrid">
-            <IonCol></IonCol>
-          </IonRow>
-        </IonGrid>
-      </IonContent>
-    </IonPage>
-  );
-};
+        <IonContent>
+          <IonHeader collapse="condense">
+            <IonToolbar color="warning">
+              <IonTitle className="title2" size="large">
+                Profile
+              </IonTitle>
+            </IonToolbar>
+          </IonHeader>
+          <IonGrid>
+            <IonRow>
+              <IonCol>
+                <Link to="/Search">
+                  <IonIcon size="large" icon={arrowBackCircle} />
+                </Link>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
+          <IonGrid>
+            <IonRow className="profileGrid">
+              <IonCol>
+                <IonImg src={ListProfile.ProfilePicURL}></IonImg>
+              </IonCol>
+              <IonCol className="title2">
+                <h1>{ListProfile.FirstName}</h1>
+                <h1>{ListProfile.LastName}</h1>
+              </IonCol>
+            </IonRow>
+            <br></br>
+            <IonRow className="profileGrid">
+              <IonCol>
+                <h3>Company/Agency:</h3>
+              </IonCol>
+              <IonCol className="listCol1">
+                <h3>{ListProfile.Company}</h3>
+              </IonCol>
+            </IonRow>
+            <IonRow className="profileGrid">
+              <IonCol>
+                <h3>Occupation:</h3>
+              </IonCol>
+              <IonCol className="listCol1">
+                <h3>{ListProfile.Occupation}</h3>
+              </IonCol>
+            </IonRow>
+            <IonRow className="profileGrid">
+              <IonCol>
+                <h3>Email:</h3>
+              </IonCol>
+              <IonCol className="listCol1">
+                <h3>{ListProfile.Email}</h3>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                <IonLabel>Scheduler: </IonLabel>
+                <IonCheckbox
+                  className="listCol1"
+                  // checked={checked}
+                  // onIonChange={(e) => setChecked(e.detail.checked)}
+                />
+              </IonCol>
+            </IonRow>
+            <br></br>
+            <br></br>
+            <AssociateProfileActions />
+            <br></br>
+            <IonRow className="profileGrid">
+              <IonCol></IonCol>
+            </IonRow>
+          </IonGrid>
+        </IonContent>
+      </IonPage>  
+    )      
+  }
+
+//   return (
+//     <RenderPage/>
+//   );
+// };
+
 export default AssociateProfile;
