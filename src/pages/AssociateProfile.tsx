@@ -6,6 +6,10 @@ import {
   IonRouterLink,
   IonList,
   IonItem,
+  useIonViewDidEnter,
+  useIonViewDidLeave,
+  useIonViewWillEnter,
+  useIonViewWillLeave,
   IonIcon,
   IonHeader,
   IonPage,
@@ -37,6 +41,16 @@ interface AssociateProfileProps
   }> {}
 
 const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
+  
+  // Get Self Data
+  interface SelfData {
+    UserId: number;
+  }
+
+  const [Self, setSelf] = React.useState<SelfData>({
+    UserId: 0,
+  });
+
   // Get selected user data
   interface ProfileData {
     UserId: number;
@@ -74,24 +88,53 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       });
   };
 
-  React.useEffect(() => {
-    fetchProfile().then((data) => setListProfile(data.user));
-  }, []);
-  console.log(ListProfile);
 
-  // Get Self Data
-  interface SelfData {
-    UserId: number;
+  // Request Status of Selected Associate
+  interface AssociationData {
+    RequestStatus: string;
   }
 
-  const [Self, setSelf] = React.useState<SelfData>({
-    UserId: 0,
+  const [association, setAssociation] = React.useState<AssociationData>({
+    RequestStatus: "",
   });
 
-  React.useEffect(() => {
-    GetUser().then((data) => setSelf(data.personDataFound));
-  }, []);
-  console.log(Self);
+  // association.RequestStatus = "something we can see";
+
+  const associationRequest = (listProfile: ProfileData, self: SelfData) => {
+    console.log(listProfile, self);
+    return axios
+      .post(
+        "http://localhost:3000/businessassociate/AssociateRelationshipStatus",
+        {
+          withCredentials: true,
+          self,
+          listProfile,
+        }
+      )
+      .then((response) => {
+        return response.data;
+      });
+  };
+
+  useIonViewDidEnter(() => {
+    fetchProfile()
+    .then((profileData) => {
+      GetUser()
+      .then((selfProfileData) => {
+        setSelf(
+          selfProfileData.personDataFound
+          );
+        associationRequest(
+          profileData.user,
+          selfProfileData.personDataFound
+        )
+        .then((requestStatusData) => {
+          setAssociation(requestStatusData.associationStatus);
+        });
+      });
+      setListProfile(profileData.user);
+    });
+  }, [match, ListProfile, association]);
 
   // Request Associate component and handler
   const handleAssociateRequest = () => {
@@ -265,35 +308,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       </IonRow>
     );
   };
-
-  // Request Status of Selected Associate
-  interface AssociationData {
-    RequestStatus: string;
-  }
-
-  const [association, setAssociation] = React.useState<AssociationData>({
-    RequestStatus: "",
-  });
-
-  const associateRequest = () => {
-    return axios
-      .post(
-        "http://localhost:3000/businessassociate/AssociateRelationshipStatus",
-        {
-          withCredentials: true,
-          Self,
-          ListProfile,
-        }
-      )
-      .then((response) => {
-        return response.data;
-      });
-  };
-
-  React.useEffect(() => {
-      associateRequest().then((data) => setAssociation(data.associationStatus));
-  }, [Self, ListProfile]);
-  console.log(association);
 
   // Render Conditional Associate Profile Action Button
   const AssociateProfileActions: React.FC = () => {
