@@ -28,7 +28,7 @@ import {
   IonCol,
   IonRow,
   IonItem,
-  IonThumbnail,
+  IonAvatar,
 } from "@ionic/react";
 import axios from "axios";
 import GetUser from "../components/GetUser";
@@ -153,13 +153,13 @@ export const Search: React.FC<RouteComponentProps> = ({ match }) => {
                   .map((val, key) => {
                     return (
                       <Link to={`/AssociateProfile/${val.UserId}`}>
-                          <IonItem className="searchBar">
+                          <IonItem >
                             <IonCol className="listCol">
-                              <IonThumbnail>
+                              <IonAvatar>
                                 <img src={val.ProfilePicURL} />
-                              </IonThumbnail>
+                              </IonAvatar>
                             </IonCol>
-                            <IonCol className="listCol">
+                            <IonCol >
                               {val.FirstName} {val.LastName}
                             </IonCol>
                             <IonCol className="listCol">{val.Company}</IonCol>

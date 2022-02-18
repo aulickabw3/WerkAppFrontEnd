@@ -13,11 +13,13 @@ import {
   IonRow,
   IonCol,
   IonThumbnail,
+  IonAvatar,
 } from "@ionic/react";
 import axios from "axios";
 import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
 import { Link, RouteComponentProps } from "react-router-dom";
 import "./Notifications.css";
+import "./Search.css";
 import GetUser from "../components/GetUser";
 
 export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
@@ -81,7 +83,6 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
   console.log(requests);
   console.log(typeof requests);
 
-
   return (
     <IonPage>
       <IonHeader>
@@ -120,34 +121,31 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
         </IonGrid>
 
         <IonList>
-          <IonItem className="listJobs">
+          <IonItem className="searchBar">
             <IonLabel>
-
-                  <IonList className="searchBar">
-                    {requests.map((val, key) => {
-                      return (
-                        <Link to={`/AssociateProfile/${val.UserId}`}>
-                          <IonItem className="searchBar">
-                            <IonCol className="listCol">
-                            <IonThumbnail>
-                                <img src={val.ProfilePicURL} />
-                              </IonThumbnail>
-                            </IonCol>
-                            <IonCol className="listCol">
-                              {val.FirstName} {val.LastName} Requested You
-                            </IonCol>
-                            <IonCol className="listCol">{}</IonCol>
-                            <IonCol></IonCol>
-                          </IonItem>
-                        </Link>
-                      );
-                    })}
-                  </IonList>
-
+              <IonList>
+                {requests.map((val, key) => {
+                  return (
+                    <Link to={`/AssociateProfile/${val.UserId}`}>
+                      <IonItem>
+                        <IonCol className="listCol">
+                          <IonAvatar>
+                            <img src={val.ProfilePicURL} />
+                          </IonAvatar>
+                        </IonCol>
+                        <IonCol className="listCol">
+                          {val.FirstName} {val.LastName} Requested You
+                        </IonCol>
+                        <IonCol>{}</IonCol>
+                        <IonCol></IonCol>
+                      </IonItem>
+                    </Link>
+                  );
+                })}
+              </IonList>
             </IonLabel>
           </IonItem>
         </IonList>
-
       </IonContent>
     </IonPage>
   );

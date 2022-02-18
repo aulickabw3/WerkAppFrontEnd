@@ -16,7 +16,7 @@ import {
   IonCheckbox,
   IonButton
 } from "@ionic/react";
-import { person, arrowBackCircle, people } from "ionicons/icons";
+import { person, arrowBackCircle, people, pencilSharp } from "ionicons/icons";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Profile.css";
@@ -87,7 +87,10 @@ const Profile: React.FC = () => {
             </IonCol>
             <IonCol>
               <Link to="/EditProfile">
-                <IonButton color="medium">Edit Profile</IonButton>
+                <IonButton color="medium">
+                  edit profile
+                  {/* <IonIcon size="large" icon={pencilSharp} /> */}
+                </IonButton>
               </Link>
             </IonCol>
   

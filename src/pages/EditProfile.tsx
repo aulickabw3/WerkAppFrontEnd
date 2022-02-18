@@ -16,17 +16,22 @@ import {
   IonCol,
   IonImg,
   IonCheckbox,
+  useIonViewDidEnter,
 } from "@ionic/react";
 import { person, arrowBackCircle, people } from "ionicons/icons";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 import "./Profile.css";
 // import "../components/GetUser";
 import GetUser from "../components/GetUser";
 
+
 // const checkboxList = [{ val: "Scheduler", isChecked: true }];
 
 const EditProfile: React.FC = () => {
+
+
+
   interface ProfileData {
     UserId: number;
     FirstName: string;
@@ -40,7 +45,7 @@ const EditProfile: React.FC = () => {
     ProfilePicURL: string;
   }
 
-  const [profile, setProfile] = React.useState<ProfileData>({
+  const [editProfile, setEditProfile] = React.useState<ProfileData>({
     UserId: 0,
     FirstName: "",
     LastName: "",
@@ -54,32 +59,37 @@ const EditProfile: React.FC = () => {
   });
 
   // console.log(profile);
-  React.useEffect(() => {
-    GetUser().then((data) => setProfile(data.personDataFound));
+  useIonViewDidEnter(() => {
+    GetUser().then((data) => {
+      setEditProfile(data.personDataFound);
+    });
   }, []);
 
-  console.log(profile);
-
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [company, setCompany] = React.useState("");
-  const [occupation, setOccupation] = React.useState("");
+  console.log(editProfile.FirstName);
 
   const handleSubmit = () => {
-    const editProfile = {
-      FirstName: firstName,
-      LastName: lastName,
-      Email: email,
-      Company: company,
-      Occupation: occupation,
-    };
+    // const EditProfile = {
+    //   UserId: userId,
+    //   FirstName: firstName,
+    //   LastName: lastName,
+    //   Email: email,
+    //   Username: username,
+    //   Company: company,
+    //   Occupation: occupation,
+    // };
 
-    // axios
-    //   .put("http://localhost:3000/user/EditProfile", { editProfile })
-    //   .then((response) => {
-    //     console.log(response);
-    //   });
+    axios
+      .put(
+        "http://localhost:3000/user/PublicUpdateUserProfile/" +
+          editProfile.UserId,
+        {
+          withCredentials: true,
+          editProfile,
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      });
   };
 
   return (
@@ -111,7 +121,7 @@ const EditProfile: React.FC = () => {
             <br></br>
             <IonRow className="profileGrid">
               <IonCol>
-                <IonImg src={profile.ProfilePicURL}></IonImg>
+                <IonImg src={editProfile.ProfilePicURL}></IonImg>
               </IonCol>
             </IonRow>
             <IonRow className="jobGrid">
@@ -125,9 +135,14 @@ const EditProfile: React.FC = () => {
                       <IonInput
                         type="text"
                         name="FirstName"
-                        value={firstName}
-                        placeholder={profile.FirstName}
-                        onIonChange={(e: any) => setFirstName(e.target.value)}
+                        value={editProfile.FirstName}
+                        placeholder="First Name"
+                        onIonChange={(e: any) =>
+                          setEditProfile({
+                            ...editProfile,
+                            FirstName: e.target.value,
+                          })
+                        }
                         clearInput
                       ></IonInput>
                     </IonCol>
@@ -135,8 +150,14 @@ const EditProfile: React.FC = () => {
                       <IonInput
                         type="text"
                         name="LastName"
-                        placeholder={profile.LastName}
-                        onIonChange={(e: any) => setLastName(e.target.value)}
+                        value={editProfile.LastName}
+                        placeholder="Last Name"
+                        onIonChange={(e: any) =>
+                          setEditProfile({
+                            ...editProfile,
+                            LastName: e.target.value,
+                          })
+                        }
                         clearInput
                       ></IonInput>
                     </IonCol>
@@ -153,8 +174,33 @@ const EditProfile: React.FC = () => {
                   <IonInput
                     type="text"
                     name="Email"
-                    placeholder={profile.Email}
-                    onIonChange={(e: any) => setEmail(e.target.value)}
+                    value={editProfile.Email}
+                    placeholder="Email Address"
+                    onIonChange={(e: any) =>
+                      setEditProfile({ ...editProfile, Email: e.target.value })
+                    }
+                    clearInput
+                  ></IonInput>
+                </IonItem>
+              </IonCol>
+            </IonRow>
+            <IonRow className="jobGrid">
+              <IonCol>
+                <IonItem>
+                  <IonLabel position="stacked">
+                    <h1>Username:</h1>
+                  </IonLabel>
+                  <IonInput
+                    type="text"
+                    name="Username"
+                    value={editProfile.Username}
+                    placeholder="Username"
+                    onIonChange={(e: any) =>
+                      setEditProfile({
+                        ...editProfile,
+                        Username: e.target.value,
+                      })
+                    }
                     clearInput
                   ></IonInput>
                 </IonItem>
@@ -169,9 +215,15 @@ const EditProfile: React.FC = () => {
                   </IonLabel>
                   <IonInput
                     type="text"
-                    name="company"
-                    placeholder={profile.Company}
-                    onIonChange={(e: any) => setCompany(e.target.value)}
+                    name="Company"
+                    value={editProfile.Company}
+                    placeholder="Company/Ageny You Work For..."
+                    onIonChange={(e: any) =>
+                      setEditProfile({
+                        ...editProfile,
+                        Company: e.target.value,
+                      })
+                    }
                     clearInput
                   ></IonInput>
                 </IonItem>
@@ -185,12 +237,28 @@ const EditProfile: React.FC = () => {
                   </IonLabel>
                   <IonInput
                     type="text"
-                    name="occupation"
-                    placeholder={profile.Occupation}
-                    onIonChange={(e: any) => setOccupation(e.target.value)}
+                    name="Occupation"
+                    value={editProfile.Occupation}
+                    placeholder="Your Occupation..."
+                    onIonChange={(e: any) =>
+                      setEditProfile({
+                        ...editProfile,
+                        Occupation: e.target.value,
+                      })
+                    }
                     clearInput
                   ></IonInput>
                 </IonItem>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                <IonLabel>Scheduler: </IonLabel>
+                <IonCheckbox
+                  className="listCol1"
+                  // checked={checked}
+                  // onIonChange={(e) => setChecked(e.detail.checked)}
+                />
               </IonCol>
             </IonRow>
             <br></br>
@@ -198,7 +266,7 @@ const EditProfile: React.FC = () => {
               <IonCol></IonCol>
               <IonCol>
                 <IonButton
-                  href="/Login"
+                  href="/Profile"
                   // type="submit"
                   color="danger"
                   size="large"
@@ -217,4 +285,5 @@ const EditProfile: React.FC = () => {
     </IonPage>
   );
 };
+
 export default EditProfile;

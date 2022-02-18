@@ -13,12 +13,14 @@ import {
   IonRow,
   IonCol,
   IonThumbnail,
+  IonAvatar,
   IonImg,
 } from "@ionic/react";
 import axios from "axios";
 import { person, arrowBackCircle, arrowBack, people } from "ionicons/icons";
 import { Link } from "react-router-dom";
 import "./Associates.css";
+import "./Search.css";
 import GetUser from "../components/GetUser";
 
 const Associates: React.FC = () => {
@@ -118,40 +120,38 @@ const Associates: React.FC = () => {
             </IonCol>
           </IonRow>
           <br></br>
-          <IonRow className="profileGrid">
+          {/* <IonRow className="profileGrid">
             <IonCol></IonCol>
-          </IonRow>
+          </IonRow> */}
         </IonGrid>
 
         <IonList>
-          <IonItem className="listJobs">
+          <IonItem className="searchBar">
             <IonLabel>
- 
-                  <IonList className="searchBar">
-                    {associates.map((val, key) => {
-                      console.log(val.ProfilePicURL);
-                      return (
-                        <Link to={`/AssociateProfile/${val.UserId}`}>
-                          <IonItem className="searchBar">
-                            <IonCol className="listCol">
-                              <IonThumbnail>
-                                <img src={val.ProfilePicURL} />
-                              </IonThumbnail>
-                            </IonCol>
-                            <IonCol className="listCol">
-                              {val.FirstName} {val.LastName}
-                            </IonCol>
-                            <IonCol className="listCol">{val.Company}</IonCol>
-                            <IonCol></IonCol>
-                          </IonItem>
-                        </Link>
-                      );
-                    })}
-                  </IonList>
+              <IonList className="searchBar">
+                {associates.map((val, key) => {
+                  console.log(val.ProfilePicURL);
+                  return (
+                    <Link to={`/AssociateProfile/${val.UserId}`}>
+                      <IonItem className="searchBar">
+                        <IonCol className="listCol">
+                          <IonAvatar>
+                            <img src={val.ProfilePicURL} />
+                          </IonAvatar>
+                        </IonCol>
+                        <IonCol className="listCol">
+                          {val.FirstName} {val.LastName}
+                        </IonCol>
+                        <IonCol className="listCol">{val.Company}</IonCol>
+                        <IonCol></IonCol>
+                      </IonItem>
+                    </Link>
+                  );
+                })}
+              </IonList>
 
-                  <IonCol className="listCol"></IonCol>
-                  <IonCol></IonCol>
-
+              <IonCol className="listCol"></IonCol>
+              <IonCol></IonCol>
             </IonLabel>
           </IonItem>
         </IonList>

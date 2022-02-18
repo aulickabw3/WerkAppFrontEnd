@@ -75,7 +75,6 @@ const CreateAccount: React.FC = () => {
                       <IonInput
                         type="text"
                         name="FirstName"
-                        value={firstName}
                         placeholder="First"
                         onIonChange={(e: any) => setFirstName(e.target.value)}
                         clearInput
