@@ -18,7 +18,7 @@ import {
   IonCheckbox,
   useIonViewDidEnter,
 } from "@ionic/react";
-import { person, arrowBackCircle, people } from "ionicons/icons";
+import { person, arrowBackCircle, people,camera, trash, close } from "ionicons/icons";
 import axios from "axios";
 import { Link, RouteComponentProps } from "react-router-dom";
 import "./Profile.css";

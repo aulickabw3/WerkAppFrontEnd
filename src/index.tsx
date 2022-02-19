@@ -4,6 +4,7 @@ import { CookiesProvider } from "react-cookie";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
+defineCustomElements(window);
 
 ReactDOM.render(
   <CookiesProvider>

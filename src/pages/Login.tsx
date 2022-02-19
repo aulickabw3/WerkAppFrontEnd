@@ -36,6 +36,7 @@ const Login: React.FC = () => {
       .then((response) => {
         setCookie("jwt", response.data, {path: "/"});
         console.log(response);
+        window.location.href="/Profile";
       });
   };
 
@@ -100,7 +101,7 @@ const Login: React.FC = () => {
               <IonCol>
                 <IonButton
                   onClick={handleClick}
-                  href="/Profile"
+                  // href="/Profile"
                   color="medium"
                   size="large"
                   expand="block"
