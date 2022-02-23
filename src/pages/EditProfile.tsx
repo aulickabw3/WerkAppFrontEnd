@@ -26,11 +26,8 @@ import "./Profile.css";
 import GetUser from "../components/GetUser";
 
 
-// const checkboxList = [{ val: "Scheduler", isChecked: true }];
 
 const EditProfile: React.FC = () => {
-
-
 
   interface ProfileData {
     UserId: number;
@@ -45,6 +42,8 @@ const EditProfile: React.FC = () => {
     ProfilePicURL: string;
   }
 
+  // const checkboxList = [{ val: "Scheduler", isChecked: true }];
+
   const [editProfile, setEditProfile] = React.useState<ProfileData>({
     UserId: 0,
     FirstName: "",
@@ -58,26 +57,13 @@ const EditProfile: React.FC = () => {
     ProfilePicURL: "",
   });
 
-  // console.log(profile);
   useIonViewDidEnter(() => {
     GetUser().then((data) => {
       setEditProfile(data.personDataFound);
     });
   }, []);
 
-  console.log(editProfile.FirstName);
-
   const handleSubmit = () => {
-    // const EditProfile = {
-    //   UserId: userId,
-    //   FirstName: firstName,
-    //   LastName: lastName,
-    //   Email: email,
-    //   Username: username,
-    //   Company: company,
-    //   Occupation: occupation,
-    // };
-
     axios
       .put(
         "http://localhost:3000/user/PublicUpdateUserProfile/" +

@@ -34,9 +34,21 @@ const Login: React.FC = () => {
         withCredentials: true,
       })
       .then((response) => {
-        setCookie("jwt", response.data, {path: "/"});
-        console.log(response);
-        window.location.href="/Profile";
+        if (response.data !== "Person not found" || "Wrong Password") {
+          setCookie("jwt", response.data, { path: "/" });
+          window.location.href = "/Profile";
+        }
+        if (response.data == "Wrong Password") {
+          console.log(response.data);
+          alert(response.data);
+          window.location.href = "/Login";
+        }
+        if (response.data == "Person not found") {
+          console.log(response.data);
+          alert(response.data);
+          window.location.href = "/Login";
+        }
+        return;
       });
   };
 
@@ -58,7 +70,7 @@ const Login: React.FC = () => {
         <br></br>
         <br></br>
         <IonGrid className="wholeGrid">
-          <form >
+          <form>
             <IonRow>
               <IonCol>
                 <h2></h2>
@@ -101,7 +113,6 @@ const Login: React.FC = () => {
               <IonCol>
                 <IonButton
                   onClick={handleClick}
-                  // href="/Profile"
                   color="medium"
                   size="large"
                   expand="block"
@@ -134,4 +145,3 @@ const Login: React.FC = () => {
 };
 
 export default Login;
-

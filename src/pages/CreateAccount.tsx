@@ -18,6 +18,7 @@ import {
 } from "@ionic/react";
 import axios from "axios";
 import "./CreateAccount.css";
+import { arrowBackCircle } from "ionicons/icons";
 
 const CreateAccount: React.FC = () => {
 
@@ -62,6 +63,13 @@ const CreateAccount: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonGrid>
+          <IonRow>
+          <IonCol>
+              <Link to="/Login">
+                <IonIcon size="large" icon={arrowBackCircle} />
+              </Link>
+            </IonCol>
+          </IonRow>
           <form >
             <br></br>
             <IonRow className="jobGrid">
@@ -162,12 +170,20 @@ const CreateAccount: React.FC = () => {
               <IonCol>
                 <IonButton
                   href="/Login"
-                  // type="submit"
-                  color="danger"
+                  color="success"
                   size="large"
                   fill="solid"
                   onClick={handleSubmit}
                 >Submit
+                </IonButton>
+              </IonCol>
+              <IonCol>
+              <IonButton
+                  href="/Login"
+                  color="danger"
+                  size="large"
+                  fill="solid"
+                >Cancel
                 </IonButton>
               </IonCol>
               <IonCol></IonCol>
