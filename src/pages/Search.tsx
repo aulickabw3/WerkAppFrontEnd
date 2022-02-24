@@ -140,13 +140,13 @@ export const Search: React.FC<RouteComponentProps> = ({ match }) => {
                       value.FirstName.toLowerCase().includes(
                         searchText.toLowerCase()
                       )
-                    )  {
+                    ) {
                       return value;
                     } else if (
                       value.LastName.toLowerCase().includes(
                         searchText.toLowerCase()
                       )
-                    )  {
+                    ) {
                       return value;
                     }
                   })

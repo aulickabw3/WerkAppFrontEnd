@@ -111,41 +111,33 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
         </IonGrid>
 
         <IonGrid>
-          <IonRow className="">
-            <IonCol className="title2"></IonCol>
-          </IonRow>
-          <br></br>
           <IonRow className="profileGrid">
             <IonCol></IonCol>
           </IonRow>
-        </IonGrid>
-
-        <IonList>
-          <IonItem className="searchBar">
-            <IonLabel>
-              <IonList>
+          <IonRow>
+            <IonCol>
+            <IonList>
                 {requests.map((val, key) => {
                   return (
                     <Link to={`/AssociateProfile/${val.UserId}`}>
                       <IonItem>
-                        <IonCol className="listCol">
+                        <IonCol size="1" className="listCol">
                           <IonAvatar>
                             <img src={val.ProfilePicURL} />
                           </IonAvatar>
                         </IonCol>
-                        <IonCol className="listCol">
-                          {val.FirstName} {val.LastName} Requested You
+                        <IonCol size="8" className="listCol">
+                          {val.FirstName} {val.LastName} Has Requested You as an Associate
                         </IonCol>
-                        <IonCol>{}</IonCol>
-                        <IonCol></IonCol>
+                        
                       </IonItem>
                     </Link>
                   );
                 })}
               </IonList>
-            </IonLabel>
-          </IonItem>
-        </IonList>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );

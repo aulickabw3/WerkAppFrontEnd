@@ -34,7 +34,7 @@ const Login: React.FC = () => {
         withCredentials: true,
       })
       .then((response) => {
-        if (response.data !== "Person not found" || "Wrong Password") {
+        if (response.data !== "Person not found" || "Wrong Password" || "" ) {
           setCookie("jwt", response.data, { path: "/" });
           window.location.href = "/Profile";
         }
@@ -47,8 +47,11 @@ const Login: React.FC = () => {
           console.log(response.data);
           alert(response.data);
           window.location.href = "/Login";
+        } if (!response) {
+          alert("Invalid Email or Password");
+          window.location.href = "/Login";
         }
-        return;
+        return
       });
   };
 

@@ -120,41 +120,34 @@ const Associates: React.FC = () => {
             </IonCol>
           </IonRow>
           <br></br>
-          {/* <IonRow className="profileGrid">
-            <IonCol></IonCol>
-          </IonRow> */}
         </IonGrid>
 
-        <IonList>
-          <IonItem className="searchBar">
-            <IonLabel>
+        <IonGrid>
+          <IonRow>
+            <IonCol>
               <IonList className="searchBar">
                 {associates.map((val, key) => {
                   console.log(val.ProfilePicURL);
                   return (
                     <Link to={`/AssociateProfile/${val.UserId}`}>
                       <IonItem className="searchBar">
-                        <IonCol className="listCol">
+                        <IonCol size="2" className="listCol">
                           <IonAvatar>
                             <img src={val.ProfilePicURL} />
                           </IonAvatar>
                         </IonCol>
-                        <IonCol className="listCol">
+                        <IonCol size="4" className="listCol">
                           {val.FirstName} {val.LastName}
                         </IonCol>
-                        <IonCol className="listCol">{val.Company}</IonCol>
-                        <IonCol></IonCol>
+                        <IonCol size="2" className="listCol">{val.Company}</IonCol>
                       </IonItem>
                     </Link>
                   );
                 })}
               </IonList>
-
-              <IonCol className="listCol"></IonCol>
-              <IonCol></IonCol>
-            </IonLabel>
-          </IonItem>
-        </IonList>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );
