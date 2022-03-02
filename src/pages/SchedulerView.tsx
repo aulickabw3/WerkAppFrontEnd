@@ -13,21 +13,10 @@ import {
   IonCol,
   IonRow,
 } from "@ionic/react";
-import axios from "axios";
 import "./Main.css";
 
-export const Main: React.FC = () => {
+export const SchedulerView: React.FC = () => {
   const [searchText, setSearchText] = useState("");
-
-  const handleClick = () => {
-    axios
-      .get("http://localhost:3000/user/Logout", {
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log(response);
-      });
-  };
 
   return (
     <IonPage>
@@ -38,9 +27,9 @@ export const Main: React.FC = () => {
       </IonHeader>
       <IonContent className="content">
         <IonHeader collapse="condense">
-          <IonToolbar color="warning">
+          <IonToolbar color="secondwarning">
             <IonTitle className="title1" size="large">
-              WerkApp
+              Scheduler View
             </IonTitle>
           </IonToolbar>
         </IonHeader>
@@ -58,13 +47,13 @@ export const Main: React.FC = () => {
           <IonRow className="grid1">
             <IonCol>
               <IonButton
-                href="/AvailableJobs"
+                href="/CreateJob"
                 color="warning"
                 size="large"
                 expand="block"
                 fill="solid"
               >
-                Available Jobs
+                Create Job
               </IonButton>
             </IonCol>
           </IonRow>
@@ -81,50 +70,10 @@ export const Main: React.FC = () => {
               </IonButton>
             </IonCol>
           </IonRow>
-          <IonRow className="grid1">
-            <IonCol>
-              <IonButton
-                href="/SchedulerView"
-                color="warning"
-                size="large"
-                expand="block"
-                fill="solid"
-              >
-                Scheduler View
-              </IonButton>
-            </IonCol>
-          </IonRow>
-          <IonRow className="grid1">
-            <IonCol>
-              <IonButton
-                href="/Profile"
-                color="warning"
-                size="large"
-                expand="block"
-                fill="solid"
-              >
-                Profile
-              </IonButton>
-            </IonCol>
-          </IonRow>
-          <IonRow className="grid1">
-            <IonCol>
-              <IonButton
-                onClick={handleClick}
-                href="/Login"
-                color="medium"
-                size="large"
-                expand="block"
-                fill="solid"
-              >
-                Log Out
-              </IonButton>
-            </IonCol>
-          </IonRow>
         </IonGrid>
       </IonContent>
     </IonPage>
   );
 };
 
-export default Main;
+export default SchedulerView;

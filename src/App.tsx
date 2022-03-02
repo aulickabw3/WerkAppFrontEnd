@@ -37,6 +37,9 @@ import CreateAccount from "./pages/CreateAccount";
 import Search from "./pages/Search";
 import AssociateProfile from "./pages/AssociateProfile";
 import EditProfile from "./pages/EditProfile";
+import SchedulerView from "./pages/SchedulerView";
+import CreateJob from "./pages/CreateJob";
+
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -75,6 +78,8 @@ const App: React.FC = () => (
           <Route path="/Search" component={Search} />
           <Route path="/AssociateProfile/:id" component={AssociateProfile} />
           <Route path="/EditProfile" component={EditProfile} />
+          <Route path="/SchedulerView" component={SchedulerView} />
+          <Route path="/CreateJob" component={CreateJob} />
           <Route path="/" render={() => <Redirect to="/Login" />} exact={true} />
         </IonRouterOutlet>
         <IonTabBar slot="bottom">

@@ -21,9 +21,8 @@ import {
 } from "@ionic/react";
 import axios from "axios";
 import { person, arrowBackCircle } from "ionicons/icons";
-import "./ScheduleJob.css";
 
-const ScheduleJob: React.FC = () => {
+const CreateJob: React.FC = () => {
   const [jobId, setJobId] = React.useState("");
   const [date, setDate] = React.useState("");
   const [time, setTime] = React.useState("");
@@ -57,15 +56,15 @@ const ScheduleJob: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="warning">
-          <IonTitle className="title2">Schedule Job</IonTitle>
+        <IonToolbar color="secondwarning">
+          <IonTitle className="title2">Create Job</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonHeader collapse="condense">
-          <IonToolbar color="warning">
+          <IonToolbar color="secondwarning">
             <IonTitle className="title2" size="large">
-              Schedule Job
+              Create Job
             </IonTitle>
           </IonToolbar>
         </IonHeader>
@@ -73,7 +72,7 @@ const ScheduleJob: React.FC = () => {
           <IonRow className="">
             <IonRow>
               <IonCol>
-                <Link to="/Main">
+                <Link to="/SchedulerView">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
               </IonCol>
@@ -237,4 +236,4 @@ const ScheduleJob: React.FC = () => {
   );
 };
 
-export default ScheduleJob;
+export default CreateJob;
