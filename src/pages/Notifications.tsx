@@ -14,6 +14,7 @@ import {
   IonCol,
   IonThumbnail,
   IonAvatar,
+  useIonViewDidEnter,
 } from "@ionic/react";
 import axios from "axios";
 import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
@@ -36,7 +37,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
     LastName: "",
   });
 
-  React.useEffect(() => {
+  useIonViewDidEnter(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
   console.log(profile);
@@ -120,7 +121,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
                 {requests.map((val, key) => {
                   return (
                     <Link to={`/AssociateProfile/${val.UserId}`}>
-                      <IonItem>
+                      <IonItem >
                         <IonCol size="1" className="listCol">
                           <IonAvatar>
                             <img src={val.ProfilePicURL} />

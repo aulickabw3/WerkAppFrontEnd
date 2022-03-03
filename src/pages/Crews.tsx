@@ -24,23 +24,23 @@ import "./Associates.css";
 import "./Search.css";
 import GetUser from "../components/GetUser";
 
-const Associates: React.FC = () => {
+const Crews: React.FC = () => {
   //GET MY PROFILE DATA
   interface ProfileData {
     UserId: number;
     FirstName: string;
     LastName: string;
   }
-  const [profile, setProfile] = React.useState<ProfileData>({
+  const [myProfile, setMyProfile] = React.useState<ProfileData>({
     UserId: 0,
     FirstName: "",
     LastName: "",
   });
 
   useIonViewDidEnter(() => {
-    GetUser().then((data) => setProfile(data.personDataFound));
+    GetUser().then((data) => setMyProfile(data.personDataFound));
   }, []);
-  console.log(profile);
+  console.log(myProfile);
 
   // Get Array Of All My Associates
   interface AssociatesData {
@@ -52,7 +52,7 @@ const Associates: React.FC = () => {
     ProfilePicURL: string;
   }
 
-  const [associates, setAssociates] = React.useState<AssociatesData[]>([
+  const [associatesCrew, setAssociatesCrew] = React.useState<AssociatesData[]>([
     {
       UserId: 0,
       FirstName: "",
@@ -67,7 +67,7 @@ const Associates: React.FC = () => {
     return axios
       .get(
         "http://localhost:3000/businessassociate/ListOfAssociates/" +
-          profile.UserId,
+          myProfile.UserId,
         {}
       )
       .then((response) => {
@@ -76,26 +76,26 @@ const Associates: React.FC = () => {
       });
   };
 
-  React.useEffect (() => {      
-     fetchAssociates().then((data) => setAssociates(data.listOfAssociates2));
-  }, [profile]);
+  React.useEffect(() => {
+    fetchAssociates().then((data) => setAssociatesCrew(data.listOfAssociates2));
+  }, [myProfile]);
 
-  console.log(associates);
-  console.log(typeof associates);
+  console.log(associatesCrew);
+  console.log(typeof associatesCrew);
 
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="warning">
-          <IonTitle className="title2">Associates</IonTitle>
+        <IonToolbar color="secondwarning">
+          <IonTitle className="title2">My Crews</IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonContent>
         <IonHeader collapse="condense">
-          <IonToolbar color="warning">
+          <IonToolbar color="secondwarning">
             <IonTitle className="title2" size="large">
-              Associates
+              My Crews
             </IonTitle>
           </IonToolbar>
         </IonHeader>
@@ -127,7 +127,7 @@ const Associates: React.FC = () => {
           <IonRow>
             <IonCol>
               <IonList className="searchBar">
-                {associates.map((val, key) => {
+                {associatesCrew.map((val, key) => {
                   console.log(val.ProfilePicURL);
                   return (
                     <Link to={`/AssociateProfile/${val.UserId}`}>
@@ -156,4 +156,4 @@ const Associates: React.FC = () => {
   );
 };
 
-export default Associates;
+export default Crews;

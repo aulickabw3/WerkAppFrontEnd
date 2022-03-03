@@ -87,7 +87,7 @@ const Profile: React.FC = () => {
             </IonCol>
             <IonCol>
               <Link to="/EditProfile">
-                <IonButton color="medium">
+                <IonButton color="danger" fill="outline">
                   edit profile
                   {/* <IonIcon size="large" icon={pencilSharp} /> */}
                 </IonButton>

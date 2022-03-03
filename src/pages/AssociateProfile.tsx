@@ -151,6 +151,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       )
       .then((response) => {
         console.log(response);
+        window.location.href = "/AssociateProfile";
       });
   };
 
@@ -158,10 +159,8 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     return (
       <IonRow className="listCol1">
         <IonCol className="listJobs">
-          <Link to="/Associates">
             <IonButton
               onClick={handleAssociateRequest}
-              href="/MyJobs"
               color="warning"
               size="large"
               expand="block"
@@ -170,7 +169,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
               Add Associate
             </IonButton>
             <br></br>
-          </Link>
         </IonCol>
       </IonRow>
     );
@@ -209,10 +207,9 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     return (
       <IonRow className="listCol1">
         <IonCol className="listJobs">
-          <Link to="/Associates">
+          <Link to="/Notifications">
             <IonButton
               onClick={handleAcceptRequest}
-              href="/MyJobs"
               color="success"
               size="large"
               expand="block"
@@ -224,10 +221,9 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
           </Link>
         </IonCol>
         <IonCol className="listJobs">
-          <Link to="/Associates">
+          <Link to="/Notifications">
             <IonButton
               onClick={handleDeclineRequest}
-              href="/MyJobs"
               color="danger"
               size="large"
               expand="block"
@@ -260,10 +256,9 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     return (
       <IonRow className="listCol1">
         <IonCol className="listJobs">
-          <Link to="/Associates">
+          <Link to="/Search">
             <IonButton
               onClick={handleCancelRequest}
-              href="/MyJobs"
               color="danger"
               size="large"
               expand="block"
@@ -297,9 +292,8 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       <IonRow className="listCol1">
         <IonCol className="listJobs">
           <Link to="/Associates">
-            <IonButton
+            <IonButton 
               onClick={handleFireAssociate}
-              href="/MyJobs"
               color="danger"
               size="large"
               expand="block"

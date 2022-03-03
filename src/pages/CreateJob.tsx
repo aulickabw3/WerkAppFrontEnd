@@ -95,7 +95,7 @@ const CreateJob: React.FC = () => {
               </IonItem>
             </IonCol>
           </IonRow>
-          <IonRow className="jobGrid">
+          {/* <IonRow className="jobGrid">
             <IonCol size="6">
               <IonItem>
                 <IonLabel position="stacked">
@@ -122,9 +122,9 @@ const CreateJob: React.FC = () => {
                 ></IonInput>
               </IonItem>
             </IonCol>
-          </IonRow>
+          </IonRow> */}
           <IonRow className="jobGrid">
-            <IonCol size="6">
+            <IonCol size="12">
               <IonItem>
                 <IonLabel position="stacked">
                   <h1>Company:</h1>
@@ -137,7 +137,7 @@ const CreateJob: React.FC = () => {
                 ></IonInput>
               </IonItem>
             </IonCol>
-            <IonCol size="6">
+            {/* <IonCol size="6">
               <IonItem>
                 <IonLabel position="stacked">
                   <h1>Location:</h1>
@@ -149,10 +149,10 @@ const CreateJob: React.FC = () => {
                   clearInput
                 ></IonInput>
               </IonItem>
-            </IonCol>
+            </IonCol> */}
           </IonRow>
           <br></br>
-          <IonRow className="jobGrid">
+          {/* <IonRow className="jobGrid">
             <IonCol size="6">
               <IonItem>
                 <IonLabel position="stacked">
@@ -169,7 +169,7 @@ const CreateJob: React.FC = () => {
             <IonCol size="6">
               
             </IonCol>
-          </IonRow>
+          </IonRow> */}
           <br></br>
           <IonRow className="jobGrid">
             <IonCol>
@@ -219,8 +219,8 @@ const CreateJob: React.FC = () => {
             <IonCol>
               <IonButton
                 onClick={handleSubmit}
-                href="/AvailableJob"
-                color="success"
+                href="/ScheduleJob"
+                color="danger"
                 size="large"
                 fill="solid"
               >

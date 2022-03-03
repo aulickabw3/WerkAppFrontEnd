@@ -124,7 +124,7 @@ const CreateAccount: React.FC = () => {
                     <h1>Password:</h1>
                   </IonLabel>
                   <IonInput
-                    type="password"
+                    type="text"
                     name="Password"
                     placeholder="Password"
                     onIonChange={(e: any) => setPassword(e.target.value)}

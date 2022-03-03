@@ -257,7 +257,7 @@ const EditProfile: React.FC = () => {
                   color="danger"
                   size="large"
                   expand="block"
-                  fill="solid"
+                  fill="outline"
                   onClick={handleSubmit}
                 >
                   Save

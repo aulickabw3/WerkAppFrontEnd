@@ -36,7 +36,7 @@ const Login: React.FC = () => {
       .then((response) => {
         if (response.data !== "Person not found" || "Wrong Password" || "" ) {
           setCookie("jwt", response.data, { path: "/" });
-          window.location.href = "/Profile";
+          window.location.href = "/Main";
         }
         if (response.data == "Wrong Password") {
           console.log(response.data);
@@ -102,7 +102,7 @@ const Login: React.FC = () => {
                     <h1>Password:</h1>
                   </IonLabel>
                   <IonInput
-                    type="text"
+                    type="password"
                     name="Password"
                     placeholder="Password"
                     onIonChange={(e: any) => setPassword(e.target.value)}
