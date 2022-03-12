@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { Redirect, Route, Link } from "react-router-dom";
 import {
+  IonIcon,
+  IonSearchbar,
   IonButton,
   IonContent,
   IonHeader,
@@ -7,160 +10,96 @@ import {
   IonTitle,
   IonToolbar,
   IonGrid,
-  IonRow,
   IonCol,
-  IonList,
-  IonIcon,
-  IonItem,
-  IonLabel,
+  IonRow,
 } from "@ionic/react";
-import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
-import { Link } from "react-router-dom";
-import ExploreContainer from "../components/ExploreContainer";
-import "./MyJobs.css";
+import axios from "axios";
+import "./Main.css";
+import { arrowBackCircle } from "ionicons/icons";
 
-const MyJobs: React.FC = () => {
+export const MyJobs: React.FC = () => {
+  const [searchText, setSearchText] = useState("");
+
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar color="warning">
-          <IonTitle className="title2">My Jobs</IonTitle>
+          <IonTitle className="title1">My Jobs</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent className="content">
         <IonHeader collapse="condense">
           <IonToolbar color="warning">
-            <IonTitle className="title3" size="large">
+            <IonTitle className="title1" size="large">
               My Jobs
             </IonTitle>
           </IonToolbar>
         </IonHeader>
+        <h1></h1>
         <IonGrid>
           <IonRow>
-            <IonCol>
+            <IonCol size="2">
               <Link to="/Main">
                 <IonIcon size="large" icon={arrowBackCircle} />
               </Link>
             </IonCol>
-            <IonCol>
-              <IonButton color="dark">Past</IonButton>
+            <IonCol size="2"></IonCol>
+            <IonCol size="7">
+              <IonButton
+                href="/SchedulerView"
+                color="secondwarning"
+                size="large"
+                expand="block"
+                fill="solid"
+              >
+                Scheduler View
+              </IonButton>
             </IonCol>
-            <IonCol>
-              <IonButton color="medium">Future</IonButton>
-            </IonCol>
-            <IonCol></IonCol>
           </IonRow>
         </IonGrid>
-        <IonList>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/MyJobSummary">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/22</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-
-          {/* fake */}
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/MyJobSummary">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">Archer Western</IonCol>
-                    <IonCol className="listCol">8/18</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/MyJobSummary">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/17</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/MyJobSummary">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">Chinchor</IonCol>
-                    <IonCol className="listCol">8/14</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/MyJobSummary">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/11</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/MyJobSummary">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/09</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/MyJobSummary">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/08</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-        </IonList>
-        {/* <ExploreContainer name="don" /> */}
+        <IonGrid>
+          <IonRow className="grid1">
+            <IonCol>
+              <IonButton
+                href="/ScheduledJobs"
+                color="warning"
+                size="large"
+                expand="block"
+                fill="solid"
+              >
+                Scheduled Jobs
+              </IonButton>
+            </IonCol>
+          </IonRow>
+          <IonRow className="grid1">
+            <IonCol>
+              <IonButton
+                href="/WerkedJobs"
+                color="warning"
+                size="large"
+                expand="block"
+                fill="solid"
+              >
+                Werked Jobs
+              </IonButton>
+            </IonCol>
+          </IonRow>
+          {/* <IonRow className="grid1">
+            <IonCol>
+              <IonButton
+                href="/SchedulerView"
+                color="secondwarning"
+                size="large"
+                expand="block"
+                fill="solid"
+              >
+                Scheduler View
+              </IonButton>
+            </IonCol>
+          </IonRow> */}
+          
+        </IonGrid>
       </IonContent>
     </IonPage>
   );

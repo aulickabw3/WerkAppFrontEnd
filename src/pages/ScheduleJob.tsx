@@ -29,7 +29,9 @@ const ScheduleJob: React.FC = () => {
   const [time, setTime] = React.useState("");
   const [company, setCompany] = React.useState("");
   const [location, setLocation] = React.useState("");
-  const [pay, setPay] = React.useState("");
+  const [pay, setPay] = React.useState(0);
+  const [payFrequency, setPayFrequency] = React.useState("");
+  const [numberOfWorkers, setnumberOfWorkers] = React.useState(0);
   const [pocName, setPocName] = React.useState("");
   const [pocPhone, setPocPhone] = React.useState("");
   const [notes, setNotes] = React.useState("");
@@ -42,6 +44,8 @@ const ScheduleJob: React.FC = () => {
       Company: company,
       Location: location,
       Pay: pay,
+      PayFrequency: payFrequency,
+      NumberOfWerkers: numberOfWorkers,
       POCName: pocName,
       POCPhone: pocPhone,
       Notes: notes,
@@ -51,6 +55,7 @@ const ScheduleJob: React.FC = () => {
       .post("http://localhost:3000/jobs/CreateJob", { newJob })
       .then((response) => {
         console.log(response);
+        window.location.href = "/PublishJob";
       });
   };
 
@@ -157,10 +162,10 @@ const ScheduleJob: React.FC = () => {
             <IonCol size="6">
               <IonItem>
                 <IonLabel position="stacked">
-                  <h1>Pay:</h1>
+                  <h1>Pay: $</h1>
                 </IonLabel>
                 <IonInput
-                  type="text"
+                  type="number"
                   name="Pay"
                   onIonChange={(e: any) => setPay(e.target.value)}
                   clearInput
@@ -168,7 +173,17 @@ const ScheduleJob: React.FC = () => {
               </IonItem>
             </IonCol>
             <IonCol size="6">
-              
+              <IonItem>
+                <IonLabel position="stacked">
+                  <h1>How Many:</h1>
+                </IonLabel>
+                <IonInput
+                  type="number"
+                  name="NumberOfWerkers"
+                  onIonChange={(e: any) => setnumberOfWorkers(e.target.value)}
+                  clearInput
+                ></IonInput>
+              </IonItem>
             </IonCol>
           </IonRow>
           <br></br>
@@ -219,8 +234,8 @@ const ScheduleJob: React.FC = () => {
             <IonCol></IonCol>
             <IonCol>
               <IonButton
+                href="/PublishJob"
                 onClick={handleSubmit}
-                href="/AvailableJob"
                 color="success"
                 size="large"
                 fill="solid"

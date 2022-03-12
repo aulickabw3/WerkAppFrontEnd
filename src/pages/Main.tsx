@@ -84,13 +84,13 @@ export const Main: React.FC = () => {
           <IonRow className="grid1">
             <IonCol>
               <IonButton
-                href="/SchedulerView"
+                href="/ScheduleJob"
                 color="warning"
                 size="large"
                 expand="block"
                 fill="solid"
               >
-                Scheduler View
+                Schedule Job
               </IonButton>
             </IonCol>
           </IonRow>

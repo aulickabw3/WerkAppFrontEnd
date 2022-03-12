@@ -3,9 +3,12 @@ import { useCookies } from "react-cookie";
 import { Redirect, Route, Link } from "react-router-dom";
 import {
   IonApp,
+  IonButton,
+  IonCol,
   IonIcon,
   IonLabel,
   IonRouterOutlet,
+  IonRow,
   IonTabBar,
   IonTabButton,
   IonTabs,
@@ -40,7 +43,10 @@ import EditProfile from "./pages/EditProfile";
 import SchedulerView from "./pages/SchedulerView";
 import CreateJob from "./pages/CreateJob";
 import Crews from "./pages/Crews";
-
+import AddNewCrew from "./pages/AddNewCrew";
+import WerkedJobs from "./pages/WerkedJobs";
+import ScheduledJobs from "./pages/ScheduledJobs";
+import PublishJob from "./pages/PublishJob";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -82,8 +88,17 @@ const App: React.FC = () => (
           <Route path="/SchedulerView" component={SchedulerView} />
           <Route path="/CreateJob" component={CreateJob} />
           <Route path="/Crews" component={Crews} />
-          <Route path="/" render={() => <Redirect to="/Login" />} exact={true} />
+          <Route path="/AddNewCrew" component={AddNewCrew} />
+          <Route path="/WerkedJobs" component={WerkedJobs} />
+          <Route path="/ScheduledJobs" component={ScheduledJobs} />
+          <Route path="/PublishJob" component={PublishJob} />
+          <Route
+            path="/"
+            render={() => <Redirect to="/Login" />}
+            exact={true}
+          />
         </IonRouterOutlet>
+
         <IonTabBar slot="bottom">
           <IonTabButton tab="Search" href="/Search">
             <IonIcon icon={searchOutline} />
@@ -107,6 +122,7 @@ const App: React.FC = () => (
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
+
       <Route path="/Login" component={Login} />
       <Route path="/CreateAccount" component={CreateAccount} />
     </IonReactRouter>

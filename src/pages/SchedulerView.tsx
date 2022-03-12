@@ -14,6 +14,7 @@ import {
   IonRow,
 } from "@ionic/react";
 import "./Main.css";
+import { arrowBackCircle } from "ionicons/icons";
 
 export const SchedulerView: React.FC = () => {
   const [searchText, setSearchText] = useState("");
@@ -36,6 +37,15 @@ export const SchedulerView: React.FC = () => {
         <h1></h1>
         <IonGrid>
           <IonRow>
+            <IonCol>
+              <Link to="/MyJobs">
+                <IonIcon size="large" icon={arrowBackCircle} />
+              </Link>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+        <IonGrid>
+          <IonRow>
             <IonCol size="12">
               <IonSearchbar
                 value={searchText}
@@ -44,7 +54,7 @@ export const SchedulerView: React.FC = () => {
               ></IonSearchbar>
             </IonCol>
           </IonRow>
-          <IonRow className="grid1">
+          {/* <IonRow className="grid1">
             <IonCol>
               <IonButton
                 href="/CreateJob"
@@ -56,7 +66,7 @@ export const SchedulerView: React.FC = () => {
                 Create Job
               </IonButton>
             </IonCol>
-          </IonRow>
+          </IonRow> */}
           <IonRow className="grid1">
             <IonCol>
               <IonButton
