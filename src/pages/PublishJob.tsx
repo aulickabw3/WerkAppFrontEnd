@@ -86,11 +86,11 @@ const PublishJob: React.FC = () => {
     fetchAssociates().then((data) => setAssociatesCrew(data.listOfAssociates2));
   }, [myProfile]);
 
-  const [werkers, setWerkers] = useState<string[]>([]);
+  const [checked, setChecked] = useState<string[]>([]);
 
   const handleSubmit = () => {
     axios
-      .post("http://localhost:3000/user/PublishJob", { werkers })
+      .post("http://localhost:3000/user/PublishJob", { checked })
       .then((response) => {
         console.log(response);
       });
@@ -114,7 +114,7 @@ const PublishJob: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-              <Link to="/Crews">
+              <Link to="/ScheduleJob">
                 <IonIcon size="large" icon={arrowBackCircle} />
               </Link>
             </IonCol>
