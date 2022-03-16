@@ -26,8 +26,21 @@ import {
 import axios from "axios";
 import { person, arrowBackCircle } from "ionicons/icons";
 import "./ScheduleJob.css";
+import GetUser from "../components/GetUser";
 
 const ScheduleJob: React.FC = () => {
+  interface ProfileData {
+    UserId: number;
+  }
+
+  const [profile, setProfile] = React.useState<ProfileData>({
+    UserId: 0,
+  });
+
+  React.useEffect(() => {
+    GetUser().then((data) => setProfile(data.personDataFound));
+  }, []);
+
   const [jobId, setJobId] = React.useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [beginSelectedDate, setBeginSelectedDate] = useState("");
@@ -43,21 +56,21 @@ const ScheduleJob: React.FC = () => {
 
   const handleSubmit = () => {
     const newJob = {
+      UserId: profile.UserId,
       JobID: jobId,
-      Date: beginSelectedDate,
-      Time: endSelectedDate,
+      Date: selectedDate,
+      BeginTime: beginSelectedDate,
+      EndTime: endSelectedDate,
       Company: company,
       Location: location,
       Pay: pay,
       // PayFrequency: payFrequency,
       NumberOfWerkers: numberOfWorkers,
-      POCName: pocName,
-      POCPhone: pocPhone,
       Notes: notes,
     };
-
+    console.log(newJob.BeginTime);
     axios
-      .post("http://localhost:3000/jobs/CreateJob", { newJob })
+      .post("http://localhost:3000/job/CreateJob", { newJob })
       .then((response) => {
         console.log(response);
         window.location.href = "/PublishJob";
@@ -264,7 +277,7 @@ const ScheduleJob: React.FC = () => {
               <IonCol></IonCol>
               <IonCol>
                 <IonButton
-                  href="/PublishJob"
+                  // href="/PublishJob"
                   onClick={handleSubmit}
                   color="danger"
                   size="large"

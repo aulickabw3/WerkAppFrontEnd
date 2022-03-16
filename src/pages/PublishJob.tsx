@@ -125,7 +125,6 @@ const PublishJob: React.FC = () => {
                 {associatesCrew.map((val, key) => {
                   console.log(val.ProfilePicURL);
                   return (
-                    <Link to={`/AssociateProfile/${val.UserId}`}>
                       <IonItem className="searchBar">
                         <IonCol size="1">
                           <IonCheckbox
@@ -146,7 +145,6 @@ const PublishJob: React.FC = () => {
                           {val.Company}
                         </IonCol>
                       </IonItem>
-                    </Link>
                   );
                 })}
               </IonList>
