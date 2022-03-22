@@ -48,37 +48,43 @@ const ScheduleJob: React.FC = () => {
   const [company, setCompany] = React.useState("");
   const [location, setLocation] = React.useState("");
   const [pay, setPay] = React.useState("");
-  // const [payFrequency, setPayFrequency] = React.useState("");
   const [numberOfWorkers, setnumberOfWorkers] = React.useState(0);
-  const [pocName, setPocName] = React.useState("");
-  const [pocPhone, setPocPhone] = React.useState("");
   const [notes, setNotes] = React.useState("");
 
-  const [jobJobId, setJobJobId] = React.useState("");
+  interface NewShiftData {
+    ShiftId: any;
+  }
+
+  const [shiftId, setShiftId] = React.useState<NewShiftData>({
+    ShiftId: "0",
+  });
 
   const handleSubmit = () => {
-    const newJob = {
-      UserId: profile.UserId,
-      JobID: jobId,
-      Date: selectedDate,
-      BeginTime: beginSelectedDate,
-      EndTime: endSelectedDate,
+    const newShift = {
+      UserUserId: profile.UserId,
+      ShiftIdentifier: jobId,
+      DateDay: selectedDate,
+      StartDateTime: beginSelectedDate,
+      FinishDateTime: endSelectedDate,
       Company: company,
       Location: location,
       Pay: pay,
-      // PayFrequency: payFrequency,
       NumberOfWerkers: numberOfWorkers,
-      Notes: notes,
+      ShiftNotes: notes,
     };
 
     axios
-      .post("http://localhost:3000/job/CreateJob", { newJob })
-      .then((response) => {
-        // setJobJobId(response.JobJobId);
+      .post("http://localhost:3000/shifts/CreateShift", { newShift })
+      .then((response) => { 
         console.log(response);
-        window.location.href = "/PublishJob/" + jobJobId;
+        return response.data
+      }).then((data) => {
+        setShiftId(data.CreateAShift);
+        // window.location.href = "/PublishJob/" + shiftId.ShiftId;
       });
   };
+
+  console.log(shiftId);
 
   return (
     <IonPage>
