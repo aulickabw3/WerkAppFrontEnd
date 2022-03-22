@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  IonButton,
   IonContent,
-  IonLabel,
-  IonList,
-  IonItem,
-  IonIcon,
   IonHeader,
   IonPage,
   IonTitle,
@@ -12,26 +9,33 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonThumbnail,
-  IonAvatar,
-  IonImg,
+  IonList,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonTabBar,
+  IonTabButton,
+  IonTab,
+  IonRouterLink,
+  IonTabs,
   useIonViewDidEnter,
+  IonAvatar,
 } from "@ionic/react";
-import axios from "axios";
-import { person, arrowBackCircle, arrowBack, people } from "ionicons/icons";
+import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
 import { Link } from "react-router-dom";
-import "./Associates.css";
-import "./Search.css";
+import ExploreContainer from "../components/ExploreContainer";
+import "./MyJobs.css";
 import GetUser from "../components/GetUser";
+import axios from "axios";
 
-const Associates: React.FC = () => {
-  //GET MY PROFILE DATA
+const MyScheduledJobs: React.FC = () => {
+
   interface ProfileData {
     UserId: number;
     FirstName: string;
     LastName: string;
   }
-  const [profile, setProfile] = React.useState<ProfileData>({
+  const [profile, setProfile] = useState<ProfileData>({
     UserId: 0,
     FirstName: "",
     LastName: "",
@@ -42,30 +46,28 @@ const Associates: React.FC = () => {
   }, []);
 
   // Get Array Of All My Associates
-  interface AssociatesData {
-    UserId: number;
-    FirstName: string;
-    LastName: string;
+  interface MyScheduledJobsData {
+    JJobId: number;
+    SchedulerId: string;
     Company: string;
-    Occupation: string;
-    ProfilePicURL: string;
+    Date: string;
+    SchedulerProfilePicURL: string;
   }
 
-  const [associates, setAssociates] = React.useState<AssociatesData[]>([
+  const [myScheduledJobs, setMyScheduledJobs] = React.useState<MyScheduledJobsData[]>([
     {
-      UserId: 0,
-      FirstName: "",
-      LastName: "",
-      Company: "",
-      Occupation: "",
-      ProfilePicURL: "",
+      JJobId: 0,
+      SchedulerId: "",
+      Company: "Go Get",
+      Date: "Some Work!!",
+      SchedulerProfilePicURL: '../assets/profilePic.png',
     },
   ]);
 
-  const fetchAssociates = () => {
+  const fetchScheduledJobs = () => {
     return axios
       .get(
-        "http://localhost:3000/businessassociate/ListOfAssociates/" +
+        "http://localhost:3000/job/MyScheduledJobs/" +
           profile.UserId,
         {}
       )
@@ -75,52 +77,53 @@ const Associates: React.FC = () => {
       });
   };
 
-  React.useEffect (() => {      
-     fetchAssociates().then((data) => setAssociates(data.listOfAssociates2));
+  useEffect(() => {      
+    fetchScheduledJobs().then((data) => setMyScheduledJobs(data.listOfJobs));
   }, [profile]);
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar color="warning">
-          <IonTitle className="title2">Associates</IonTitle>
+          <IonTitle className="title2">Scheduled Jobs</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar color="warning">
             <IonTitle className="title2" size="large">
-              Associates
+              Scheduled Jobs
             </IonTitle>
           </IonToolbar>
         </IonHeader>
-        <br></br>
         <IonGrid>
-          <IonRow className="">
-            <IonCol className="title2">
-              <IonIcon size="large" icon={people} />
+          <IonRow>
+            <IonCol>
+            <Link to="/MyJobs">
+                  <IonIcon size="large" icon={arrowBackCircle} />
+                </Link>
             </IonCol>
           </IonRow>
         </IonGrid>
+
         <IonGrid>
           <IonRow>
             <IonCol>
               <IonList className="searchBar">
-                {associates.map((val, key) => {
-                  console.log(val.ProfilePicURL);
+                {myScheduledJobs.map((val, key) => {
                   return (
-                    <Link to={`/AssociateProfile/${val.UserId}`}>
+                    <Link to={`/MyJobSummary/${val.JJobId}`}>
                       <IonItem className="searchBar">
                         <IonCol size="2" className="listCol">
                           <IonAvatar>
-                            <img src={val.ProfilePicURL} />
+                            <img src={val.SchedulerProfilePicURL} />
                           </IonAvatar>
                         </IonCol>
                         <IonCol size="4" className="listCol">
-                          {val.FirstName} {val.LastName}
+                          {val.Company}
                         </IonCol>
                         <IonCol size="2" className="listCol">
-                          {val.Company}
+                          {val.Date}
                         </IonCol>
                       </IonItem>
                     </Link>
@@ -130,9 +133,10 @@ const Associates: React.FC = () => {
             </IonCol>
           </IonRow>
         </IonGrid>
+
       </IonContent>
     </IonPage>
   );
 };
 
-export default Associates;
+export default MyScheduledJobs;

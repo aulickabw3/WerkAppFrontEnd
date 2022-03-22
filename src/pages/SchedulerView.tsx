@@ -57,7 +57,7 @@ export const SchedulerView: React.FC = () => {
           <IonRow className="grid1">
             <IonCol>
               <IonButton
-                href="/WerkedJobs"
+                href="/SPastJobs"
                 color="secondwarning"
                 size="large"
                 expand="block"
@@ -70,7 +70,20 @@ export const SchedulerView: React.FC = () => {
           <IonRow className="grid1">
             <IonCol>
               <IonButton
-                href="/ScheduledJobs"
+                href="/SScheduledJobs"
+                color="secondwarning"
+                size="large"
+                expand="block"
+                fill="outline"
+              >
+                Scheduled Jobs
+              </IonButton>
+            </IonCol>
+          </IonRow>
+          <IonRow className="grid1">
+            <IonCol>
+              <IonButton
+                href="/SAvailableJobs"
                 color="secondwarning"
                 size="large"
                 expand="block"

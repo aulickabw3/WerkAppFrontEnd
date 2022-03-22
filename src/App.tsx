@@ -44,9 +44,10 @@ import SchedulerView from "./pages/SchedulerView";
 import CreateJob from "./pages/CreateJob";
 import Crews from "./pages/Crews";
 import AddNewCrew from "./pages/AddNewCrew";
-import WerkedJobs from "./pages/WerkedJobs";
-import ScheduledJobs from "./pages/ScheduledJobs";
+import PastJobs from "./pages/PastJobs";
+import MyScheduledJobs from "./pages/MyScheduledJobs";
 import PublishJob from "./pages/PublishJob";
+import MyPastJobSummary from "./pages/MyPastJobSummary";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -89,9 +90,10 @@ const App: React.FC = () => (
           <Route path="/CreateJob" component={CreateJob} />
           <Route path="/Crews" component={Crews} />
           <Route path="/AddNewCrew" component={AddNewCrew} />
-          <Route path="/WerkedJobs" component={WerkedJobs} />
-          <Route path="/ScheduledJobs" component={ScheduledJobs} />
-          <Route path="/PublishJob" component={PublishJob} />
+          <Route path="/PastJobs" component={PastJobs} />
+          <Route path="/MyScheduledJobs" component={MyScheduledJobs} />
+          <Route path="/PublishJob/:id" component={PublishJob} />
+          <Route path="/MyPastJobSummary/:id" component={MyPastJobSummary} />
           <Route
             path="/"
             render={() => <Redirect to="/Login" />}

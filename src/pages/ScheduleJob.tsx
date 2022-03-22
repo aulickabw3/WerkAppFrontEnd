@@ -54,6 +54,8 @@ const ScheduleJob: React.FC = () => {
   const [pocPhone, setPocPhone] = React.useState("");
   const [notes, setNotes] = React.useState("");
 
+  const [jobJobId, setJobJobId] = React.useState("");
+
   const handleSubmit = () => {
     const newJob = {
       UserId: profile.UserId,
@@ -68,12 +70,13 @@ const ScheduleJob: React.FC = () => {
       NumberOfWerkers: numberOfWorkers,
       Notes: notes,
     };
-    console.log(newJob.BeginTime);
+
     axios
       .post("http://localhost:3000/job/CreateJob", { newJob })
       .then((response) => {
+        // setJobJobId(response.JobJobId);
         console.log(response);
-        window.location.href = "/PublishJob";
+        window.location.href = "/PublishJob/" + jobJobId;
       });
   };
 
@@ -202,19 +205,6 @@ const ScheduleJob: React.FC = () => {
                   ></IonInput>
                 </IonItem>
               </IonCol>
-              {/* <IonCol size="2">
-                <IonItem>
-                  <IonLabel>per</IonLabel>
-                  <IonSelect
-                    value={payFrequency}
-                    placeholder="Select One"
-                    onIonChange={(e) => setPayFrequency(e.detail.value)}
-                  >
-                    <IonSelectOption value="/hr">/hr</IonSelectOption>
-                    <IonSelectOption value="/day">/day</IonSelectOption>
-                  </IonSelect>
-                </IonItem>
-              </IonCol> */}
               <IonCol size="6">
                 <IonItem>
                   <IonLabel position="stacked">
@@ -230,35 +220,6 @@ const ScheduleJob: React.FC = () => {
               </IonCol>
             </IonRow>
             <br></br>
-            {/* <IonRow className="jobGrid">
-              <IonCol>
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>Point Of Contact:</h1>
-                  </IonLabel>
-                  <IonRow>
-                    <IonCol size="6">
-                      <IonInput
-                        type="text"
-                        name="POCName"
-                        placeholder="Name"
-                        onIonChange={(e: any) => setPocName(e.target.value)}
-                        clearInput
-                      ></IonInput>
-                    </IonCol>
-                    <IonCol size="6">
-                      <IonInput
-                        type="text"
-                        name="POCPhone"
-                        placeholder="Phone"
-                        onIonChange={(e: any) => setPocPhone(e.target.value)}
-                        clearInput
-                      ></IonInput>
-                    </IonCol>
-                  </IonRow>
-                </IonItem>
-              </IonCol>
-            </IonRow> */}
             <IonRow className="jobGrid">
               <IonCol size="12">
                 <IonItem>

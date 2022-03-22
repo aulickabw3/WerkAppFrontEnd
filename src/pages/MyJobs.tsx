@@ -20,7 +20,6 @@ import { arrowBackCircle } from "ionicons/icons";
 export const MyJobs: React.FC = () => {
   const [searchText, setSearchText] = useState("");
 
-
   return (
     <IonPage>
       <IonHeader>
@@ -45,24 +44,26 @@ export const MyJobs: React.FC = () => {
               </Link>
             </IonCol>
             <IonCol size="2"></IonCol>
-            <IonCol size="7">
-              <IonButton
-                href="/SchedulerView"
-                color="secondwarning"
-                size="large"
-                expand="block"
-                fill="solid"
-              >
-                Scheduler View
-              </IonButton>
-            </IonCol>
           </IonRow>
         </IonGrid>
         <IonGrid>
           <IonRow className="grid1">
             <IonCol>
               <IonButton
-                href="/ScheduledJobs"
+                href="/AvailableJobs"
+                color="warning"
+                size="large"
+                expand="block"
+                fill="solid"
+              >
+                Available Jobs
+              </IonButton>
+            </IonCol>
+          </IonRow>
+          <IonRow className="grid1">
+            <IonCol>
+              <IonButton
+                href="/MyScheduledJobs"
                 color="warning"
                 size="large"
                 expand="block"
@@ -75,18 +76,18 @@ export const MyJobs: React.FC = () => {
           <IonRow className="grid1">
             <IonCol>
               <IonButton
-                href="/WerkedJobs"
+                href="/PastJobs"
                 color="warning"
                 size="large"
                 expand="block"
                 fill="solid"
               >
-                Werked Jobs
+                Past Jobs
               </IonButton>
             </IonCol>
           </IonRow>
-          {/* <IonRow className="grid1">
-            <IonCol>
+          <IonRow className="grid1">
+            <IonCol >
               <IonButton
                 href="/SchedulerView"
                 color="secondwarning"
@@ -97,8 +98,7 @@ export const MyJobs: React.FC = () => {
                 Scheduler View
               </IonButton>
             </IonCol>
-          </IonRow> */}
-          
+          </IonRow>
         </IonGrid>
       </IonContent>
     </IonPage>

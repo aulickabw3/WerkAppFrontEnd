@@ -17,10 +17,8 @@ import {
   IonButton,
 } from "@ionic/react";
 import { person, arrowBackCircle, people, pencilSharp } from "ionicons/icons";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Profile.css";
-// import "../components/GetUser";
 import GetUser from "../components/GetUser";
 
 // const checkboxList = [{ val: "Scheduler", isChecked: true }];
@@ -39,7 +37,7 @@ const Profile: React.FC = () => {
     ProfilePicURL: string;
   }
 
-  const [profile, setProfile] = React.useState<ProfileData>({
+  const [profile, setProfile] = useState<ProfileData>({
     UserId: 0,
     FirstName: "",
     LastName: "",
@@ -52,12 +50,10 @@ const Profile: React.FC = () => {
     ProfilePicURL: "",
   });
 
-  // console.log(profile);
-  React.useEffect(() => {
+  useEffect(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
-  console.log(profile);
 
   return (
     <IonPage>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Redirect, Route, Link } from "react-router-dom";
 import { IonReactRouter } from "@ionic/react-router";
 import {
@@ -14,12 +14,97 @@ import {
   IonIcon,
   IonLabel,
   IonTabButton,
+  IonItem,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import ExploreContainer from "../components/ExploreContainer";
 import "./MyJobSummary.css";
+import GetUser from "../components/GetUser";
+import axios from "axios";
 
 const MyJobSummary: React.FC = () => {
+
+  interface ProfileData {
+    UserId: number;
+  }
+
+  const [profile, setProfile] = useState<ProfileData>({
+    UserId: 0,
+  });
+
+  useEffect(() => {
+    GetUser().then((data) => setProfile(data.personDataFound));
+  }, []);
+
+  interface MyJobData {
+    JjobId: number;
+    SJobId: string;
+    SchedulerId: string;
+    Date: string;
+    StartTime: string;
+    FinnishTime: string;
+    Company: string;
+    Location: string;
+    Pay: string;
+    Notes: string;
+  }
+
+  const [myJob, setMyJob] = useState<MyJobData>({
+    JjobId: 0,
+    SJobId: "",
+    SchedulerId: "",
+    Date: "",
+    StartTime: "",
+    FinnishTime: "",
+    Company: "",
+    Location: "",
+    Pay: "",
+    Notes: "",
+  });
+
+  const fetchMyJob = () => {
+    return axios
+      .get(
+        "http://localhost:3000/job/AvailableJobs/" +
+          myJob.JjobId,
+        {}
+      )
+      .then((response) => {
+        console.log(response);
+        return response.data;
+      });
+  };
+
+  useEffect(() => {      
+    fetchMyJob().then((data) => setMyJob(data.JobInfo));
+  }, []);
+
+  const handleWerked = () => {
+    const werkJob = {
+      UserId: profile.UserId,
+    };
+
+    axios
+      .put("http://localhost:3000/job/WerkedJob/" + myJob.JjobId, { werkJob })
+      .then((response) => {
+        console.log(response);
+        window.location.href = "/MyJobSummary/" + myJob.JjobId;
+      });
+  };
+
+  const handleCancel = () => {
+    const werkJob = {
+      UserId: profile.UserId,
+    };
+
+    axios
+      .put("http://localhost:3000/job/CancelJob/" + myJob.JjobId, { werkJob })
+      .then((response) => {
+        console.log(response);
+        window.location.href = "/MyJobSummary/" + myJob.JjobId;
+      });
+  };
+
   return (
     
     <IonPage>
@@ -40,88 +125,118 @@ const MyJobSummary: React.FC = () => {
           <IonRow className="">
             <IonRow>
               <IonCol>
-                <Link to="/MyJobs">
+                <Link to="/MyScheduledJobs">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
               </IonCol>
             </IonRow>
           </IonRow>
-          <IonRow className="jobGrid">
-            <IonCol>
-              <h1>Date:</h1>
-              <br></br>
-              8/22/20
-            </IonCol>
+          <form>
+            <br></br>
+            <IonRow>
+              <IonCol size="6">
+                <IonItem>
+                  <IonLabel position="stacked">
+                    <h1>Job ID/#:</h1>
+                  </IonLabel>
+                  <h1>{myJob.SJobId}</h1>
+                </IonItem>
+              </IonCol>
+              <IonCol size="6">
+                <IonItem>
+                  <IonLabel position="stacked">
+                    <h1>Date:</h1>
+                  </IonLabel>
+                  <h1>{myJob.Date}</h1>
+                </IonItem>
+              </IonCol>
+            </IonRow>
+            <IonRow className="jobGrid">
+              <IonCol size="6">
+                <IonItem>
+                  <IonLabel position="stacked">
+                    <h1>Start:</h1>
+                  </IonLabel>
+                  <h1>{myJob.StartTime}</h1>
+                </IonItem>
+              </IonCol>
+              <IonCol size="6">
+                <IonItem>
+                  <IonLabel position="stacked">
+                    <h1>End:</h1>
+                  </IonLabel>
+                  <h1>{myJob.FinnishTime}</h1>
+                </IonItem>
+              </IonCol>
+            </IonRow>
+            <IonRow className="jobGrid">
+              <IonCol size="6">
+                <IonItem>
+                  <IonLabel position="stacked">
+                    <h1>Company:</h1>
+                  </IonLabel>
+                  <h1>{myJob.Company}</h1>
+                </IonItem>
+              </IonCol>
+              <IonCol size="6">
+                <IonItem>
+                  <IonLabel position="stacked">
+                    <h1>Location:</h1>
+                  </IonLabel>
+                  <h1>{myJob.Location}</h1>
+                </IonItem>
+              </IonCol>
+            </IonRow>
+            <br></br>
+            <IonRow className="jobGrid">
+              <IonCol size="6">
+                <IonItem>
+                  <IonLabel position="stacked">
+                    <h1>Pay: </h1>
+                  </IonLabel>
+                </IonItem>
+              </IonCol>
+              <IonCol size="6">
+                <IonItem>
+                  <IonLabel position="stacked">
+                    <h1>$</h1>
+                  </IonLabel>
+                  <h1>{myJob.Pay}</h1>
+                </IonItem>
+              </IonCol>
+            </IonRow>
+            <br></br>
+            <IonRow className="jobGrid">
+              <IonCol size="12">
+                <IonItem>
+                  <IonLabel position="stacked">
+                    <h1>Notes:</h1>
+                  </IonLabel>
+                  <h1>{myJob.Notes}</h1>
+                </IonItem>
+              </IonCol>
+            </IonRow>
+            <IonRow>
             <IonCol></IonCol>
             <IonCol>
-              <h1>Time:</h1>
-              <br></br>
-              9p-5a
-            </IonCol>
-            <IonCol></IonCol>
-          </IonRow>
-          <IonRow className="jobGrid">
-            <IonCol>
-              <h1>Company:</h1>
-              <br></br>
-              P&S Paving
-            </IonCol>
-            <IonCol></IonCol>
-            <IonCol>
-              <h1>Location:</h1>
-              <br></br>
-              I4/I95
-            </IonCol>
-            <IonCol></IonCol>
-          </IonRow>
-          <br></br>
-          <IonRow className="jobGrid">
-            <IonCol>
-              <h1>Pay:</h1>
-            </IonCol>
-            <IonCol></IonCol>
-            <IonCol color="success">
-              <h1 className="money">$65/hr</h1>
-            </IonCol>
-            <IonCol></IonCol>
-          </IonRow>
-          <br></br>
-          <IonRow>
-            <IonCol></IonCol>
-            <IonCol>
-              <IonButton href="/Main" color="success" size="large" fill="solid">
+              <IonButton onClick={handleWerked} color="success" size="large" fill="solid">
                 Werked
               </IonButton>
             </IonCol>
             <IonCol>
-              <IonButton href="/Main" color="danger" size="large" fill="solid">
+              <IonButton onClick={handleCancel} color="danger" size="large" fill="solid">
                 Cancel 
               </IonButton>
             </IonCol>
             <IonCol></IonCol>
           </IonRow>
-          <IonRow className="jobGrid">
-            <IonCol>
-              <h1>Notes:</h1>
-            </IonCol>
-          </IonRow>
-          <IonRow className="jobGrid">
-            <IonCol>
-              4 hr min. Meet at BP on 92
-            </IonCol>
-          </IonRow>
-          <IonRow className="jobGrid">
-            <IonCol>
-              <h1>Point Of Contact:</h1>
-              <br></br>
-              John Doe (386)123-4567
-            </IonCol>
-          </IonRow>
+          </form>
         </IonGrid>
 
-        {/* <ExploreContainer name="Tab 2 page" /> */}
       </IonContent>
     </IonPage>
+          
+
   );
 };
 

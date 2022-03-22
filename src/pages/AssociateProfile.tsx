@@ -151,7 +151,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       )
       .then((response) => {
         console.log(response);
-        window.location.href = "/AssociateProfile";
+        window.location.href = "/AssociateProfile/" + match.params.id;
       });
   };
 
@@ -187,6 +187,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       })
       .then((response) => {
         console.log(response);
+        window.location.href = "/AssociateProfile/" + match.params.id;
       });
   };
 
@@ -200,6 +201,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       })
       .then((response) => {
         console.log(response);
+        window.location.href = "/AssociateProfile/" + match.params.id;
       });
   };
 
@@ -207,7 +209,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     return (
       <IonRow className="listCol1">
         <IonCol className="listJobs">
-          <Link to="/Notifications">
             <IonButton
               onClick={handleAcceptRequest}
               color="success"
@@ -218,10 +219,8 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
               Accept Request
             </IonButton>
             <br></br>
-          </Link>
         </IonCol>
         <IonCol className="listJobs">
-          <Link to="/Notifications">
             <IonButton
               onClick={handleDeclineRequest}
               color="danger"
@@ -232,7 +231,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
               Deny Request
             </IonButton>
             <br></br>
-          </Link>
         </IonCol>
       </IonRow>
     );
@@ -249,6 +247,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       })
       .then((response) => {
         console.log(response);
+        window.location.href = "/AssociateProfile/" + match.params.id;
       });
   };
 
@@ -256,7 +255,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     return (
       <IonRow className="listCol1">
         <IonCol className="listJobs">
-          <Link to="/Search">
             <IonButton
               onClick={handleCancelRequest}
               color="danger"
@@ -267,7 +265,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
               Cancel Request
             </IonButton>
             <br></br>
-          </Link>
         </IonCol>
       </IonRow>
     );
@@ -284,6 +281,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       })
       .then((response) => {
         console.log(response);
+        window.location.href = "/AssociateProfile/" + match.params.id;
       });
   };
 
@@ -291,7 +289,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     return (
       <IonRow className="listCol1">
         <IonCol className="listJobs">
-          <Link to="/Associates">
             <IonButton 
               onClick={handleFireAssociate}
               color="danger"
@@ -302,7 +299,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
               Fire Associate
             </IonButton>
             <br></br>
-          </Link>
         </IonCol>
       </IonRow>
     );
@@ -424,7 +420,9 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
             </IonRow>
             <br></br>
             <br></br>
+
             <AssociateProfileActions />
+            
             <br></br>
             <IonRow className="profileGrid">
               <IonCol></IonCol>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   IonIcon,
   IonContent,
@@ -12,13 +12,70 @@ import {
   IonTitle,
   IonToolbar,
   IonGrid,
+  useIonViewDidEnter,
+  IonAvatar,
 } from "@ionic/react";
 import { person, arrowBackCircle, arrowBack } from 'ionicons/icons';
-import ExploreContainer from "../components/ExploreContainer";
 import "./AvailableJobs.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import GetUser from "../components/GetUser";
+
 
 const AvailableJobs: React.FC = () => {
+
+  interface ProfileData {
+    UserId: number;
+    FirstName: string;
+    LastName: string;
+  }
+  const [profile, setProfile] = useState<ProfileData>({
+    UserId: 0,
+    FirstName: "",
+    LastName: "",
+  });
+
+  useIonViewDidEnter(() => {
+    GetUser().then((data) => setProfile(data.personDataFound));
+  }, []);
+
+  // Get Array Of All My Associates
+  interface AvailableJobData {
+    JJobId: number;
+    SchedulerId: string;
+    Company: string;
+    Date: string;
+    SchedulerProfilePicURL: string;
+  }
+
+  const [availableJobs, setAvailableJobs] = React.useState<AvailableJobData[]>([
+    {
+      JJobId: 0,
+      SchedulerId: "",
+      Company: "No     Jobs",
+      Date: "Yet",
+      SchedulerProfilePicURL: '../assets/profilePic.png',
+    },
+  ]);
+
+  const fetchAvailableJobs = () => {
+    return axios
+      .get(
+        "http://localhost:3000/job/AvailableJobs/" +
+          profile.UserId,
+        {}
+      )
+      .then((response) => {
+        console.log(response);
+        return response.data;
+      });
+  };
+
+  useEffect(() => {      
+    fetchAvailableJobs().then((data) => setAvailableJobs(data.listOfJobs));
+  }, [profile]);
+
+
   return (
     <IonPage>
       <IonHeader>
@@ -43,124 +100,35 @@ const AvailableJobs: React.FC = () => {
             </IonCol>
           </IonRow>
         </IonGrid>
-        <IonList>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/AvailableJob">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/22</IonCol>
-                    <IonCol>4</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
 
-          {/* extra fake ones... */}
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/AvailableJob">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">Archer Western</IonCol>
-                    <IonCol className="listCol">8/18</IonCol>
-                    <IonCol>4</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/AvailableJob">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/17</IonCol>
-                    <IonCol>4</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/AvailableJob">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">Chinchor</IonCol>
-                    <IonCol className="listCol">8/14</IonCol>
-                    <IonCol>4</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/AvailableJob">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/11</IonCol>
-                    <IonCol>4</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/AvailableJob">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/09</IonCol>
-                    <IonCol>4</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="listJobs">
-            <IonLabel>
-              <IonGrid>
-                <IonRow className="listJobs">
-                  <Link to="/AvailableJob">
-                    <IonCol className="listCol">
-                      <IonIcon icon={person} />
-                    </IonCol>
-                    <IonCol className="listCol">P&S Paving</IonCol>
-                    <IonCol className="listCol">8/08</IonCol>
-                    <IonCol>4</IonCol>
-                  </Link>
-                </IonRow>
-              </IonGrid>
-            </IonLabel>
-          </IonItem>
-          
-        </IonList>
-        {/* <ExploreContainer name="Tab 2 page" /> */}
+        <IonGrid>
+          <IonRow>
+            <IonCol>
+              <IonList className="searchBar">
+                {availableJobs.map((val, key) => {
+                  return (
+                    <Link to={`/AvailableJob/${val.JJobId}`}>
+                      <IonItem className="searchBar">
+                        <IonCol size="2" className="listCol">
+                          <IonAvatar>
+                            <img src={val.SchedulerProfilePicURL} />
+                          </IonAvatar>
+                        </IonCol>
+                        <IonCol size="4" className="listCol">
+                          {val.Company}
+                        </IonCol>
+                        <IonCol size="2" className="listCol">
+                          {val.Date}
+                        </IonCol>
+                      </IonItem>
+                    </Link>
+                  );
+                })}
+              </IonList>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+
       </IonContent>
     </IonPage>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Redirect, Route, Link } from "react-router-dom";
 import { IonReactRouter } from "@ionic/react-router";
 import {
@@ -18,12 +18,12 @@ import {
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import ExploreContainer from "../components/ExploreContainer";
-import "./AvailableJob.css";
-import axios from "axios";
+import "./MyJobSummary.css";
 import GetUser from "../components/GetUser";
+import axios from "axios";
 
+const MyPastJobSummary: React.FC = () => {
 
-const AvailableJob: React.FC = () => {
   interface ProfileData {
     UserId: number;
   }
@@ -36,7 +36,7 @@ const AvailableJob: React.FC = () => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
-  interface AvailableJobData {
+  interface MyJobData {
     JjobId: number;
     SJobId: string;
     SchedulerId: string;
@@ -49,7 +49,7 @@ const AvailableJob: React.FC = () => {
     Notes: string;
   }
 
-  const [availableJob, setAvailableJob] = useState<AvailableJobData>({
+  const [myJob, setMyJob] = useState<MyJobData>({
     JjobId: 0,
     SJobId: "",
     SchedulerId: "",
@@ -62,11 +62,11 @@ const AvailableJob: React.FC = () => {
     Notes: "",
   });
 
-  const fetchAvailableJob = () => {
+  const fetchMyPastJob = () => {
     return axios
       .get(
-        "http://localhost:3000/job/AvailableJobs/" +
-          availableJob.JjobId,
+        "http://localhost:3000/job/PastJobs/" +
+          myJob.JjobId,
         {}
       )
       .then((response) => {
@@ -76,19 +76,18 @@ const AvailableJob: React.FC = () => {
   };
 
   useEffect(() => {      
-    fetchAvailableJob().then((data) => setAvailableJob(data.JobInfo));
+    fetchMyPastJob().then((data) => setMyJob(data.JobInfo));
   }, []);
 
-  const handleSubmit = () => {
-    const werkJob = {
+  const handlePaid = () => {
+    const JobPaid = {
       UserId: profile.UserId,
     };
 
     axios
-      .put("http://localhost:3000/job/WerkJob/" + availableJob.JjobId, { werkJob })
+      .put("http://localhost:3000/job/WerkedJob/" + myJob.JjobId, { JobPaid })
       .then((response) => {
         console.log(response);
-        window.location.href = "/MyJobSummary/" + availableJob.JjobId;
       });
   };
 
@@ -113,7 +112,7 @@ const AvailableJob: React.FC = () => {
           <IonRow className="">
             <IonRow>
               <IonCol>
-                <Link to="/AvailableJobs">
+                <Link to="/PastJobs">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
               </IonCol>
@@ -127,7 +126,7 @@ const AvailableJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Job ID/#:</h1>
                   </IonLabel>
-                  <h1>{availableJob.SJobId}</h1>
+                  <h1>{myJob.SJobId}</h1>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -135,7 +134,7 @@ const AvailableJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Date:</h1>
                   </IonLabel>
-                  <h1>{availableJob.Date}</h1>
+                  <h1>{myJob.Date}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -145,7 +144,7 @@ const AvailableJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Start:</h1>
                   </IonLabel>
-                  <h1>{availableJob.StartTime}</h1>
+                  <h1>{myJob.StartTime}</h1>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -153,7 +152,7 @@ const AvailableJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>End:</h1>
                   </IonLabel>
-                  <h1>{availableJob.FinnishTime}</h1>
+                  <h1>{myJob.FinnishTime}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -163,7 +162,7 @@ const AvailableJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Company:</h1>
                   </IonLabel>
-                  <h1>{availableJob.Company}</h1>
+                  <h1>{myJob.Company}</h1>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -171,7 +170,7 @@ const AvailableJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Location:</h1>
                   </IonLabel>
-                  <h1>{availableJob.Location}</h1>
+                  <h1>{myJob.Location}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -189,7 +188,7 @@ const AvailableJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>$</h1>
                   </IonLabel>
-                  <h1>{availableJob.Pay}</h1>
+                  <h1>{myJob.Pay}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -200,30 +199,27 @@ const AvailableJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Notes:</h1>
                   </IonLabel>
-                  <h1>{availableJob.Notes}</h1>
+                  <h1>{myJob.Notes}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
             <IonRow>
-              <IonCol></IonCol>
-              <IonCol>
-                <IonButton
-                  onClick={handleSubmit}
-                  color="danger"
-                  size="large"
-                  fill="solid"
-                >
-                  Werk Job
-                </IonButton>
-              </IonCol>
-              <IonCol></IonCol>
-            </IonRow>
+            <IonCol></IonCol>
+            <IonCol>
+              <IonButton onClick={handlePaid} color="success" size="large" fill="solid">
+                Paid
+              </IonButton>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
           </form>
         </IonGrid>
 
       </IonContent>
     </IonPage>
+          
+
   );
 };
 
-export default AvailableJob;
+export default MyPastJobSummary;

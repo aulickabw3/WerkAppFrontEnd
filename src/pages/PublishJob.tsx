@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, Link } from "react-router-dom";
+import { RouteComponentProps, Link } from "react-router-dom";
 import {
   IonContent,
   IonHeader,
@@ -28,44 +28,45 @@ import {
 } from "@ionic/react";
 import axios from "axios";
 import "./CreateAccount.css";
-import { arrowBackCircle } from "ionicons/icons";
+import { arrowBackCircle, checkmarkDoneSharp } from "ionicons/icons";
 import GetUser from "../components/GetUser";
 
-const PublishJob: React.FC = () => {
+interface PublishJobProps
+  extends RouteComponentProps<{
+    id: string;
+  }> {}
 
+const PublishJob: React.FC<PublishJobProps> = ({ match }) => {
+// Get Self UserId
   interface ProfileData {
     UserId: number;
-    FirstName: string;
-    LastName: string;
   }
   const [myProfile, setMyProfile] = React.useState<ProfileData>({
     UserId: 0,
-    FirstName: "",
-    LastName: "",
   });
-
   useIonViewDidEnter(() => {
     GetUser().then((data) => setMyProfile(data.personDataFound));
   }, []);
-  console.log(myProfile);
 
   // Get Array Of All My Associates
   interface AssociatesData {
-    UserId: number;
+    UserId: any;
     FirstName: string;
     LastName: string;
     Company: string;
     Occupation: string;
     ProfilePicURL: string;
+    isSelected: boolean;
   }
   const [associatesCrew, setAssociatesCrew] = React.useState<AssociatesData[]>([
     {
-      UserId: 0,
+      UserId: "",
       FirstName: "",
       LastName: "",
       Company: "",
       Occupation: "",
       ProfilePicURL: "",
+      isSelected: false,
     },
   ]);
 
@@ -86,26 +87,35 @@ const PublishJob: React.FC = () => {
     fetchAssociates().then((data) => setAssociatesCrew(data.listOfAssociates2));
   }, [myProfile]);
 
-  const [checked, setChecked] = useState<string[]>([]);
+  //Set My Crew
+  const [crew, setCrew] = useState<Array<number>>([]);
 
   const handleSubmit = () => {
+    const MyCrew = {
+      UserId: myProfile.UserId,
+      Crew: crew,
+      JobJobID: match.params,
+    };
     axios
-      .post("http://localhost:3000/user/PublishJob", { checked })
+      .post("http://localhost:3000/user/PublishJob", { MyCrew })
       .then((response) => {
         console.log(response);
+        console.log(MyCrew);
       });
   };
+
+  console.log(crew);
 
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="secondwarning">
+        <IonToolbar color="warning">
           <IonTitle className="title2">Choose Werkers</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonHeader collapse="condense">
-          <IonToolbar color="secondwarning">
+          <IonToolbar color="warning">
             <IonTitle className="title2" size="large">
               Choose Werkers
             </IonTitle>
@@ -123,28 +133,40 @@ const PublishJob: React.FC = () => {
             <IonGrid>
               <IonList className="searchBar">
                 {associatesCrew.map((val, key) => {
-                  console.log(val.ProfilePicURL);
+                  key = val.UserId;
                   return (
-                      <IonItem className="searchBar">
-                        <IonCol size="1">
-                          <IonCheckbox
-                            className="listCol1"
-                            // checked={checked}
-                            // onIonChange={(e) => setChecked(e.detail.checked)}
-                          />
-                        </IonCol>
-                        <IonCol size="1" className="listCol">
-                          <IonAvatar>
-                            <img src={val.ProfilePicURL} />
-                          </IonAvatar>
-                        </IonCol>
-                        <IonCol size="4" className="listCol">
-                          {val.FirstName} {val.LastName}
-                        </IonCol>
-                        <IonCol size="2" className="listCol">
-                          {val.Company}
-                        </IonCol>
-                      </IonItem>
+                    <IonItem className="searchBar">
+                      <IonCol className="squared" size="1">
+                        <IonCheckbox
+                          value={val.UserId}
+                          onIonChange={(event: any) => {
+                            const selectedCrew = parseInt(event.target.value);
+                            if (crew.includes(selectedCrew)) {
+                              const newIds = crew.filter(
+                                (crewId) => crewId !== selectedCrew
+                              );
+                              setCrew(newIds);
+                            } else {
+                              const newCrew = [...crew];
+                              newCrew.push(selectedCrew);
+                              setCrew(newCrew);
+                            }
+                          }}
+                          checked={crew.includes(val.UserId) ? true : false}
+                        />
+                      </IonCol>
+                      <IonCol size="1" className="listCol">
+                        <IonAvatar>
+                          <img src={val.ProfilePicURL} />
+                        </IonAvatar>
+                      </IonCol>
+                      <IonCol size="3" className="listCol">
+                        {val.FirstName} {val.LastName}
+                      </IonCol>
+                      <IonCol size="4" className="listCol">
+                        {val.Company}
+                      </IonCol>
+                    </IonItem>
                   );
                 })}
               </IonList>
@@ -157,7 +179,7 @@ const PublishJob: React.FC = () => {
         <IonTabButton>
           <IonRow>
             <IonCol></IonCol>
-            <IonCol >
+            <IonCol>
               <IonButton
                 href="/SchedulerView"
                 color="danger"
