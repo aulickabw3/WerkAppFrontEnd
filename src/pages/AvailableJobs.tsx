@@ -61,9 +61,9 @@ const AvailableJobs: React.FC = () => {
   const fetchAvailableJobs = () => {
     return axios
       .get(
-        "http://localhost:3000/job/AvailableJobs/" +
+        "http://localhost:3000/shifts/AvailableShifts/" +
           profile.UserId,
-        {}
+        { withCredentials: true }
       )
       .then((response) => {
         console.log(response);

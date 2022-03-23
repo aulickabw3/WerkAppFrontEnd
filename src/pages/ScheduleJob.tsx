@@ -51,14 +51,6 @@ const ScheduleJob: React.FC = () => {
   const [numberOfWorkers, setnumberOfWorkers] = React.useState(0);
   const [notes, setNotes] = React.useState("");
 
-  interface NewShiftData {
-    ShiftId: any;
-  }
-
-  const [shiftId, setShiftId] = React.useState<NewShiftData>({
-    ShiftId: "0",
-  });
-
   const handleSubmit = () => {
     const newShift = {
       UserUserId: profile.UserId,
@@ -79,12 +71,10 @@ const ScheduleJob: React.FC = () => {
         console.log(response);
         return response.data
       }).then((data) => {
-        setShiftId(data.CreateAShift);
-        // window.location.href = "/PublishJob/" + shiftId.ShiftId;
+        console.log(data.ShiftId);
+        window.location.href = "/PublishJob/" + data.ShiftId;
       });
   };
-
-  console.log(shiftId);
 
   return (
     <IonPage>

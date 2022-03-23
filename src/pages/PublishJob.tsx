@@ -97,7 +97,7 @@ const PublishJob: React.FC<PublishJobProps> = ({ match }) => {
       JobJobID: match.params,
     };
     axios
-      .post("http://localhost:3000/user/PublishJob", { MyCrew })
+      .post("http://localhost:3000/shifts/PublishJob", { MyCrew })
       .then((response) => {
         console.log(response);
         console.log(MyCrew);
@@ -181,7 +181,7 @@ const PublishJob: React.FC<PublishJobProps> = ({ match }) => {
             <IonCol></IonCol>
             <IonCol>
               <IonButton
-                href="/SchedulerView"
+                // href="/SchedulerView"
                 color="danger"
                 size="large"
                 fill="solid"
