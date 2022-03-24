@@ -61,20 +61,24 @@ const AvailableJobs: React.FC = () => {
   const fetchAvailableJobs = () => {
     return axios
       .get(
-        "http://localhost:3000/job/AvailableJobs/" +
+        "http://localhost:3000/shifts/AvailableShifts/" +
           profile.UserId,
         {}
       )
       .then((response) => {
+        console.log("made it back");
         console.log(response);
         return response.data;
       });
+
   };
 
   useEffect(() => {      
     fetchAvailableJobs().then((data) => setAvailableJobs(data.listOfJobs));
   }, [profile]);
 
+  console.log(availableJobs);
+  console.log(profile.UserId);
 
   return (
     <IonPage>
@@ -105,7 +109,7 @@ const AvailableJobs: React.FC = () => {
           <IonRow>
             <IonCol>
               <IonList className="searchBar">
-                {availableJobs.map((val, key) => {
+                {/* {availableJobs.map((val, key) => {
                   return (
                     <Link to={`/AvailableJob/${val.JJobId}`}>
                       <IonItem className="searchBar">
@@ -123,7 +127,7 @@ const AvailableJobs: React.FC = () => {
                       </IonItem>
                     </Link>
                   );
-                })}
+                })} */}
               </IonList>
             </IonCol>
           </IonRow>
