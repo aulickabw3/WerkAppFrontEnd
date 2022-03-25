@@ -98,10 +98,10 @@ const PublishJob: React.FC<PublishJobProps> = ({ match }) => {
     };
     axios
       .post("http://localhost:3000/shifts/PublishJob", { MyCrew })
-      .then((response) => {
-        console.log(response);
-        console.log(MyCrew);
-      });
+      .then((data) => {
+        console.log(data);
+        window.location.href = "/SchedulerView"
+    });
   };
 
   console.log(crew);
@@ -181,11 +181,11 @@ const PublishJob: React.FC<PublishJobProps> = ({ match }) => {
             <IonCol></IonCol>
             <IonCol>
               <IonButton
-                // href="/SchedulerView"
+                onClick={handleSubmit}
                 color="danger"
                 size="large"
                 fill="solid"
-                onClick={handleSubmit}
+                href="/SchedulerView"
               >
                 Schedule
               </IonButton>

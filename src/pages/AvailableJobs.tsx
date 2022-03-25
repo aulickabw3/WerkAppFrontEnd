@@ -14,16 +14,15 @@ import {
   IonGrid,
   useIonViewDidEnter,
   IonAvatar,
+  IonDatetime,
 } from "@ionic/react";
-import { person, arrowBackCircle, arrowBack } from 'ionicons/icons';
+import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
 import "./AvailableJobs.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import GetUser from "../components/GetUser";
 
-
 const AvailableJobs: React.FC = () => {
-
   interface ProfileData {
     UserId: number;
     FirstName: string;
@@ -41,44 +40,42 @@ const AvailableJobs: React.FC = () => {
 
   // Get Array Of All My Associates
   interface AvailableJobData {
-    JJobId: number;
-    SchedulerId: string;
-    Company: string;
-    Date: string;
-    SchedulerProfilePicURL: string;
+    JJobId: any;
+    JJobId2: any;
+    SchedulerId: any;
+    Company: any;
+    Date: any;
+    SchedulerProfilePicURL: any;
   }
 
   const [availableJobs, setAvailableJobs] = React.useState<AvailableJobData[]>([
     {
       JJobId: 0,
-      SchedulerId: "",
+      JJobId2: 0,
+      SchedulerId: 0,
       Company: "No     Jobs",
       Date: "Yet",
-      SchedulerProfilePicURL: '../assets/profilePic.png',
+      SchedulerProfilePicURL: "../assets/profilePic.png",
     },
   ]);
 
   const fetchAvailableJobs = () => {
     return axios
-      .get(
-        "http://localhost:3000/shifts/AvailableShifts/" +
-          profile.UserId,
-        {}
-      )
+      .get("http://localhost:3000/shifts/AvailableShifts/" + profile.UserId, {})
       .then((response) => {
-        console.log("made it back");
         console.log(response);
         return response.data;
       });
-
   };
 
-  useEffect(() => {      
-    fetchAvailableJobs().then((data) => setAvailableJobs(data.listOfJobs));
+  useEffect(() => {
+    fetchAvailableJobs().then((data) => {
+      setAvailableJobs(data.availableShifts2);
+      // console.log("useEffect is working..");
+    });
   }, [profile]);
 
   console.log(availableJobs);
-  console.log(profile.UserId);
 
   return (
     <IonPage>
@@ -98,9 +95,9 @@ const AvailableJobs: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-            <Link to="/Main">
-                  <IonIcon size="large" icon={arrowBackCircle} />
-                </Link>
+              <Link to="/Main">
+                <IonIcon size="large" icon={arrowBackCircle} />
+              </Link>
             </IonCol>
           </IonRow>
         </IonGrid>
@@ -109,7 +106,7 @@ const AvailableJobs: React.FC = () => {
           <IonRow>
             <IonCol>
               <IonList className="searchBar">
-                {/* {availableJobs.map((val, key) => {
+                {availableJobs.map((val, key) => {
                   return (
                     <Link to={`/AvailableJob/${val.JJobId}`}>
                       <IonItem className="searchBar">
@@ -118,21 +115,23 @@ const AvailableJobs: React.FC = () => {
                             <img src={val.SchedulerProfilePicURL} />
                           </IonAvatar>
                         </IonCol>
-                        <IonCol size="4" className="listCol">
+                        <IonCol size="2" className="listCol">
                           {val.Company}
                         </IonCol>
-                        <IonCol size="2" className="listCol">
-                          {val.Date}
+                        <IonCol size="5" className="listCol">
+                          <IonDatetime
+                            displayFormat="DD-MMM-YY"
+                            value={val.Date}
+                          ></IonDatetime>
                         </IonCol>
                       </IonItem>
                     </Link>
                   );
-                })} */}
+                })}
               </IonList>
             </IonCol>
           </IonRow>
         </IonGrid>
-
       </IonContent>
     </IonPage>
   );
