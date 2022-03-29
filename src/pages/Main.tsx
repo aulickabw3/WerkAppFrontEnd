@@ -71,39 +71,39 @@ export const Main: React.FC = () => {
           <IonRow className="grid1">
             <IonCol>
               <IonButton
-                href="/MyJobs"
+                href="/MyScheduledJobs"
                 color="warning"
                 size="large"
                 expand="block"
                 fill="solid"
               >
-                My Jobs
+                Scheduled Jobs
               </IonButton>
             </IonCol>
           </IonRow>
           <IonRow className="grid1">
             <IonCol>
               <IonButton
-                href="/ScheduleJob"
+                href="/PastJobs"
                 color="warning"
                 size="large"
                 expand="block"
                 fill="solid"
               >
-                Schedule Job
+                Past Jobs
               </IonButton>
             </IonCol>
           </IonRow>
           <IonRow className="grid1">
-            <IonCol>
+            <IonCol >
               <IonButton
-                href="/Profile"
+                href="/SchedulerView"
                 color="warning"
                 size="large"
                 expand="block"
                 fill="solid"
               >
-                Profile
+                Scheduler View
               </IonButton>
             </IonCol>
           </IonRow>

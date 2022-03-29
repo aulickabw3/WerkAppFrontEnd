@@ -123,7 +123,7 @@ const Profile: React.FC = () => {
               <h3>{profile.Email}</h3>
             </IonCol>
           </IonRow>
-          <IonRow>
+          {/* <IonRow>
             <IonCol>
               <IonLabel>Scheduler: </IonLabel>
               <IonCheckbox
@@ -132,7 +132,7 @@ const Profile: React.FC = () => {
                 // onIonChange={(e) => setChecked(e.detail.checked)}
               />
             </IonCol>
-          </IonRow>
+          </IonRow> */}
           <br></br>
           <br></br>
           <IonRow className="listCol1">

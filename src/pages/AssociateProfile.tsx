@@ -409,14 +409,14 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
               </IonCol>
             </IonRow>
             <IonRow>
-              <IonCol>
+              {/* <IonCol>
                 <IonLabel>Scheduler: </IonLabel>
                 <IonCheckbox
                   className="listCol1"
                   // checked={checked}
                   // onIonChange={(e) => setChecked(e.detail.checked)}
                 />
-              </IonCol>
+              </IonCol> */}
             </IonRow>
             <br></br>
             <br></br>

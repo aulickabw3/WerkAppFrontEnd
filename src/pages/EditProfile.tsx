@@ -17,6 +17,8 @@ import {
   IonImg,
   IonCheckbox,
   useIonViewDidEnter,
+  IonTabBar,
+  IonTabButton,
 } from "@ionic/react";
 import { person, arrowBackCircle, people,camera, trash, close } from "ionicons/icons";
 import axios from "axios";
@@ -99,6 +101,21 @@ const EditProfile: React.FC = () => {
               <Link to="/Profile">
                 <IonIcon size="large" icon={arrowBackCircle} />
               </Link>
+            </IonCol>
+            <IonCol></IonCol>
+            <IonCol></IonCol>
+            <IonCol>
+            <IonButton
+                  href="/Profile"
+                  // type="submit"
+                  color="danger"
+                  // size="large"
+                  // expand="block"
+                  fill="solid"
+                  onClick={handleSubmit}
+                >
+                  Save
+                </IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>
@@ -248,7 +265,7 @@ const EditProfile: React.FC = () => {
               </IonCol>
             </IonRow>
             <br></br>
-            <IonRow>
+            {/* <IonRow>
               <IonCol></IonCol>
               <IonCol>
                 <IonButton
@@ -264,10 +281,31 @@ const EditProfile: React.FC = () => {
                 </IonButton>
               </IonCol>
               <IonCol></IonCol>
-            </IonRow>
+            </IonRow> */}
           </form>
         </IonGrid>
       </IonContent>
+
+      {/* <IonTabBar className="schedulebutton">
+        <IonTabButton>
+          <IonRow>
+            <IonCol></IonCol>
+            <IonCol>
+              <IonButton
+                onClick={handleSubmit}
+                color="danger"
+                size="large"
+                fill="solid"
+                href="/Profile"
+              >
+                Save
+              </IonButton>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+        </IonTabButton>
+      </IonTabBar> */}
+
     </IonPage>
   );
 };

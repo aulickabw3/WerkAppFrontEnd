@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, Route, Link } from "react-router-dom";
-import { IonReactRouter } from "@ionic/react-router";
+import { Link, match, RouteComponentProps } from "react-router-dom";
 import {
   IonContent,
   IonHeader,
@@ -14,65 +13,85 @@ import {
   IonIcon,
   IonLabel,
   IonTabButton,
-  IonModal,
   IonItem,
-  IonInput,
-  IonTextarea,
-  IonDatetime,
-  IonSelect,
-  IonSelectOption,
 } from "@ionic/react";
-// import { format, parseISO } from 'date-fns';
-import axios from "axios";
 import { person, arrowBackCircle } from "ionicons/icons";
-import "./ScheduleJob.css";
+import "./AvailableJob.css";
+import axios from "axios";
 import GetUser from "../components/GetUser";
 
-const ScheduleJob: React.FC = () => {
+interface AssociateProfileProps
+  extends RouteComponentProps<{
+    id: string;
+  }> {}
+
+const SchedAvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
   interface ProfileData {
     UserId: number;
   }
 
-  const [profile, setProfile] = React.useState<ProfileData>({
+  const [profile, setProfile] = useState<ProfileData>({
     UserId: 0,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
-  const [jobId, setJobId] = React.useState("");
-  const [selectedDate, setSelectedDate] = useState("");
-  const [beginSelectedDate, setBeginSelectedDate] = useState("");
-  const [endSelectedDate, setEndSelectedDate] = useState("");
-  const [company, setCompany] = React.useState("");
-  const [location, setLocation] = React.useState("");
-  const [pay, setPay] = React.useState("");
-  const [numberOfWorkers, setnumberOfWorkers] = React.useState(0);
-  const [notes, setNotes] = React.useState("");
+  interface AvailableJobData {
+    JjobId: number;
+    SJobId: string;
+    SchedulerId: string;
+    Date: string;
+    StartTime: string;
+    FinnishTime: string;
+    Company: string;
+    Location: string;
+    Pay: string;
+    Notes: string;
+  }
+
+  const [availableJob, setAvailableJob] = useState<AvailableJobData>({
+    JjobId: 0,
+    SJobId: "",
+    SchedulerId: "",
+    Date: "",
+    StartTime: "",
+    FinnishTime: "",
+    Company: "",
+    Location: "",
+    Pay: "",
+    Notes: "",
+  });
+
+  const fetchAvailableJob = () => {
+    return axios
+      .get("http://localhost:3000/shift/AvailableShift/" + match.params, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        return response.data;
+      });
+  };
+
+  useEffect(() => {
+    fetchAvailableJob().then((data) => setAvailableJob(data.JobInfo));
+  }, []);
 
   const handleSubmit = () => {
-    const newShift = {
-      UserUserId: profile.UserId,
-      ShiftIdentifier: jobId,
-      DateDay: selectedDate,
-      StartDateTime: beginSelectedDate,
-      FinishDateTime: endSelectedDate,
-      Company: company,
-      Location: location,
-      Pay: pay,
-      NumberOfWerkers: numberOfWorkers,
-      ShiftNotes: notes,
+    const werkJob = {
+      UserId: profile.UserId,
     };
 
     axios
-      .post("http://localhost:3000/shifts/CreateShift", { newShift })
-      .then((response) => { 
+      .put("http://localhost:3000/shifts/SchedCancel/" + availableJob.JjobId, {
+        werkJob,
+        withCredentials: true,
+      })
+      .then((response) => {
         console.log(response);
-        return response.data
-      }).then((data) => {
-        console.log(data.ShiftId);
-        window.location.href = "/PublishJob/" + data.ShiftId;
+        window.location.href = "/SchedAvailableJob/" + availableJob.JjobId;
       });
   };
 
@@ -80,14 +99,14 @@ const ScheduleJob: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar color="secondwarning">
-          <IonTitle className="title2">Schedule Job</IonTitle>
+          <IonTitle className="title2">Job Summary</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar color="secondwarning">
             <IonTitle className="title2" size="large">
-              Schedule Job
+              Job Summary
             </IonTitle>
           </IonToolbar>
         </IonHeader>
@@ -95,7 +114,7 @@ const ScheduleJob: React.FC = () => {
           <IonRow className="">
             <IonRow>
               <IonCol>
-                <Link to="/Main">
+                <Link to="/SchedAvailableJobs">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
               </IonCol>
@@ -109,12 +128,7 @@ const ScheduleJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Job ID/#:</h1>
                   </IonLabel>
-                  <IonInput
-                    type="text"
-                    name="Date"
-                    onIonChange={(e: any) => setJobId(e.target.value)}
-                    clearInput
-                  ></IonInput>
+                  <h1>{availableJob.SJobId}</h1>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -122,13 +136,7 @@ const ScheduleJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Date:</h1>
                   </IonLabel>
-                  <IonDatetime
-                    displayFormat="DD-MMM-YY"
-                    min="2022-01-01"
-                    max="2030-01-01"
-                    value={selectedDate}
-                    onIonChange={(e) => setSelectedDate(e.detail.value!)}
-                  ></IonDatetime>
+                  <h1>{availableJob.Date}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -138,11 +146,7 @@ const ScheduleJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Start:</h1>
                   </IonLabel>
-                  <IonDatetime
-                    displayFormat="HH:mm"
-                    value={beginSelectedDate}
-                    onIonChange={(e) => setBeginSelectedDate(e.detail.value!)}
-                  ></IonDatetime>
+                  <h1>{availableJob.StartTime}</h1>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -150,11 +154,7 @@ const ScheduleJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>End:</h1>
                   </IonLabel>
-                  <IonDatetime
-                    displayFormat="HH:mm"
-                    value={endSelectedDate}
-                    onIonChange={(e) => setEndSelectedDate(e.detail.value!)}
-                  ></IonDatetime>
+                  <h1>{availableJob.FinnishTime}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -164,12 +164,7 @@ const ScheduleJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Company:</h1>
                   </IonLabel>
-                  <IonInput
-                    type="text"
-                    name="Company"
-                    onIonChange={(e: any) => setCompany(e.target.value)}
-                    clearInput
-                  ></IonInput>
+                  <h1>{availableJob.Company}</h1>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -177,12 +172,7 @@ const ScheduleJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Location:</h1>
                   </IonLabel>
-                  <IonInput
-                    type="text"
-                    name="Location"
-                    onIonChange={(e: any) => setLocation(e.target.value)}
-                    clearInput
-                  ></IonInput>
+                  <h1>{availableJob.Location}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -191,27 +181,16 @@ const ScheduleJob: React.FC = () => {
               <IonCol size="6">
                 <IonItem>
                   <IonLabel position="stacked">
-                    <h1>Pay: $</h1>
+                    <h1>Pay: </h1>
                   </IonLabel>
-                  <IonInput
-                    type="text"
-                    name="Pay"
-                    onIonChange={(e: any) => setPay(e.target.value)}
-                    clearInput
-                  ></IonInput>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
                 <IonItem>
                   <IonLabel position="stacked">
-                    <h1>How Many:</h1>
+                    <h1>$</h1>
                   </IonLabel>
-                  <IonInput
-                    type="number"
-                    name="NumberOfWerkers"
-                    onIonChange={(e: any) => setnumberOfWorkers(e.target.value)}
-                    clearInput
-                  ></IonInput>
+                  <h1>{availableJob.Pay}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -222,25 +201,23 @@ const ScheduleJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Notes:</h1>
                   </IonLabel>
-                  <IonTextarea
-                    name="Time"
-                    onIonChange={(e: any) => setNotes(e.target.value)}
-                    clearOnEdit={true}
-                  ></IonTextarea>
+                  <h1>{availableJob.Notes}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
             <IonRow>
               <IonCol></IonCol>
               <IonCol>
+                <h2>Need ___ More Werkers</h2>
+              </IonCol>
+              <IonCol>
                 <IonButton
-                  // href="/PublishJob"
                   onClick={handleSubmit}
                   color="danger"
                   size="large"
                   fill="solid"
                 >
-                  Create Job
+                  Cancel
                 </IonButton>
               </IonCol>
               <IonCol></IonCol>
@@ -252,5 +229,4 @@ const ScheduleJob: React.FC = () => {
   );
 };
 
-export default ScheduleJob;
-
+export default SchedAvailableJob;

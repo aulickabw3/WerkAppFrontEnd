@@ -36,13 +36,7 @@ export const SchedulerView: React.FC = () => {
         </IonHeader>
         <h1></h1>
         <IonGrid>
-          <IonRow>
-            <IonCol>
-              <Link to="/MyJobs">
-                <IonIcon size="large" icon={arrowBackCircle} />
-              </Link>
-            </IonCol>
-          </IonRow>
+        
         </IonGrid>
         <IonGrid>
           <IonRow>
@@ -57,13 +51,13 @@ export const SchedulerView: React.FC = () => {
           <IonRow className="grid1">
             <IonCol>
               <IonButton
-                href="/SPastJobs"
+                href="/SchedAvailableJobs"
                 color="secondwarning"
                 size="large"
                 expand="block"
                 fill="outline"
               >
-                Werked Jobs
+                Open Jobs
               </IonButton>
             </IonCol>
           </IonRow>
@@ -83,29 +77,43 @@ export const SchedulerView: React.FC = () => {
           <IonRow className="grid1">
             <IonCol>
               <IonButton
-                href="/SAvailableJobs"
+                href="/SchedPastJobs"
                 color="secondwarning"
                 size="large"
                 expand="block"
                 fill="outline"
               >
-                Scheduled Jobs
+                Past Jobs
               </IonButton>
             </IonCol>
           </IonRow>
           <IonRow className="grid1">
             <IonCol>
               <IonButton
+                href="/ScheduleJob"
+                color="secondwarning"
+                size="large"
+                expand="block"
+                fill="solid"
+              >
+                Schedule A Job
+              </IonButton>
+            </IonCol>
+          </IonRow>
+          {/* <IonRow className="grid1">
+            <IonCol>
+              <IonButton
                 href="/Crews"
                 color="secondwarning"
                 size="large"
                 expand="block"
-                fill="outline"
+                fill="solid"
               >
                 Manage Crews
               </IonButton>
             </IonCol>
-          </IonRow>
+          </IonRow> */}
+          
         </IonGrid>
       </IonContent>
     </IonPage>

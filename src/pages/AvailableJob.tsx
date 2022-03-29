@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, Route, Link } from "react-router-dom";
-import { IonReactRouter } from "@ionic/react-router";
+import { Link, match, RouteComponentProps } from "react-router-dom";
 import {
   IonContent,
   IonHeader,
@@ -17,13 +16,16 @@ import {
   IonItem,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
-import ExploreContainer from "../components/ExploreContainer";
 import "./AvailableJob.css";
 import axios from "axios";
 import GetUser from "../components/GetUser";
 
+interface AssociateProfileProps
+  extends RouteComponentProps<{
+    id: string;
+  }> {}
 
-const AvailableJob: React.FC = () => {
+const AvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
   interface ProfileData {
     UserId: number;
   }
@@ -64,18 +66,16 @@ const AvailableJob: React.FC = () => {
 
   const fetchAvailableJob = () => {
     return axios
-      .get(
-        "http://localhost:3000/job/AvailableJobs/" +
-          availableJob.JjobId,
-        {}
-      )
+      .get("http://localhost:3000/shifts/AvailableJob/" + match.params, {
+        withCredentials: true,
+      })
       .then((response) => {
         console.log(response);
         return response.data;
       });
   };
 
-  useEffect(() => {      
+  useEffect(() => {
     fetchAvailableJob().then((data) => setAvailableJob(data.JobInfo));
   }, []);
 
@@ -85,16 +85,17 @@ const AvailableJob: React.FC = () => {
     };
 
     axios
-      .put("http://localhost:3000/job/WerkJob/" + availableJob.JjobId, { werkJob })
+      .put("http://localhost:3000/shifts/WerkJob/" + availableJob.JjobId, {
+        werkJob,
+        withCredentials: true,
+      })
       .then((response) => {
         console.log(response);
         window.location.href = "/MyJobSummary/" + availableJob.JjobId;
       });
   };
 
-
   return (
-    
     <IonPage>
       <IonHeader>
         <IonToolbar color="warning">
@@ -220,7 +221,6 @@ const AvailableJob: React.FC = () => {
             </IonRow>
           </form>
         </IonGrid>
-
       </IonContent>
     </IonPage>
   );

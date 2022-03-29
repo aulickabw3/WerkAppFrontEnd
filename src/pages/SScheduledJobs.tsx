@@ -18,8 +18,8 @@ import {
   IonTab,
   IonRouterLink,
   IonTabs,
-  IonAvatar,
   useIonViewDidEnter,
+  IonAvatar,
 } from "@ionic/react";
 import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
 import { Link } from "react-router-dom";
@@ -28,7 +28,7 @@ import "./MyJobs.css";
 import GetUser from "../components/GetUser";
 import axios from "axios";
 
-const PastJobs: React.FC = () => {
+const SScheduledJobs: React.FC = () => {
 
   interface ProfileData {
     UserId: number;
@@ -46,7 +46,7 @@ const PastJobs: React.FC = () => {
   }, []);
 
   // Get Array Of All My Associates
-  interface MyPastJobsData {
+  interface MyScheduledJobsData {
     JJobId: number;
     SchedulerId: string;
     Company: string;
@@ -54,20 +54,20 @@ const PastJobs: React.FC = () => {
     SchedulerProfilePicURL: string;
   }
 
-  const [myPastJobs, setMyPastJobs] = React.useState<MyPastJobsData[]>([
+  const [myScheduledJobs, setMyScheduledJobs] = React.useState<MyScheduledJobsData[]>([
     {
       JJobId: 0,
       SchedulerId: "",
-      Company: "You Didn't Werk",
-      Date: "Yet..",
+      Company: "Schedule ",
+      Date: "Some Work!!",
       SchedulerProfilePicURL: '../assets/profilePic.png',
     },
   ]);
 
-  const fetchPastJobs = () => {
+  const fetchScheduledJobs = () => {
     return axios
       .get(
-        "http://localhost:3000/job/MyPastJobs/" +
+        "http://localhost:3000/shift/SchedulerScheduledJobs/" +
           profile.UserId,
         {}
       )
@@ -78,28 +78,28 @@ const PastJobs: React.FC = () => {
   };
 
   useEffect(() => {      
-    fetchPastJobs().then((data) => setMyPastJobs(data.listOfPastJobs));
+    fetchScheduledJobs().then((data) => setMyScheduledJobs(data.listOfJobs));
   }, [profile]);
 
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="warning">
-          <IonTitle className="title2">Past Jobs</IonTitle>
+        <IonToolbar color="secondwarning">
+          <IonTitle className="title2">Scheduled Jobs</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonHeader collapse="condense">
-          <IonToolbar color="warning">
+          <IonToolbar color="secondwarning">
             <IonTitle className="title2" size="large">
-              Past Jobs
+              Scheduled Jobs
             </IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonGrid>
           <IonRow>
             <IonCol>
-            <Link to="/Main">
+            <Link to="/SchedulerView">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
             </IonCol>
@@ -110,9 +110,9 @@ const PastJobs: React.FC = () => {
           <IonRow>
             <IonCol>
               <IonList className="searchBar">
-                {myPastJobs.map((val, key) => {
+                {myScheduledJobs.map((val, key) => {
                   return (
-                    <Link to={`/MyPastJobSummary/${val.JJobId}`}>
+                    <Link to={`/SScheduledJob/${val.JJobId}`}>
                       <IonItem className="searchBar">
                         <IonCol size="2" className="listCol">
                           <IonAvatar>
@@ -136,8 +136,7 @@ const PastJobs: React.FC = () => {
 
       </IonContent>
     </IonPage>
-      
   );
 };
 
-export default PastJobs;
+export default SScheduledJobs;

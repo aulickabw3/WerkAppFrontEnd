@@ -28,7 +28,7 @@ import "./MyJobs.css";
 import GetUser from "../components/GetUser";
 import axios from "axios";
 
-const PastJobs: React.FC = () => {
+const SchedPastJobs: React.FC = () => {
 
   interface ProfileData {
     UserId: number;
@@ -58,7 +58,7 @@ const PastJobs: React.FC = () => {
     {
       JJobId: 0,
       SchedulerId: "",
-      Company: "You Didn't Werk",
+      Company: "You Didn't Sched",
       Date: "Yet..",
       SchedulerProfilePicURL: '../assets/profilePic.png',
     },
@@ -67,7 +67,7 @@ const PastJobs: React.FC = () => {
   const fetchPastJobs = () => {
     return axios
       .get(
-        "http://localhost:3000/job/MyPastJobs/" +
+        "http://localhost:3000/shifts/SchedPastJobs/" +
           profile.UserId,
         {}
       )
@@ -84,13 +84,13 @@ const PastJobs: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="warning">
+        <IonToolbar color="secondwarning">
           <IonTitle className="title2">Past Jobs</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonHeader collapse="condense">
-          <IonToolbar color="warning">
+          <IonToolbar color="secondwarning">
             <IonTitle className="title2" size="large">
               Past Jobs
             </IonTitle>
@@ -99,7 +99,7 @@ const PastJobs: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-            <Link to="/Main">
+            <Link to="/SchedulerView">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
             </IonCol>
@@ -112,7 +112,7 @@ const PastJobs: React.FC = () => {
               <IonList className="searchBar">
                 {myPastJobs.map((val, key) => {
                   return (
-                    <Link to={`/MyPastJobSummary/${val.JJobId}`}>
+                    <Link to={`/SchedPastJob/${val.JJobId}`}>
                       <IonItem className="searchBar">
                         <IonCol size="2" className="listCol">
                           <IonAvatar>
@@ -140,4 +140,4 @@ const PastJobs: React.FC = () => {
   );
 };
 
-export default PastJobs;
+export default SchedPastJobs;

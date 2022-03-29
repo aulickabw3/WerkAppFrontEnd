@@ -67,7 +67,7 @@ const MyScheduledJobs: React.FC = () => {
   const fetchScheduledJobs = () => {
     return axios
       .get(
-        "http://localhost:3000/job/MyScheduledJobs/" +
+        "http://localhost:3000/shift/MyScheduledJobs/" +
           profile.UserId,
         {}
       )
@@ -99,7 +99,7 @@ const MyScheduledJobs: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-            <Link to="/MyJobs">
+            <Link to="/Main">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
             </IonCol>

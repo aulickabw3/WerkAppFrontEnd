@@ -22,7 +22,7 @@ import "./MyJobSummary.css";
 import GetUser from "../components/GetUser";
 import axios from "axios";
 
-const MyPastJobSummary: React.FC = () => {
+const SchedPastJob: React.FC = () => {
 
   interface ProfileData {
     UserId: number;
@@ -65,7 +65,7 @@ const MyPastJobSummary: React.FC = () => {
   const fetchMyPastJob = () => {
     return axios
       .get(
-        "http://localhost:3000/shifts/PastJobs/" +
+        "http://localhost:3000/shifts/SchedPastJobs/" +
           myJob.JjobId,
         {}
       )
@@ -96,13 +96,13 @@ const MyPastJobSummary: React.FC = () => {
     
     <IonPage>
       <IonHeader>
-        <IonToolbar color="warning">
+        <IonToolbar color="secondwarning">
           <IonTitle className="title2">Job Summary</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonHeader collapse="condense">
-          <IonToolbar color="warning">
+          <IonToolbar color="secondwarning">
             <IonTitle className="title2" size="large">
               Job Summary
             </IonTitle>
@@ -112,7 +112,7 @@ const MyPastJobSummary: React.FC = () => {
           <IonRow className="">
             <IonRow>
               <IonCol>
-                <Link to="/PastJobs">
+                <Link to="/SchedPastJobs">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
               </IonCol>
@@ -206,9 +206,10 @@ const MyPastJobSummary: React.FC = () => {
             <IonRow>
             <IonCol></IonCol>
             <IonCol>
-              <IonButton onClick={handlePaid} color="success" size="large" fill="solid">
+              {/* <IonButton onClick={handlePaid} color="success" size="large" fill="solid">
                 Paid
-              </IonButton>
+              </IonButton> */}
+              <h2>Paid/Not Paid</h2>
             </IonCol>
             <IonCol></IonCol>
           </IonRow>
@@ -222,4 +223,4 @@ const MyPastJobSummary: React.FC = () => {
   );
 };
 
-export default MyPastJobSummary;
+export default SchedPastJob;

@@ -86,11 +86,11 @@ export const MyJobs: React.FC = () => {
               </IonButton>
             </IonCol>
           </IonRow>
-          <IonRow className="grid1">
+          {/* <IonRow className="grid1">
             <IonCol >
               <IonButton
                 href="/SchedulerView"
-                color="secondwarning"
+                color="medium"
                 size="large"
                 expand="block"
                 fill="solid"
@@ -98,7 +98,7 @@ export const MyJobs: React.FC = () => {
                 Scheduler View
               </IonButton>
             </IonCol>
-          </IonRow>
+          </IonRow> */}
         </IonGrid>
       </IonContent>
     </IonPage>

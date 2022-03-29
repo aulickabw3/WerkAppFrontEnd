@@ -17,12 +17,11 @@ import {
   IonItem,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
-import ExploreContainer from "../components/ExploreContainer";
 import "./MyJobSummary.css";
 import GetUser from "../components/GetUser";
 import axios from "axios";
 
-const MyPastJobSummary: React.FC = () => {
+const SScheduledJob: React.FC = () => {
 
   interface ProfileData {
     UserId: number;
@@ -62,10 +61,10 @@ const MyPastJobSummary: React.FC = () => {
     Notes: "",
   });
 
-  const fetchMyPastJob = () => {
+  const fetchMyJob = () => {
     return axios
       .get(
-        "http://localhost:3000/shifts/PastJobs/" +
+        "http://localhost:3000/shifts/SchedScheduledShifts/" +
           myJob.JjobId,
         {}
       )
@@ -76,33 +75,46 @@ const MyPastJobSummary: React.FC = () => {
   };
 
   useEffect(() => {      
-    fetchMyPastJob().then((data) => setMyJob(data.JobInfo));
+    fetchMyJob().then((data) => setMyJob(data.JobInfo));
   }, []);
 
-  const handlePaid = () => {
-    const JobPaid = {
+  const handleWerked = () => {
+    const werkJob = {
       UserId: profile.UserId,
     };
 
     axios
-      .put("http://localhost:3000/shifts/Paid/" + myJob.JjobId, { JobPaid })
+      .put("http://localhost:3000/shifts/SchedulerWerkedShift/" + myJob.JjobId, { werkJob })
       .then((response) => {
         console.log(response);
+        window.location.href = "/SScheduledJob/" + myJob.JjobId;
       });
   };
 
+  const handleCancel = () => {
+    const werkJob = {
+      UserId: profile.UserId,
+    };
+
+    axios
+      .put("http://localhost:3000/shifts/SchedulerCancelShift/" + myJob.JjobId, { werkJob })
+      .then((response) => {
+        console.log(response);
+        window.location.href = "/SScheduledJob/" + myJob.JjobId;
+      });
+  };
 
   return (
     
     <IonPage>
       <IonHeader>
-        <IonToolbar color="warning">
+        <IonToolbar color="secondwarning">
           <IonTitle className="title2">Job Summary</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonHeader collapse="condense">
-          <IonToolbar color="warning">
+          <IonToolbar color="secondwarning">
             <IonTitle className="title2" size="large">
               Job Summary
             </IonTitle>
@@ -112,7 +124,7 @@ const MyPastJobSummary: React.FC = () => {
           <IonRow className="">
             <IonRow>
               <IonCol>
-                <Link to="/PastJobs">
+                <Link to="/SScheduledJobs">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
               </IonCol>
@@ -205,21 +217,21 @@ const MyPastJobSummary: React.FC = () => {
             </IonRow>
             <IonRow>
             <IonCol></IonCol>
+            
             <IonCol>
-              <IonButton onClick={handlePaid} color="success" size="large" fill="solid">
-                Paid
+              <IonButton onClick={handleCancel} color="danger" size="large" fill="solid">
+                Cancel 
               </IonButton>
             </IonCol>
             <IonCol></IonCol>
           </IonRow>
           </form>
-        </IonGrid>
-
-      </IonContent>
-    </IonPage>
           
+        </IonGrid>
+      </IonContent>
+    </IonPage>      
 
   );
 };
 
-export default MyPastJobSummary;
+export default SScheduledJob;

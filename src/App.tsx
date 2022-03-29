@@ -48,6 +48,12 @@ import PastJobs from "./pages/PastJobs";
 import MyScheduledJobs from "./pages/MyScheduledJobs";
 import PublishJob from "./pages/PublishJob";
 import MyPastJobSummary from "./pages/MyPastJobSummary";
+import SScheduledJobs from "./pages/SScheduledJobs";
+import SScheduledJob from "./pages/SScheduledJob";
+import SchedAvailableJobs from "./pages/SchedAvailableJobs";
+import SchedAvailableJob from "./pages/SchedAvailableJob";
+import SchedPastJobs from "./pages/SchedPastJobs";
+import SchedPastJob from "./pages/SchedPastJob";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -94,6 +100,12 @@ const App: React.FC = () => (
           <Route path="/MyScheduledJobs" component={MyScheduledJobs} />
           <Route path="/PublishJob/:id" component={PublishJob} />
           <Route path="/MyPastJobSummary/:id" component={MyPastJobSummary} />
+          <Route path="/SScheduledJobs" component={SScheduledJobs} />
+          <Route path="/SScheduledJob/:id" component={SScheduledJob} />
+          <Route path="/SchedAvailableJobs" component={SchedAvailableJobs} />
+          <Route path="/SchedAvailableJob/:id" component={SchedAvailableJob} />
+          <Route path="/SchedPastJobs" component={SchedPastJobs} />
+          <Route path="/SchedPastJob/:id" component={SchedPastJob} />
           <Route
             path="/"
             render={() => <Redirect to="/Login" />}

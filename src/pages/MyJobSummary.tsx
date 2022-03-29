@@ -17,7 +17,6 @@ import {
   IonItem,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
-import ExploreContainer from "../components/ExploreContainer";
 import "./MyJobSummary.css";
 import GetUser from "../components/GetUser";
 import axios from "axios";
@@ -65,7 +64,7 @@ const MyJobSummary: React.FC = () => {
   const fetchMyJob = () => {
     return axios
       .get(
-        "http://localhost:3000/job/AvailableJobs/" +
+        "http://localhost:3000/shifts/MyScheduledShifts/" +
           myJob.JjobId,
         {}
       )
@@ -85,7 +84,7 @@ const MyJobSummary: React.FC = () => {
     };
 
     axios
-      .put("http://localhost:3000/job/WerkedJob/" + myJob.JjobId, { werkJob })
+      .put("http://localhost:3000/shifts/WerkedShift/" + myJob.JjobId, { werkJob })
       .then((response) => {
         console.log(response);
         window.location.href = "/MyJobSummary/" + myJob.JjobId;
@@ -98,7 +97,7 @@ const MyJobSummary: React.FC = () => {
     };
 
     axios
-      .put("http://localhost:3000/job/CancelJob/" + myJob.JjobId, { werkJob })
+      .put("http://localhost:3000/shifts/CancelShift/" + myJob.JjobId, { werkJob })
       .then((response) => {
         console.log(response);
         window.location.href = "/MyJobSummary/" + myJob.JjobId;
