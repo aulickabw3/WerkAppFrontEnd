@@ -96,7 +96,7 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
     };
 
     axios
-      .post("http://localhost:3000/shifts/WerkJob/" + availableJob.JjobId, {
+      .post("http://localhost:3000/shifts/WerkShift/" + availableJob.JjobId, {
         werkJob,
         withCredentials: true,
       })
