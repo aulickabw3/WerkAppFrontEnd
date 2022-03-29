@@ -42,6 +42,7 @@ interface AssociateProfileProps
   }> {}
 
 const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
+  console.log(match.params.id);
 
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   

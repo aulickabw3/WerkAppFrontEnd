@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, match, RouteComponentProps } from "react-router-dom";
+import {
+  Link,
+  matchPath,
+  match,
+  useRouteMatch,
+  RouteComponentProps,
+} from "react-router-dom";
 import {
   IonContent,
   IonHeader,
@@ -14,29 +20,20 @@ import {
   IonLabel,
   IonTabButton,
   IonItem,
+  useIonViewDidEnter,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import "./AvailableJob.css";
 import axios from "axios";
 import GetUser from "../components/GetUser";
 
-interface AssociateProfileProps
+interface AvailableJobProps
   extends RouteComponentProps<{
     id: string;
   }> {}
 
-const AvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
-  interface ProfileData {
-    UserId: number;
-  }
-
-  const [profile, setProfile] = useState<ProfileData>({
-    UserId: 0,
-  });
-
-  useEffect(() => {
-    GetUser().then((data) => setProfile(data.personDataFound));
-  }, []);
+const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
+  console.log(match.params.id);
 
   interface AvailableJobData {
     JjobId: number;
@@ -66,18 +63,32 @@ const AvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
 
   const fetchAvailableJob = () => {
     return axios
-      .get("http://localhost:3000/shifts/AvailableJob/" + match.params, {
-        withCredentials: true,
+      .get("http://localhost:3000/shifts/ShiftDetails/" + match.params.id, {
+        // withCredentials: true,
       })
       .then((response) => {
-        console.log(response);
+        console.log(response)
         return response.data;
       });
   };
 
-  useEffect(() => {
-    fetchAvailableJob().then((data) => setAvailableJob(data.JobInfo));
+  interface ProfileData {
+    UserId: number;
+  }
+
+  const [profile, setProfile] = useState<ProfileData>({
+    UserId: 0,
+  });
+
+  useIonViewDidEnter(() => {
+    fetchAvailableJob()
+      .then((data) => setAvailableJob(data.werkShift))
   }, []);
+
+  useEffect(() => {
+    GetUser().then((data) => setProfile(data.personDataFound));
+  }, [availableJob]);
+
 
   const handleSubmit = () => {
     const werkJob = {
@@ -85,7 +96,7 @@ const AvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
     };
 
     axios
-      .put("http://localhost:3000/shifts/WerkJob/" + availableJob.JjobId, {
+      .post("http://localhost:3000/shifts/WerkJob/" + availableJob.JjobId, {
         werkJob,
         withCredentials: true,
       })
@@ -94,7 +105,7 @@ const AvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
         window.location.href = "/MyJobSummary/" + availableJob.JjobId;
       });
   };
-
+  console.log(match.params.id);
   return (
     <IonPage>
       <IonHeader>

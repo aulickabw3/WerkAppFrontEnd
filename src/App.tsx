@@ -84,7 +84,7 @@ const App: React.FC = () => (
           <Route path="/MyJobs" component={MyJobs} />
           <Route path="/ScheduleJob" component={ScheduleJob} />
           <Route path="/Profile" component={Profile} />
-          <Route path="/AvailableJob" component={AvailableJob} />
+          <Route path="/AvailableJob/:id" component={AvailableJob} />
           <Route path="/Notifications" component={Notifications} />
           <Route path="/MyJobSummary" component={MyJobSummary} />
           <Route path="/Associates" component={Associates} />
