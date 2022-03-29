@@ -64,7 +64,7 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
   const fetchAvailableJob = () => {
     return axios
       .get("http://localhost:3000/shifts/ShiftDetails/" + match.params.id, {
-        // withCredentials: true,
+        withCredentials: true,
       })
       .then((response) => {
         console.log(response)
@@ -93,10 +93,11 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
   const handleSubmit = () => {
     const werkJob = {
       UserId: profile.UserId,
+      ShiftId: availableJob.JjobId,
     };
 
     axios
-      .post("http://localhost:3000/shifts/WerkShift/" + availableJob.JjobId, {
+      .post("http://localhost:3000/shifts/WerkShift/", {
         werkJob,
         withCredentials: true,
       })
