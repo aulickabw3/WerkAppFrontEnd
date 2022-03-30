@@ -21,6 +21,7 @@ import {
   IonTabButton,
   IonItem,
   useIonViewDidEnter,
+  IonDatetime,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import "./AvailableJob.css";
@@ -36,29 +37,29 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
   console.log(match.params.id);
 
   interface AvailableJobData {
-    JjobId: number;
-    SJobId: string;
-    SchedulerId: string;
-    Date: string;
-    StartTime: string;
-    FinnishTime: string;
+    ShiftId: number;
+    ShiftIdentifier: string;
+    UserUserId: string;
+    DateDay: string;
+    StartDateTime: string;
+    FinishDateTime: string;
     Company: string;
     Location: string;
     Pay: string;
-    Notes: string;
+    ShiftNotes: string;
   }
 
   const [availableJob, setAvailableJob] = useState<AvailableJobData>({
-    JjobId: 0,
-    SJobId: "",
-    SchedulerId: "",
-    Date: "",
-    StartTime: "",
-    FinnishTime: "",
+    ShiftId: 0,
+    ShiftIdentifier: "",
+    UserUserId: "",
+    DateDay: "",
+    StartDateTime: "",
+    FinishDateTime: "",
     Company: "",
     Location: "",
     Pay: "",
-    Notes: "",
+    ShiftNotes: "",
   });
 
   const fetchAvailableJob = () => {
@@ -67,7 +68,7 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response)
+        console.log(response);
         return response.data;
       });
   };
@@ -81,19 +82,17 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
   });
 
   useIonViewDidEnter(() => {
-    fetchAvailableJob()
-      .then((data) => setAvailableJob(data.werkShift))
+    fetchAvailableJob().then((data) => setAvailableJob(data.werkShift));
   }, []);
 
   useEffect(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, [availableJob]);
 
-
   const handleSubmit = () => {
     const werkJob = {
       UserId: profile.UserId,
-      ShiftId: availableJob.JjobId,
+      ShiftId: availableJob.ShiftId,
     };
 
     axios
@@ -103,7 +102,7 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
       })
       .then((response) => {
         console.log(response);
-        window.location.href = "/MyJobSummary/" + availableJob.JjobId;
+        window.location.href = "/MyJobSummary/" + availableJob.ShiftId;
       });
   };
   console.log(match.params.id);
@@ -140,7 +139,7 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Job ID/#:</h1>
                   </IonLabel>
-                  <h1>{availableJob.SJobId}</h1>
+                  {availableJob.ShiftIdentifier}
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -148,7 +147,10 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Date:</h1>
                   </IonLabel>
-                  <h1>{availableJob.Date}</h1>
+                  <IonDatetime
+                    displayFormat="DD-MMM-YY"
+                    value={availableJob.DateDay}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -158,7 +160,12 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Start:</h1>
                   </IonLabel>
-                  <h1>{availableJob.StartTime}</h1>
+                  <IonDatetime
+                    // hourValues={12}
+                    // hour-cycle="h12"
+                    displayFormat="HH:mm"
+                    value={availableJob.StartDateTime}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -166,7 +173,10 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>End:</h1>
                   </IonLabel>
-                  <h1>{availableJob.FinnishTime}</h1>
+                  <IonDatetime
+                    displayFormat="HH:mm"
+                    value={availableJob.FinishDateTime}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -176,7 +186,7 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Company:</h1>
                   </IonLabel>
-                  <h1>{availableJob.Company}</h1>
+                  <h3>{availableJob.Company}</h3>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -184,11 +194,10 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Location:</h1>
                   </IonLabel>
-                  <h1>{availableJob.Location}</h1>
+                  <h3>{availableJob.Location}</h3>
                 </IonItem>
               </IonCol>
             </IonRow>
-            <br></br>
             <IonRow className="jobGrid">
               <IonCol size="6">
                 <IonItem>
@@ -197,23 +206,20 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
                   </IonLabel>
                 </IonItem>
               </IonCol>
-              <IonCol size="6">
+              <IonCol size="1"><h1>$</h1></IonCol>
+              <IonCol size="5">
                 <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>$</h1>
-                  </IonLabel>
-                  <h1>{availableJob.Pay}</h1>
+                  <h1 className="money">{availableJob.Pay}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
-            <br></br>
             <IonRow className="jobGrid">
               <IonCol size="12">
                 <IonItem>
                   <IonLabel position="stacked">
                     <h1>Notes:</h1>
                   </IonLabel>
-                  <h1>{availableJob.Notes}</h1>
+                  <h3>{availableJob.ShiftNotes}</h3>
                 </IonItem>
               </IonCol>
             </IonRow>
