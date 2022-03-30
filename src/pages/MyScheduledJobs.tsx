@@ -48,7 +48,7 @@ const MyScheduledJobs: React.FC = () => {
   // Get Array Of All My Associates
   interface MyScheduledJobsData {
     JJobId: number;
-    SchedulerId: string;
+    ShiftIdentifier: string;
     Company: string;
     Date: string;
     SchedulerProfilePicURL: string;
@@ -57,7 +57,7 @@ const MyScheduledJobs: React.FC = () => {
   const [myScheduledJobs, setMyScheduledJobs] = React.useState<MyScheduledJobsData[]>([
     {
       JJobId: 0,
-      SchedulerId: "",
+      ShiftIdentifier: "",
       Company: "Go Get",
       Date: "Some Work!!",
       SchedulerProfilePicURL: '../assets/profilePic.png',
@@ -67,7 +67,7 @@ const MyScheduledJobs: React.FC = () => {
   const fetchScheduledJobs = () => {
     return axios
       .get(
-        "http://localhost:3000/shift/MyScheduledJobs/" +
+        "http://localhost:3000/shifts/MyScheduledJobs/" +
           profile.UserId,
         {}
       )
@@ -78,7 +78,7 @@ const MyScheduledJobs: React.FC = () => {
   };
 
   useEffect(() => {      
-    fetchScheduledJobs().then((data) => setMyScheduledJobs(data.listOfJobs));
+    fetchScheduledJobs().then((data) => setMyScheduledJobs(data.ScheduledShifts2));
   }, [profile]);
 
   return (
@@ -112,7 +112,7 @@ const MyScheduledJobs: React.FC = () => {
               <IonList className="searchBar">
                 {myScheduledJobs.map((val, key) => {
                   return (
-                    <Link to={`/MyJobSummary/${val.JJobId}`}>
+                    <Link to={`/MyJobSummary/${val.ShiftIdentifier}`}>
                       <IonItem className="searchBar">
                         <IonCol size="2" className="listCol">
                           <IonAvatar>
