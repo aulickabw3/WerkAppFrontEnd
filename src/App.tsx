@@ -32,7 +32,7 @@ import ScheduleJob from "./pages/ScheduleJob";
 import Profile from "./pages/Profile";
 import AvailableJob from "./pages/AvailableJob";
 import Notifications from "./pages/Notifications";
-import MyJobSummary from "./pages/MyJobSummary";
+import ScheduledJob from "./pages/ScheduledJob";
 import Associates from "./pages/Associates";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
@@ -45,7 +45,7 @@ import CreateJob from "./pages/CreateJob";
 import Crews from "./pages/Crews";
 import AddNewCrew from "./pages/AddNewCrew";
 import PastJobs from "./pages/PastJobs";
-import MyScheduledJobs from "./pages/MyScheduledJobs";
+import ScheduledJobs from "./pages/ScheduledJobs";
 import PublishJob from "./pages/PublishJob";
 import MyPastJobSummary from "./pages/MyPastJobSummary";
 import SScheduledJobs from "./pages/SScheduledJobs";
@@ -86,7 +86,7 @@ const App: React.FC = () => (
           <Route path="/Profile" component={Profile} />
           <Route path="/AvailableJob/:id" component={AvailableJob} />
           <Route path="/Notifications" component={Notifications} />
-          <Route path="/MyJobSummary" component={MyJobSummary} />
+          <Route path="/ScheduledJob" component={ScheduledJob} />
           <Route path="/Associates" component={Associates} />
           <Route path="/Logout" component={Logout} />
           <Route path="/Search" component={Search} />
@@ -97,7 +97,7 @@ const App: React.FC = () => (
           <Route path="/Crews" component={Crews} />
           <Route path="/AddNewCrew" component={AddNewCrew} />
           <Route path="/PastJobs" component={PastJobs} />
-          <Route path="/MyScheduledJobs" component={MyScheduledJobs} />
+          <Route path="/ScheduledJobs" component={ScheduledJobs} />
           <Route path="/PublishJob/:id" component={PublishJob} />
           <Route path="/MyPastJobSummary/:id" component={MyPastJobSummary} />
           <Route path="/SScheduledJobs" component={SScheduledJobs} />

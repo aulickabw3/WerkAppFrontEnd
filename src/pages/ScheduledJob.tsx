@@ -15,6 +15,7 @@ import {
   IonLabel,
   IonTabButton,
   IonItem,
+  IonDatetime,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import "./MyJobSummary.css";
@@ -22,7 +23,6 @@ import GetUser from "../components/GetUser";
 import axios from "axios";
 
 const MyJobSummary: React.FC = () => {
-
   interface ProfileData {
     UserId: number;
   }
@@ -63,28 +63,26 @@ const MyJobSummary: React.FC = () => {
 
   const fetchMyJob = () => {
     return axios
-      .get(
-        "http://localhost:3000/shifts/MyScheduledShifts/" +
-          myJob.JjobId,
-        {}
-      )
+      .get("http://localhost:3000/shifts/MyScheduledShifts/" + myJob.JjobId, {})
       .then((response) => {
         console.log(response);
         return response.data;
       });
   };
 
-  useEffect(() => {      
+  useEffect(() => {
     fetchMyJob().then((data) => setMyJob(data.JobInfo));
   }, []);
 
+  
   const handleWerked = () => {
     const werkJob = {
       UserId: profile.UserId,
     };
-
     axios
-      .put("http://localhost:3000/shifts/WerkedShift/" + myJob.JjobId, { werkJob })
+      .put("http://localhost:3000/shifts/WerkedShift/" + myJob.JjobId, {
+        werkJob,
+      })
       .then((response) => {
         console.log(response);
         window.location.href = "/MyJobSummary/" + myJob.JjobId;
@@ -95,9 +93,10 @@ const MyJobSummary: React.FC = () => {
     const werkJob = {
       UserId: profile.UserId,
     };
-
     axios
-      .put("http://localhost:3000/shifts/CancelShift/" + myJob.JjobId, { werkJob })
+      .put("http://localhost:3000/shifts/CancelShift/" + myJob.JjobId, {
+        werkJob,
+      })
       .then((response) => {
         console.log(response);
         window.location.href = "/MyJobSummary/" + myJob.JjobId;
@@ -105,7 +104,6 @@ const MyJobSummary: React.FC = () => {
   };
 
   return (
-    
     <IonPage>
       <IonHeader>
         <IonToolbar color="warning">
@@ -124,7 +122,7 @@ const MyJobSummary: React.FC = () => {
           <IonRow className="">
             <IonRow>
               <IonCol>
-                <Link to="/MyScheduledJobs">
+                <Link to="/AvailableJobs">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
               </IonCol>
@@ -138,7 +136,7 @@ const MyJobSummary: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Job ID/#:</h1>
                   </IonLabel>
-                  <h1>{myJob.SJobId}</h1>
+                  {myJob.SJobId}
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -146,7 +144,10 @@ const MyJobSummary: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Date:</h1>
                   </IonLabel>
-                  <h1>{myJob.Date}</h1>
+                  <IonDatetime
+                    displayFormat="DD-MMM-YY"
+                    value={myJob.Date}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -156,7 +157,12 @@ const MyJobSummary: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Start:</h1>
                   </IonLabel>
-                  <h1>{myJob.StartTime}</h1>
+                  <IonDatetime
+                    // hourValues={12}
+                    // hour-cycle="h12"
+                    displayFormat="HH:mm"
+                    value={myJob.StartTime}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -164,7 +170,10 @@ const MyJobSummary: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>End:</h1>
                   </IonLabel>
-                  <h1>{myJob.FinnishTime}</h1>
+                  <IonDatetime
+                    displayFormat="HH:mm"
+                    value={myJob.FinnishTime}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -174,7 +183,7 @@ const MyJobSummary: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Company:</h1>
                   </IonLabel>
-                  <h1>{myJob.Company}</h1>
+                  <h3>{myJob.Company}</h3>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -182,11 +191,10 @@ const MyJobSummary: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Location:</h1>
                   </IonLabel>
-                  <h1>{myJob.Location}</h1>
+                  <h3>{myJob.Location}</h3>
                 </IonItem>
               </IonCol>
             </IonRow>
-            <br></br>
             <IonRow className="jobGrid">
               <IonCol size="6">
                 <IonItem>
@@ -195,47 +203,54 @@ const MyJobSummary: React.FC = () => {
                   </IonLabel>
                 </IonItem>
               </IonCol>
-              <IonCol size="6">
+              <IonCol size="1">
+                <h1>$</h1>
+              </IonCol>
+              <IonCol size="5">
                 <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>$</h1>
-                  </IonLabel>
-                  <h1>{myJob.Pay}</h1>
+                  <h1 className="money">{myJob.Pay}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
-            <br></br>
             <IonRow className="jobGrid">
               <IonCol size="12">
                 <IonItem>
                   <IonLabel position="stacked">
                     <h1>Notes:</h1>
                   </IonLabel>
-                  <h1>{myJob.Notes}</h1>
+                  <h3>{myJob.Notes}</h3>
                 </IonItem>
               </IonCol>
             </IonRow>
+            <br></br>
             <IonRow>
-            <IonCol></IonCol>
-            <IonCol>
-              <IonButton onClick={handleWerked} color="success" size="large" fill="solid">
-                Werked
-              </IonButton>
-            </IonCol>
-            <IonCol>
-              <IonButton onClick={handleCancel} color="danger" size="large" fill="solid">
-                Cancel 
-              </IonButton>
-            </IonCol>
-            <IonCol></IonCol>
-          </IonRow>
+              <IonCol></IonCol>
+              <IonCol>
+                <IonButton
+                  onClick={handleWerked}
+                  color="success"
+                  size="large"
+                  fill="solid"
+                >
+                  Werked
+                </IonButton>
+              </IonCol>
+              <IonCol>
+                <IonButton
+                  onClick={handleCancel}
+                  color="danger"
+                  size="large"
+                  fill="solid"
+                >
+                  Cancel
+                </IonButton>
+              </IonCol>
+              <IonCol></IonCol>
+            </IonRow>
           </form>
         </IonGrid>
-
       </IonContent>
     </IonPage>
-          
-
   );
 };
 

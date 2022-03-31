@@ -71,7 +71,7 @@ export const Main: React.FC = () => {
           <IonRow className="grid1">
             <IonCol>
               <IonButton
-                href="/MyScheduledJobs"
+                href="/ScheduledJobs"
                 color="warning"
                 size="large"
                 expand="block"
