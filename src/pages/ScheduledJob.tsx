@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Redirect, Route, Link } from "react-router-dom";
+import {
+  Link,
+  matchPath,
+  match,
+  useRouteMatch,
+  RouteComponentProps,
+} from "react-router-dom";
 import { IonReactRouter } from "@ionic/react-router";
 import {
   IonContent,
@@ -22,7 +28,12 @@ import "./MyJobSummary.css";
 import GetUser from "../components/GetUser";
 import axios from "axios";
 
-const MyJobSummary: React.FC = () => {
+interface ScheduledJobProps
+  extends RouteComponentProps<{
+    id: string;
+  }> {}
+
+const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
   interface ProfileData {
     UserId: number;
   }
@@ -36,34 +47,34 @@ const MyJobSummary: React.FC = () => {
   }, []);
 
   interface MyJobData {
-    JjobId: number;
-    SJobId: string;
+    ShiftId: number;
+    ShiftIdentifier: string;
     SchedulerId: string;
-    Date: string;
-    StartTime: string;
-    FinnishTime: string;
+    DateDay: string;
+    StartDateTime: string;
+    FinishDateTime: string;
     Company: string;
     Location: string;
     Pay: string;
-    Notes: string;
+    ShiftNotes: string;
   }
 
   const [myJob, setMyJob] = useState<MyJobData>({
-    JjobId: 0,
-    SJobId: "",
+    ShiftId: 0,
+    ShiftIdentifier: "",
     SchedulerId: "",
-    Date: "",
-    StartTime: "",
-    FinnishTime: "",
+    DateDay: "",
+    StartDateTime: "",
+    FinishDateTime: "",
     Company: "",
     Location: "",
     Pay: "",
-    Notes: "",
+    ShiftNotes: "",
   });
 
   const fetchMyJob = () => {
     return axios
-      .get("http://localhost:3000/shifts/MyScheduledShifts/" + myJob.JjobId, {})
+      .get("http://localhost:3000/shifts/ShiftDetails/" + match.params.id, {})
       .then((response) => {
         console.log(response);
         return response.data;
@@ -71,21 +82,21 @@ const MyJobSummary: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchMyJob().then((data) => setMyJob(data.JobInfo));
+    fetchMyJob().then((data) => setMyJob(data.werkShift));
   }, []);
 
-  
+
   const handleWerked = () => {
     const werkJob = {
       UserId: profile.UserId,
     };
     axios
-      .put("http://localhost:3000/shifts/WerkedShift/" + myJob.JjobId, {
+      .put("http://localhost:3000/shifts/WerkedShift/" + myJob.ShiftId, {
         werkJob,
       })
       .then((response) => {
         console.log(response);
-        window.location.href = "/MyJobSummary/" + myJob.JjobId;
+        window.location.href = "/MyJobSummary/" + myJob.ShiftId;
       });
   };
 
@@ -94,12 +105,12 @@ const MyJobSummary: React.FC = () => {
       UserId: profile.UserId,
     };
     axios
-      .put("http://localhost:3000/shifts/CancelShift/" + myJob.JjobId, {
+      .put("http://localhost:3000/shifts/CancelShift/" + myJob.ShiftId, {
         werkJob,
       })
       .then((response) => {
         console.log(response);
-        window.location.href = "/MyJobSummary/" + myJob.JjobId;
+        window.location.href = "/MyJobSummary/" + myJob.ShiftId;
       });
   };
 
@@ -122,7 +133,7 @@ const MyJobSummary: React.FC = () => {
           <IonRow className="">
             <IonRow>
               <IonCol>
-                <Link to="/AvailableJobs">
+                <Link to="/ScheduledJobs">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
               </IonCol>
@@ -136,7 +147,7 @@ const MyJobSummary: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Job ID/#:</h1>
                   </IonLabel>
-                  {myJob.SJobId}
+                  {myJob.ShiftIdentifier}
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -146,7 +157,7 @@ const MyJobSummary: React.FC = () => {
                   </IonLabel>
                   <IonDatetime
                     displayFormat="DD-MMM-YY"
-                    value={myJob.Date}
+                    value={myJob.DateDay}
                   ></IonDatetime>
                 </IonItem>
               </IonCol>
@@ -161,7 +172,7 @@ const MyJobSummary: React.FC = () => {
                     // hourValues={12}
                     // hour-cycle="h12"
                     displayFormat="HH:mm"
-                    value={myJob.StartTime}
+                    value={myJob.StartDateTime}
                   ></IonDatetime>
                 </IonItem>
               </IonCol>
@@ -172,7 +183,7 @@ const MyJobSummary: React.FC = () => {
                   </IonLabel>
                   <IonDatetime
                     displayFormat="HH:mm"
-                    value={myJob.FinnishTime}
+                    value={myJob.FinishDateTime}
                   ></IonDatetime>
                 </IonItem>
               </IonCol>
@@ -218,7 +229,7 @@ const MyJobSummary: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Notes:</h1>
                   </IonLabel>
-                  <h3>{myJob.Notes}</h3>
+                  <h3>{myJob.ShiftNotes}</h3>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -254,4 +265,4 @@ const MyJobSummary: React.FC = () => {
   );
 };
 
-export default MyJobSummary;
+export default ScheduledJob;
