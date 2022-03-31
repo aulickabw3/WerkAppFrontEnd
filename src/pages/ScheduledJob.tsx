@@ -87,12 +87,14 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
 
 
   const handleWerked = () => {
-    const werkJob = {
+    const updateWerkerShiftStatus = {
       UserId: profile.UserId,
+      ShiftId: myJob.ShiftId,
+      UpdateStatus: 'Werked'
     };
     axios
-      .put("http://localhost:3000/shifts/WerkedShift/" + myJob.ShiftId, {
-        werkJob,
+      .put("http://localhost:3000/shifts/ShiftStatusUpdate/", {
+        updateWerkerShiftStatus,
       })
       .then((response) => {
         console.log(response);
@@ -101,12 +103,15 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
   };
 
   const handleCancel = () => {
-    const werkJob = {
+    const updateWerkerShiftStatus = {
       UserId: profile.UserId,
+      ShiftId: myJob.ShiftId,
+      UpdateStatus: 'Cancelled'
     };
     axios
-      .put("http://localhost:3000/shifts/CancelShift/" + myJob.ShiftId, {
-        werkJob,
+      .put("http://localhost:3000/shifts/ShiftStatusUpdate/", {
+        updateWerkerShiftStatus,
+
       })
       .then((response) => {
         console.log(response);
