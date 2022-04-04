@@ -109,8 +109,7 @@ const AvailableJobs: React.FC = () => {
             <IonCol>
               <IonList className="searchBar">
                 {availableJobs.map((val, key) => {
-                  console.log(typeof val.JJobId);
-                  console.log(val.JJobId);
+                  key = val.JJobId
                   return (
                     <Link to={`/AvailableJob/${val.JJobId}`}>
                       <IonItem className="searchBar">

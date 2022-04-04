@@ -18,7 +18,6 @@ import {
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import ExploreContainer from "../components/ExploreContainer";
-import "./MyJobSummary.css";
 import GetUser from "../components/GetUser";
 import axios from "axios";
 

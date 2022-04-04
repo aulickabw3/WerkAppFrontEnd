@@ -24,7 +24,6 @@ import {
   IonDatetime,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
-import "./MyJobSummary.css";
 import GetUser from "../components/GetUser";
 import axios from "axios";
 
@@ -98,7 +97,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
       })
       .then((response) => {
         console.log(response);
-        window.location.href = "/MyJobSummary/" + myJob.ShiftId;
+        window.location.href = "/PastJob/" + myJob.ShiftId;
       });
   };
 
@@ -115,7 +114,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
       })
       .then((response) => {
         console.log(response);
-        window.location.href = "/MyJobSummary/" + myJob.ShiftId;
+        window.location.href = "/PastJob/" + myJob.ShiftId;
       });
   };
 

@@ -113,6 +113,7 @@ const ScheduledJobs: React.FC = () => {
             <IonCol>
               <IonList className="searchBar">
                 {myScheduledJobs.map((val, key) => {
+                  key = val.ShiftShiftId
                   return (
                     <Link to={`/ScheduledJob/${val.ShiftShiftId}`}>
                       <IonItem className="searchBar">

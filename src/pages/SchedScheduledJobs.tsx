@@ -20,6 +20,7 @@ import {
   IonTabs,
   useIonViewDidEnter,
   IonAvatar,
+  IonDatetime,
 } from "@ionic/react";
 import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
 import { Link } from "react-router-dom";
@@ -28,7 +29,7 @@ import "./MyJobs.css";
 import GetUser from "../components/GetUser";
 import axios from "axios";
 
-const SScheduledJobs: React.FC = () => {
+const SchedScheduledJobs: React.FC = () => {
 
   interface ProfileData {
     UserId: number;
@@ -46,21 +47,21 @@ const SScheduledJobs: React.FC = () => {
   }, []);
 
   // Get Array Of All My Associates
-  interface MyScheduledJobsData {
-    JJobId: number;
-    SchedulerId: string;
+  interface SchedScheduledJobsData {
+    ShiftShiftId: number;
+    // ShiftIdentifier: string;
     Company: string;
     Date: string;
     SchedulerProfilePicURL: string;
   }
 
-  const [myScheduledJobs, setMyScheduledJobs] = React.useState<MyScheduledJobsData[]>([
+  const [schedScheduledJobs, setSchedScheduledJobs] = React.useState<SchedScheduledJobsData[]>([
     {
-      JJobId: 0,
-      SchedulerId: "",
-      Company: "Schedule ",
+      ShiftShiftId: 0,
+      // ShiftIdentifier: "",
+      Company: "Go Get",
       Date: "Some Work!!",
-      SchedulerProfilePicURL: '../assets/profilePic.png',
+      SchedulerProfilePicURL: "../assets/profilePic.png",
     },
   ]);
 
@@ -78,7 +79,7 @@ const SScheduledJobs: React.FC = () => {
   };
 
   useEffect(() => {      
-    fetchScheduledJobs().then((data) => setMyScheduledJobs(data.listOfJobs));
+    fetchScheduledJobs().then((data) => setSchedScheduledJobs(data.listOfJobs));
   }, [profile]);
 
   return (
@@ -110,20 +111,24 @@ const SScheduledJobs: React.FC = () => {
           <IonRow>
             <IonCol>
               <IonList className="searchBar">
-                {myScheduledJobs.map((val, key) => {
+                {schedScheduledJobs.map((val, key) => {
+                  key = val.ShiftShiftId
                   return (
-                    <Link to={`/SScheduledJob/${val.JJobId}`}>
+                    <Link to={`/SchedScheduledJob/${val.ShiftShiftId}`}>
                       <IonItem className="searchBar">
                         <IonCol size="2" className="listCol">
                           <IonAvatar>
                             <img src={val.SchedulerProfilePicURL} />
                           </IonAvatar>
                         </IonCol>
-                        <IonCol size="4" className="listCol">
+                        <IonCol size="2" className="listCol">
                           {val.Company}
                         </IonCol>
-                        <IonCol size="2" className="listCol">
-                          {val.Date}
+                        <IonCol size="5" className="listCol">
+                          <IonDatetime
+                            displayFormat="DD-MMM-YY"
+                            value={val.Date}
+                          ></IonDatetime>
                         </IonCol>
                       </IonItem>
                     </Link>
@@ -139,4 +144,4 @@ const SScheduledJobs: React.FC = () => {
   );
 };
 
-export default SScheduledJobs;
+export default SchedScheduledJobs;

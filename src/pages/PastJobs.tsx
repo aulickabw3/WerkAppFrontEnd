@@ -20,6 +20,7 @@ import {
   IonTabs,
   IonAvatar,
   useIonViewDidEnter,
+  IonDatetime,
 } from "@ionic/react";
 import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
 import { Link } from "react-router-dom";
@@ -29,7 +30,6 @@ import GetUser from "../components/GetUser";
 import axios from "axios";
 
 const PastJobs: React.FC = () => {
-
   interface ProfileData {
     UserId: number;
     FirstName: string;
@@ -47,8 +47,8 @@ const PastJobs: React.FC = () => {
 
   // Get Array Of All My Associates
   interface MyPastJobsData {
-    JJobId: number;
-    SchedulerId: string;
+    ShiftShiftId: number;
+    // ShiftIdentifier: string;
     Company: string;
     Date: string;
     SchedulerProfilePicURL: string;
@@ -56,29 +56,25 @@ const PastJobs: React.FC = () => {
 
   const [myPastJobs, setMyPastJobs] = React.useState<MyPastJobsData[]>([
     {
-      JJobId: 0,
-      SchedulerId: "",
-      Company: "You Didn't Werk",
-      Date: "Yet..",
-      SchedulerProfilePicURL: '../assets/profilePic.png',
+      ShiftShiftId: 0,
+      // ShiftIdentifier: "",
+      Company: "Go Get",
+      Date: "Some Work!!",
+      SchedulerProfilePicURL: "../assets/profilePic.png",
     },
   ]);
 
   const fetchPastJobs = () => {
     return axios
-      .get(
-        "http://localhost:3000/job/MyPastJobs/" +
-          profile.UserId,
-        {}
-      )
+      .get("http://localhost:3000/shifts/MyPastJobs/" + profile.UserId, {})
       .then((response) => {
         console.log(response);
         return response.data;
       });
   };
 
-  useEffect(() => {      
-    fetchPastJobs().then((data) => setMyPastJobs(data.listOfPastJobs));
+  useEffect(() => {
+    fetchPastJobs().then((data) => setMyPastJobs(data.pastShifts2));
   }, [profile]);
 
   return (
@@ -99,9 +95,9 @@ const PastJobs: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-            <Link to="/Main">
-                  <IonIcon size="large" icon={arrowBackCircle} />
-                </Link>
+              <Link to="/Main">
+                <IonIcon size="large" icon={arrowBackCircle} />
+              </Link>
             </IonCol>
           </IonRow>
         </IonGrid>
@@ -111,19 +107,23 @@ const PastJobs: React.FC = () => {
             <IonCol>
               <IonList className="searchBar">
                 {myPastJobs.map((val, key) => {
+                  key = val.ShiftShiftId
                   return (
-                    <Link to={`/MyPastJobSummary/${val.JJobId}`}>
+                    <Link to={`/PastJob/${val.ShiftShiftId}`}>
                       <IonItem className="searchBar">
                         <IonCol size="2" className="listCol">
                           <IonAvatar>
                             <img src={val.SchedulerProfilePicURL} />
                           </IonAvatar>
                         </IonCol>
-                        <IonCol size="4" className="listCol">
+                        <IonCol size="2" className="listCol">
                           {val.Company}
                         </IonCol>
-                        <IonCol size="2" className="listCol">
-                          {val.Date}
+                        <IonCol size="5" className="listCol">
+                          <IonDatetime
+                            displayFormat="DD-MMM-YY"
+                            value={val.Date}
+                          ></IonDatetime>
                         </IonCol>
                       </IonItem>
                     </Link>
@@ -133,10 +133,8 @@ const PastJobs: React.FC = () => {
             </IonCol>
           </IonRow>
         </IonGrid>
-
       </IonContent>
     </IonPage>
-      
   );
 };
 

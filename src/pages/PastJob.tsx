@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Redirect, Route, Link } from "react-router-dom";
+import {
+  Link,
+  matchPath,
+  match,
+  useRouteMatch,
+  RouteComponentProps,
+} from "react-router-dom";
 import { IonReactRouter } from "@ionic/react-router";
 import {
   IonContent,
@@ -15,14 +21,18 @@ import {
   IonLabel,
   IonTabButton,
   IonItem,
+  IonDatetime,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
-import ExploreContainer from "../components/ExploreContainer";
-import "./MyJobSummary.css";
 import GetUser from "../components/GetUser";
 import axios from "axios";
 
-const MyPastJobSummary: React.FC = () => {
+interface PastJobProps
+  extends RouteComponentProps<{
+    id: string;
+  }> {}
+
+const PastJob: React.FC<PastJobProps> = ({match}) => {
 
   interface ProfileData {
     UserId: number;
@@ -37,38 +47,34 @@ const MyPastJobSummary: React.FC = () => {
   }, []);
 
   interface MyJobData {
-    JjobId: number;
-    SJobId: string;
+    ShiftId: number;
+    ShiftIdentifier: string;
     SchedulerId: string;
-    Date: string;
-    StartTime: string;
-    FinnishTime: string;
+    DateDay: string;
+    StartDateTime: string;
+    FinishDateTime: string;
     Company: string;
     Location: string;
     Pay: string;
-    Notes: string;
+    ShiftNotes: string;
   }
 
-  const [myJob, setMyJob] = useState<MyJobData>({
-    JjobId: 0,
-    SJobId: "",
+  const [myPastJob, setMyPastJob] = useState<MyJobData>({
+    ShiftId: 0,
+    ShiftIdentifier: "",
     SchedulerId: "",
-    Date: "",
-    StartTime: "",
-    FinnishTime: "",
+    DateDay: "",
+    StartDateTime: "",
+    FinishDateTime: "",
     Company: "",
     Location: "",
     Pay: "",
-    Notes: "",
+    ShiftNotes: "",
   });
 
   const fetchMyPastJob = () => {
     return axios
-      .get(
-        "http://localhost:3000/shifts/PastJobs/" +
-          myJob.JjobId,
-        {}
-      )
+      .get("http://localhost:3000/shifts/ShiftDetails/" + match.params.id, {})
       .then((response) => {
         console.log(response);
         return response.data;
@@ -76,21 +82,25 @@ const MyPastJobSummary: React.FC = () => {
   };
 
   useEffect(() => {      
-    fetchMyPastJob().then((data) => setMyJob(data.JobInfo));
+    fetchMyPastJob().then((data) => setMyPastJob(data.werkShift));
   }, []);
 
   const handlePaid = () => {
-    const JobPaid = {
+    const updateWerkerShiftStatus = {
       UserId: profile.UserId,
+      ShiftId: myPastJob.ShiftId,
+      IsPaid: true
     };
 
     axios
-      .put("http://localhost:3000/shifts/Paid/" + myJob.JjobId, { JobPaid })
+      .put("http://localhost:3000/shifts/WerkerIsPaid/", { updateWerkerShiftStatus })
       .then((response) => {
         console.log(response);
+        window.location.href = "/PastJob/" + myPastJob.ShiftId;
       });
   };
 
+  console.log(match.params.id);
 
   return (
     
@@ -126,7 +136,7 @@ const MyPastJobSummary: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Job ID/#:</h1>
                   </IonLabel>
-                  <h1>{myJob.SJobId}</h1>
+                  {myPastJob.ShiftIdentifier}
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -134,7 +144,10 @@ const MyPastJobSummary: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Date:</h1>
                   </IonLabel>
-                  <h1>{myJob.Date}</h1>
+                  <IonDatetime
+                    displayFormat="DD-MMM-YY"
+                    value={myPastJob.DateDay}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -144,7 +157,12 @@ const MyPastJobSummary: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Start:</h1>
                   </IonLabel>
-                  <h1>{myJob.StartTime}</h1>
+                  <IonDatetime
+                    // hourValues={12}
+                    // hour-cycle="h12"
+                    displayFormat="HH:mm"
+                    value={myPastJob.StartDateTime}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -152,7 +170,10 @@ const MyPastJobSummary: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>End:</h1>
                   </IonLabel>
-                  <h1>{myJob.FinnishTime}</h1>
+                  <IonDatetime
+                    displayFormat="HH:mm"
+                    value={myPastJob.FinishDateTime}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -162,7 +183,7 @@ const MyPastJobSummary: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Company:</h1>
                   </IonLabel>
-                  <h1>{myJob.Company}</h1>
+                  <h3>{myPastJob.Company}</h3>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -170,11 +191,10 @@ const MyPastJobSummary: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Location:</h1>
                   </IonLabel>
-                  <h1>{myJob.Location}</h1>
+                  <h3>{myPastJob.Location}</h3>
                 </IonItem>
               </IonCol>
             </IonRow>
-            <br></br>
             <IonRow className="jobGrid">
               <IonCol size="6">
                 <IonItem>
@@ -183,38 +203,43 @@ const MyPastJobSummary: React.FC = () => {
                   </IonLabel>
                 </IonItem>
               </IonCol>
-              <IonCol size="6">
+              <IonCol size="1">
+                <h1>$</h1>
+              </IonCol>
+              <IonCol size="5">
                 <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>$</h1>
-                  </IonLabel>
-                  <h1>{myJob.Pay}</h1>
+                  <h1 className="money">{myPastJob.Pay}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
-            <br></br>
             <IonRow className="jobGrid">
               <IonCol size="12">
                 <IonItem>
                   <IonLabel position="stacked">
                     <h1>Notes:</h1>
                   </IonLabel>
-                  <h1>{myJob.Notes}</h1>
+                  <h3>{myPastJob.ShiftNotes}</h3>
                 </IonItem>
               </IonCol>
             </IonRow>
+            <br></br>
             <IonRow>
-            <IonCol></IonCol>
-            <IonCol>
-              <IonButton onClick={handlePaid} color="success" size="large" fill="solid">
-                Paid
-              </IonButton>
-            </IonCol>
-            <IonCol></IonCol>
-          </IonRow>
+              <IonCol></IonCol>
+              <IonCol>
+                <IonButton
+                  onClick={handlePaid}
+                  color="success"
+                  size="large"
+                  fill="solid"
+                >
+                  Paid
+                </IonButton>
+              </IonCol>
+
+              <IonCol></IonCol>
+            </IonRow>
           </form>
         </IonGrid>
-
       </IonContent>
     </IonPage>
           
@@ -222,4 +247,4 @@ const MyPastJobSummary: React.FC = () => {
   );
 };
 
-export default MyPastJobSummary;
+export default PastJob;

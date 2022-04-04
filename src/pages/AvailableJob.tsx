@@ -102,7 +102,7 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
       })
       .then((response) => {
         console.log(response);
-        window.location.href = "/MyJobSummary/" + availableJob.ShiftId;
+        window.location.href = "/ScheduledJob/" + availableJob.ShiftId;
       });
   };
   console.log(match.params.id);

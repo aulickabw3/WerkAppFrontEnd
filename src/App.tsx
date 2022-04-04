@@ -47,9 +47,9 @@ import AddNewCrew from "./pages/AddNewCrew";
 import PastJobs from "./pages/PastJobs";
 import ScheduledJobs from "./pages/ScheduledJobs";
 import PublishJob from "./pages/PublishJob";
-import MyPastJobSummary from "./pages/MyPastJobSummary";
-import SScheduledJobs from "./pages/SScheduledJobs";
-import SScheduledJob from "./pages/SScheduledJob";
+import PastJob from "./pages/PastJob";
+import SchedScheduledJobs from "./pages/SchedScheduledJobs";
+import SchedScheduledJob from "./pages/SchedScheduledJob";
 import SchedAvailableJobs from "./pages/SchedAvailableJobs";
 import SchedAvailableJob from "./pages/SchedAvailableJob";
 import SchedPastJobs from "./pages/SchedPastJobs";
@@ -99,9 +99,9 @@ const App: React.FC = () => (
           <Route path="/PastJobs" component={PastJobs} />
           <Route path="/ScheduledJobs" component={ScheduledJobs} />
           <Route path="/PublishJob/:id" component={PublishJob} />
-          <Route path="/MyPastJobSummary/:id" component={MyPastJobSummary} />
-          <Route path="/SScheduledJobs" component={SScheduledJobs} />
-          <Route path="/SScheduledJob/:id" component={SScheduledJob} />
+          <Route path="/PastJob/:id" component={PastJob} />
+          <Route path="/SchedScheduledJobs" component={SchedScheduledJobs} />
+          <Route path="/SchedScheduledJob/:id" component={SchedScheduledJob} />
           <Route path="/SchedAvailableJobs" component={SchedAvailableJobs} />
           <Route path="/SchedAvailableJob/:id" component={SchedAvailableJob} />
           <Route path="/SchedPastJobs" component={SchedPastJobs} />
