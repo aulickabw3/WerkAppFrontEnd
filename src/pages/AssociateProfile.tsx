@@ -305,11 +305,16 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     );
   };
 
+  const BackButton: React.FC = () => {
+    return (<p>"/Associates"</p>);
+  };
+
   // Render Conditional Associate Profile Action Button
   const AssociateProfileActions: React.FC = () => {
     console.log(association.RequestStatus);
     if (association.RequestStatus == "RequestAccepted") {
-      return <MyAssociateProfile />;
+      return <MyAssociateProfile /> && <BackButton />;
+
     }
     if (association.RequestStatus == "RequestReceived") {
       return <PendingAssociateProfile />;

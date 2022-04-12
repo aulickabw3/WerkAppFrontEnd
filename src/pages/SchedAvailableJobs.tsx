@@ -75,7 +75,7 @@ const SchedAvailableJobs: React.FC = () => {
     });
   }, [profile]);
 
-  console.log(availableJobs);
+  console.log(profile.UserId);
 
   return (
     <IonPage>
