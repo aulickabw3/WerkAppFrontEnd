@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, match, RouteComponentProps } from "react-router-dom";
+import { Link, match, RouteComponentProps, matchPath, useRouteMatch } from "react-router-dom";
 import {
   IonContent,
   IonHeader,
@@ -20,12 +20,12 @@ import "./AvailableJob.css";
 import axios from "axios";
 import GetUser from "../components/GetUser";
 
-interface AssociateProfileProps
+interface SchedAvailableJobProps
   extends RouteComponentProps<{
     id: string;
   }> {}
 
-const SchedAvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
+const SchedAvailableJob: React.FC<SchedAvailableJobProps> = ({ match }) => {
   interface ProfileData {
     UserId: number;
   }
@@ -38,35 +38,59 @@ const SchedAvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
+
   interface AvailableJobData {
-    JjobId: number;
-    SJobId: string;
-    SchedulerId: string;
-    Date: string;
-    StartTime: string;
-    FinnishTime: string;
+    ShiftId: number;
+    ShiftIdentifier: string;
+    UserUserId: string;
+    DateDay: string;
+    StartDateTime: string;
+    FinishDateTime: string;
+    NumberOfWerkers: number;
     Company: string;
     Location: string;
     Pay: string;
-    Notes: string;
+    ShiftNotes: string;
   }
-
-  const [availableJob, setAvailableJob] = useState<AvailableJobData>({
-    JjobId: 0,
-    SJobId: "",
-    SchedulerId: "",
-    Date: "",
-    StartTime: "",
-    FinnishTime: "",
+  const [werkShift, setWerkShift] = useState<AvailableJobData>({
+    ShiftId: 0,
+    ShiftIdentifier: "",
+    UserUserId: "",
+    DateDay: "",
+    StartDateTime: "",
+    FinishDateTime: "",
+    NumberOfWerkers: 0,
     Company: "",
     Location: "",
     Pay: "",
-    Notes: "",
+    ShiftNotes: "",
   });
+
+  interface SchedWerkersData {
+      UserId: number,
+      FirstName: string,
+      LastName: string
+  }
+  const [werkers, setWerkers] = useState<SchedWerkersData[]>([
+    {
+      UserId: 0,
+      FirstName: "",
+      LastName: ""
+    },
+  ]);
+
+  interface OpenShiftData {
+    unfilledshifts: number
+  }
+  const [openShifts, setOpenShifts] = useState<OpenShiftData>(
+    {
+      unfilledshifts: 0
+    }
+  );
 
   const fetchAvailableJob = () => {
     return axios
-      .get("http://localhost:3000/shift/AvailableShift/" + match.params, {
+      .get("http://localhost:3000/shifts/SchedShiftDetails/" + match.params.id, {
         withCredentials: true,
       })
       .then((response) => {
@@ -76,8 +100,14 @@ const SchedAvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
   };
 
   useEffect(() => {
-    fetchAvailableJob().then((data) => setAvailableJob(data.JobInfo));
-  }, []);
+    fetchAvailableJob().then((data) => {
+      setWerkShift(data.WerkShift);
+      setWerkers(data.Werkers);
+      setOpenShifts(data.OpenShifts);
+    });
+  }, [profile]);
+
+  console.log(werkShift);
 
   const handleSubmit = () => {
     const werkJob = {
@@ -85,13 +115,13 @@ const SchedAvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
     };
 
     axios
-      .put("http://localhost:3000/shifts/SchedCancel/" + availableJob.JjobId, {
+      .put("http://localhost:3000/shifts/SchedCancel/" + werkShift.ShiftId, {
         werkJob,
         withCredentials: true,
       })
       .then((response) => {
         console.log(response);
-        window.location.href = "/SchedAvailableJob/" + availableJob.JjobId;
+        window.location.href = "/SchedAvailableJob/" + werkShift.ShiftId;
       });
   };
 
@@ -128,7 +158,7 @@ const SchedAvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Job ID/#:</h1>
                   </IonLabel>
-                  <h1>{availableJob.SJobId}</h1>
+                  <h1>{werkShift.ShiftIdentifier}</h1>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -136,7 +166,7 @@ const SchedAvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Date:</h1>
                   </IonLabel>
-                  <h1>{availableJob.Date}</h1>
+                  <h1>{werkShift.DateDay}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -146,7 +176,7 @@ const SchedAvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Start:</h1>
                   </IonLabel>
-                  <h1>{availableJob.StartTime}</h1>
+                  <h1>{werkShift.StartDateTime}</h1>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -154,7 +184,7 @@ const SchedAvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>End:</h1>
                   </IonLabel>
-                  <h1>{availableJob.FinnishTime}</h1>
+                  <h1>{werkShift.FinishDateTime}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -164,7 +194,7 @@ const SchedAvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Company:</h1>
                   </IonLabel>
-                  <h1>{availableJob.Company}</h1>
+                  <h1>{werkShift.Company}</h1>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -172,7 +202,7 @@ const SchedAvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Location:</h1>
                   </IonLabel>
-                  <h1>{availableJob.Location}</h1>
+                  <h1>{werkShift.Location}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -190,7 +220,7 @@ const SchedAvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>$</h1>
                   </IonLabel>
-                  <h1>{availableJob.Pay}</h1>
+                  <h1>{werkShift.Pay}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -201,7 +231,7 @@ const SchedAvailableJob: React.FC<AssociateProfileProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Notes:</h1>
                   </IonLabel>
-                  <h1>{availableJob.Notes}</h1>
+                  <h1>{werkShift.ShiftNotes}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
