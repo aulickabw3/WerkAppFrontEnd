@@ -40,22 +40,20 @@ const SchedAvailableJobs: React.FC = () => {
 
   // Get Array Of All My Associates
   interface AvailableJobData {
-    JJobId: any;
-    JJobId2: any;
-    SchedulerId: any;
+    ShiftId: any;
+    ShiftIdentifier: any;
+    UserUserId: any;
     Company: any;
-    Date: any;
-    SchedulerProfilePicURL: any;
+    DateDay: any;
   }
 
   const [availableJobs, setAvailableJobs] = React.useState<AvailableJobData[]>([
     {
-      JJobId: 0,
-      JJobId2: 0,
-      SchedulerId: 0,
+      ShiftId: 0,
+      ShiftIdentifier: 0,
+      UserUserId: 0,
       Company: "No     Jobs",
-      Date: "Yet",
-      SchedulerProfilePicURL: "../assets/profilePic.png",
+      DateDay: "Yet",
     },
   ]);
 
@@ -70,7 +68,7 @@ const SchedAvailableJobs: React.FC = () => {
 
   useEffect(() => {
     fetchAvailableJobs().then((data) => {
-      setAvailableJobs(data.availableShifts2);
+      setAvailableJobs(data.SchedAvailableJob);
       // console.log("useEffect is working..");
     });
   }, [profile]);
@@ -108,12 +106,10 @@ const SchedAvailableJobs: React.FC = () => {
               <IonList className="searchBar">
                 {availableJobs.map((val, key) => {
                   return (
-                    <Link to={`/SchedAvailableJob/${val.JJobId}`}>
+                    <Link to={`/SchedAvailableJob/${val.ShiftId}`}>
                       <IonItem className="searchBar">
                         <IonCol size="2" className="listCol">
-                          <IonAvatar>
-                            <img src={val.SchedulerProfilePicURL} />
-                          </IonAvatar>
+                          {val.ShiftIdentifier}
                         </IonCol>
                         <IonCol size="2" className="listCol">
                           {val.Company}
@@ -121,7 +117,7 @@ const SchedAvailableJobs: React.FC = () => {
                         <IonCol size="5" className="listCol">
                           <IonDatetime
                             displayFormat="DD-MMM-YY"
-                            value={val.Date}
+                            value={val.DateDay}
                           ></IonDatetime>
                         </IonCol>
                       </IonItem>
