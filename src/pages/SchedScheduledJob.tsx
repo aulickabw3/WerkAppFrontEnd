@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Redirect, Route, Link } from "react-router-dom";
+import { Link, match, RouteComponentProps, matchPath, useRouteMatch } from "react-router-dom";
 import { IonReactRouter } from "@ionic/react-router";
 import {
   IonContent,
@@ -15,12 +15,18 @@ import {
   IonLabel,
   IonTabButton,
   IonItem,
+  IonDatetime,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import GetUser from "../components/GetUser";
 import axios from "axios";
 
-const SchedScheduledJob: React.FC = () => {
+interface SchedSchedJobProps
+  extends RouteComponentProps<{
+    id: string;
+  }> {}
+
+const SchedScheduledJob: React.FC<SchedSchedJobProps> = ({match}) => {
 
   interface ProfileData {
     UserId: number;
@@ -37,10 +43,11 @@ const SchedScheduledJob: React.FC = () => {
   interface SchedJobData {
     ShiftId: number;
     ShiftIdentifier: string;
-    SchedulerId: string;
+    UserUserId: string;
     DateDay: string;
     StartDateTime: string;
     FinishDateTime: string;
+    NumberOfWerkers: number;
     Company: string;
     Location: string;
     Pay: string;
@@ -50,22 +57,23 @@ const SchedScheduledJob: React.FC = () => {
   const [schedJob, setSchedJob] = useState<SchedJobData>({
     ShiftId: 0,
     ShiftIdentifier: "",
-    SchedulerId: "",
+    UserUserId: "",
     DateDay: "",
     StartDateTime: "",
     FinishDateTime: "",
+    NumberOfWerkers: 0,
     Company: "",
     Location: "",
     Pay: "",
     ShiftNotes: "",
   });
 
-  const fetchMyJob = () => {
+  const fetchSchedJob = () => {
     return axios
       .get(
-        "http://localhost:3000/shifts/SchedScheduledShifts/" +
-        schedJob.ShiftId,
-        {}
+        "http://localhost:3000/shifts/SchedShiftDetails/" + match.params.id, {
+          withCredentials: true,
+        }
       )
       .then((response) => {
         console.log(response);
@@ -74,7 +82,7 @@ const SchedScheduledJob: React.FC = () => {
   };
 
   useEffect(() => {      
-    fetchMyJob().then((data) => setSchedJob(data.JobInfo));
+    fetchSchedJob().then((data) => setSchedJob(data.WerkShift));
   }, []);
 
   const handleWerked = () => {
@@ -145,7 +153,10 @@ const SchedScheduledJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Date:</h1>
                   </IonLabel>
-                  <h1>{schedJob.DateDay}</h1>
+                  <IonDatetime
+                    displayFormat="DD-MMM-YY"
+                    value={schedJob.DateDay}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -155,7 +166,12 @@ const SchedScheduledJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Start:</h1>
                   </IonLabel>
-                  <h1>{schedJob.StartDateTime}</h1>
+                  <IonDatetime
+                    // hourValues={12}
+                    // hour-cycle="h12"
+                    displayFormat="HH:mm"
+                    value={schedJob.StartDateTime}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -163,7 +179,10 @@ const SchedScheduledJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>End:</h1>
                   </IonLabel>
-                  <h1>{schedJob.FinishDateTime}</h1>
+                  <IonDatetime
+                    displayFormat="HH:mm"
+                    value={schedJob.FinishDateTime}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
             </IonRow>

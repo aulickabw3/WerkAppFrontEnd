@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Redirect, Route, Link } from "react-router-dom";
+import { Link, match, RouteComponentProps, matchPath, useRouteMatch } from "react-router-dom";
 import { IonReactRouter } from "@ionic/react-router";
 import {
   IonContent,
@@ -15,13 +15,19 @@ import {
   IonLabel,
   IonTabButton,
   IonItem,
+  IonDatetime,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import ExploreContainer from "../components/ExploreContainer";
 import GetUser from "../components/GetUser";
 import axios from "axios";
 
-const SchedPastJob: React.FC = () => {
+interface SchedPastJobProps
+  extends RouteComponentProps<{
+    id: string;
+  }> {}
+
+const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
 
   interface ProfileData {
     UserId: number;
@@ -36,37 +42,39 @@ const SchedPastJob: React.FC = () => {
   }, []);
 
   interface MyJobData {
-    JjobId: number;
-    SJobId: string;
-    SchedulerId: string;
-    Date: string;
-    StartTime: string;
-    FinnishTime: string;
+    ShiftId: number;
+    ShiftIdentifier: string;
+    UserUserId: string;
+    DateDay: string;
+    StartDateTime: string;
+    FinishDateTime: string;
+    NumberOfWerkers: number;
     Company: string;
     Location: string;
     Pay: string;
-    Notes: string;
+    ShiftNotes: string;
   }
 
   const [myJob, setMyJob] = useState<MyJobData>({
-    JjobId: 0,
-    SJobId: "",
-    SchedulerId: "",
-    Date: "",
-    StartTime: "",
-    FinnishTime: "",
+    ShiftId: 0,
+    ShiftIdentifier: "",
+    UserUserId: "",
+    DateDay: "",
+    StartDateTime: "",
+    FinishDateTime: "",
+    NumberOfWerkers: 0,
     Company: "",
     Location: "",
     Pay: "",
-    Notes: "",
+    ShiftNotes: "",
   });
 
-  const fetchMyPastJob = () => {
+  const fetchSchedPastJob = () => {
     return axios
       .get(
-        "http://localhost:3000/shifts/SchedPastJobs/" +
-          myJob.JjobId,
-        {}
+        "http://localhost:3000/shifts/SchedShiftDetails/" + match.params.id, {
+          withCredentials: true,
+        }
       )
       .then((response) => {
         console.log(response);
@@ -75,7 +83,7 @@ const SchedPastJob: React.FC = () => {
   };
 
   useEffect(() => {      
-    fetchMyPastJob().then((data) => setMyJob(data.JobInfo));
+    fetchSchedPastJob().then((data) => setMyJob(data.WerkShift));
   }, []);
 
   const handlePaid = () => {
@@ -84,7 +92,7 @@ const SchedPastJob: React.FC = () => {
     };
 
     axios
-      .put("http://localhost:3000/shifts/Paid/" + myJob.JjobId, { JobPaid })
+      .put("http://localhost:3000/shifts/Paid/" + myJob.ShiftId, { JobPaid })
       .then((response) => {
         console.log(response);
       });
@@ -125,7 +133,7 @@ const SchedPastJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Job ID/#:</h1>
                   </IonLabel>
-                  <h1>{myJob.SJobId}</h1>
+                  <h1>{myJob.ShiftIdentifier}</h1>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -133,7 +141,10 @@ const SchedPastJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Date:</h1>
                   </IonLabel>
-                  <h1>{myJob.Date}</h1>
+                  <IonDatetime
+                    displayFormat="DD-MMM-YY"
+                    value={myJob.DateDay}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -143,7 +154,12 @@ const SchedPastJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Start:</h1>
                   </IonLabel>
-                  <h1>{myJob.StartTime}</h1>
+                  <IonDatetime
+                    // hourValues={12}
+                    // hour-cycle="h12"
+                    displayFormat="HH:mm"
+                    value={myJob.StartDateTime}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -151,7 +167,10 @@ const SchedPastJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>End:</h1>
                   </IonLabel>
-                  <h1>{myJob.FinnishTime}</h1>
+                  <IonDatetime
+                    displayFormat="HH:mm"
+                    value={myJob.FinishDateTime}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -198,7 +217,7 @@ const SchedPastJob: React.FC = () => {
                   <IonLabel position="stacked">
                     <h1>Notes:</h1>
                   </IonLabel>
-                  <h1>{myJob.Notes}</h1>
+                  <h1>{myJob.ShiftNotes}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>

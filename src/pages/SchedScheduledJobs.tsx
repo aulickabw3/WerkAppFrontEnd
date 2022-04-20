@@ -48,27 +48,27 @@ const SchedScheduledJobs: React.FC = () => {
 
   // Get Array Of All My Associates
   interface SchedScheduledJobsData {
-    ShiftShiftId: number;
-    // ShiftIdentifier: string;
-    Company: string;
-    Date: string;
-    SchedulerProfilePicURL: string;
+    ShiftId: any;
+    ShiftIdentifier: any;
+    UserUserId: any;
+    Company: any;
+    DateDay: any;
   }
 
   const [schedScheduledJobs, setSchedScheduledJobs] = React.useState<SchedScheduledJobsData[]>([
     {
-      ShiftShiftId: 0,
-      // ShiftIdentifier: "",
-      Company: "Go Get",
-      Date: "Some Work!!",
-      SchedulerProfilePicURL: "../assets/profilePic.png",
+      ShiftId: 0,
+      ShiftIdentifier: 0,
+      UserUserId: 0,
+      Company: "No Jobs",
+      DateDay: "Sched Yet",
     },
   ]);
 
   const fetchScheduledJobs = () => {
     return axios
       .get(
-        "http://localhost:3000/shift/SchedulerScheduledJobs/" +
+        "http://localhost:3000/shifts/SchedScheduledShifts/" +
           profile.UserId,
         {}
       )
@@ -79,7 +79,7 @@ const SchedScheduledJobs: React.FC = () => {
   };
 
   useEffect(() => {      
-    fetchScheduledJobs().then((data) => setSchedScheduledJobs(data.listOfJobs));
+    fetchScheduledJobs().then((data) => setSchedScheduledJobs(data.SchedScheduledJob));
   }, [profile]);
 
   return (
@@ -112,14 +112,11 @@ const SchedScheduledJobs: React.FC = () => {
             <IonCol>
               <IonList className="searchBar">
                 {schedScheduledJobs.map((val, key) => {
-                  key = val.ShiftShiftId
                   return (
-                    <Link to={`/SchedScheduledJob/${val.ShiftShiftId}`}>
+                    <Link to={`/SchedScheduledJob/${val.ShiftId}`}>
                       <IonItem className="searchBar">
                         <IonCol size="2" className="listCol">
-                          <IonAvatar>
-                            <img src={val.SchedulerProfilePicURL} />
-                          </IonAvatar>
+                          {val.ShiftIdentifier}
                         </IonCol>
                         <IonCol size="2" className="listCol">
                           {val.Company}
@@ -127,7 +124,7 @@ const SchedScheduledJobs: React.FC = () => {
                         <IonCol size="5" className="listCol">
                           <IonDatetime
                             displayFormat="DD-MMM-YY"
-                            value={val.Date}
+                            value={val.DateDay}
                           ></IonDatetime>
                         </IonCol>
                       </IonItem>

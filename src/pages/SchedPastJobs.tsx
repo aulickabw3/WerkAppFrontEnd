@@ -20,6 +20,7 @@ import {
   IonTabs,
   IonAvatar,
   useIonViewDidEnter,
+  IonDatetime,
 } from "@ionic/react";
 import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
 import { Link } from "react-router-dom";
@@ -46,28 +47,28 @@ const SchedPastJobs: React.FC = () => {
   }, []);
 
   // Get Array Of All My Associates
-  interface MyPastJobsData {
-    JJobId: number;
-    SchedulerId: string;
-    Company: string;
-    Date: string;
-    SchedulerProfilePicURL: string;
+  interface SchedPastJobsData {
+    ShiftId: any;
+    ShiftIdentifier: any;
+    UserUserId: any;
+    Company: any;
+    DateDay: any;
   }
 
-  const [myPastJobs, setMyPastJobs] = React.useState<MyPastJobsData[]>([
+  const [myPastJobs, setMyPastJobs] = React.useState<SchedPastJobsData[]>([
     {
-      JJobId: 0,
-      SchedulerId: "",
-      Company: "You Didn't Sched",
-      Date: "Yet..",
-      SchedulerProfilePicURL: '../assets/profilePic.png',
+      ShiftId: 0,
+      ShiftIdentifier: 0,
+      UserUserId: 0,
+      Company: "No Past",
+      DateDay: "Jobs Yet",
     },
   ]);
 
   const fetchPastJobs = () => {
     return axios
       .get(
-        "http://localhost:3000/shifts/SchedPastJobs/" +
+        "http://localhost:3000/shifts/SchedPastShifts/" +
           profile.UserId,
         {}
       )
@@ -78,7 +79,7 @@ const SchedPastJobs: React.FC = () => {
   };
 
   useEffect(() => {      
-    fetchPastJobs().then((data) => setMyPastJobs(data.listOfPastJobs));
+    fetchPastJobs().then((data) => setMyPastJobs(data.SchedPastJob));
   }, [profile]);
 
   return (
@@ -112,18 +113,19 @@ const SchedPastJobs: React.FC = () => {
               <IonList className="searchBar">
                 {myPastJobs.map((val, key) => {
                   return (
-                    <Link to={`/SchedPastJob/${val.JJobId}`}>
+                    <Link to={`/SchedPastJob/${val.ShiftId}`}>
                       <IonItem className="searchBar">
                         <IonCol size="2" className="listCol">
-                          <IonAvatar>
-                            <img src={val.SchedulerProfilePicURL} />
-                          </IonAvatar>
-                        </IonCol>
-                        <IonCol size="4" className="listCol">
-                          {val.Company}
+                          {val.ShiftIdentifier}
                         </IonCol>
                         <IonCol size="2" className="listCol">
-                          {val.Date}
+                          {val.Company}
+                        </IonCol>
+                        <IonCol size="5" className="listCol">
+                          <IonDatetime
+                            displayFormat="DD-MMM-YY"
+                            value={val.DateDay}
+                          ></IonDatetime>
                         </IonCol>
                       </IonItem>
                     </Link>

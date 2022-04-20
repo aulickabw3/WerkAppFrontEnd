@@ -14,6 +14,7 @@ import {
   IonLabel,
   IonTabButton,
   IonItem,
+  IonDatetime,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import "./AvailableJob.css";
@@ -166,7 +167,10 @@ const SchedAvailableJob: React.FC<SchedAvailableJobProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Date:</h1>
                   </IonLabel>
-                  <h1>{werkShift.DateDay}</h1>
+                  <IonDatetime
+                    displayFormat="DD-MMM-YY"
+                    value={werkShift.DateDay}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -176,7 +180,12 @@ const SchedAvailableJob: React.FC<SchedAvailableJobProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Start:</h1>
                   </IonLabel>
-                  <h1>{werkShift.StartDateTime}</h1>
+                  <IonDatetime
+                    // hourValues={12}
+                    // hour-cycle="h12"
+                    displayFormat="HH:mm"
+                    value={werkShift.StartDateTime}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -184,7 +193,10 @@ const SchedAvailableJob: React.FC<SchedAvailableJobProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>End:</h1>
                   </IonLabel>
-                  <h1>{werkShift.FinishDateTime}</h1>
+                  <IonDatetime
+                    displayFormat="HH:mm"
+                    value={werkShift.FinishDateTime}
+                  ></IonDatetime>
                 </IonItem>
               </IonCol>
             </IonRow>
