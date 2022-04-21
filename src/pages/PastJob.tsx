@@ -22,6 +22,8 @@ import {
   IonTabButton,
   IonItem,
   IonDatetime,
+  useIonViewDidEnter,
+  IonTabBar,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import GetUser from "../components/GetUser";
@@ -42,7 +44,7 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
     UserId: 0,
   });
 
-  useEffect(() => {
+  useIonViewDidEnter(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
@@ -83,7 +85,7 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
 
   useEffect(() => {      
     fetchMyPastJob().then((data) => setMyPastJob(data.werkShift));
-  }, []);
+  }, [profile]);
 
   const handlePaid = () => {
     const updateWerkerShiftStatus = {
@@ -96,14 +98,13 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
       .put("http://localhost:3000/shifts/WerkerIsPaid/", { updateWerkerShiftStatus })
       .then((response) => {
         console.log(response);
-        window.location.href = "/PastJob/" + myPastJob.ShiftId;
+        // window.location.href = "/PastJob/" + myPastJob.ShiftId;
       });
   };
 
   console.log(match.params.id);
 
-  return (
-    
+  return ( 
     <IonPage>
       <IonHeader>
         <IonToolbar color="warning">
@@ -196,7 +197,7 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
               </IonCol>
             </IonRow>
             <IonRow className="jobGrid">
-              <IonCol size="6">
+              <IonCol size="5">
                 <IonItem>
                   <IonLabel position="stacked">
                     <h1>Pay: </h1>
@@ -206,7 +207,7 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
               <IonCol size="1">
                 <h1>$</h1>
               </IonCol>
-              <IonCol size="5">
+              <IonCol size="6">
                 <IonItem>
                   <h1 className="money">{myPastJob.Pay}</h1>
                 </IonItem>
@@ -223,26 +224,29 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
               </IonCol>
             </IonRow>
             <br></br>
-            <IonRow>
-              <IonCol></IonCol>
-              <IonCol>
-                <IonButton
-                  onClick={handlePaid}
-                  color="success"
-                  size="large"
-                  fill="solid"
-                >
-                  Paid
-                </IonButton>
-              </IonCol>
-
-              <IonCol></IonCol>
-            </IonRow>
           </form>
         </IonGrid>
       </IonContent>
-    </IonPage>
-          
+      <IonTabBar className="schedulebutton">
+        <IonTabButton>
+          <IonRow>
+            <IonCol></IonCol>
+            <IonCol>
+              <IonButton
+                onClick={handlePaid}
+                color="danger"
+                size="large"
+                fill="solid"
+                href="/SchedulerView"
+              >
+                Schedule
+              </IonButton>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+        </IonTabButton>
+      </IonTabBar>
+    </IonPage> 
 
   );
 };

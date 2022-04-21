@@ -22,6 +22,8 @@ import {
   IonTabButton,
   IonItem,
   IonDatetime,
+  useIonViewDidEnter,
+  IonTabBar,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import GetUser from "../components/GetUser";
@@ -41,7 +43,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
     UserId: 0,
   });
 
-  useEffect(() => {
+  useIonViewDidEnter(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
@@ -82,7 +84,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
 
   useEffect(() => {
     fetchMyJob().then((data) => setMyJob(data.werkShift));
-  }, []);
+  }, [profile]);
 
 
   const handleWerked = () => {
@@ -238,9 +240,13 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
               </IonCol>
             </IonRow>
             <br></br>
-            <IonRow>
-              <IonCol></IonCol>
-              <IonCol>
+          </form>
+        </IonGrid>
+      </IonContent>
+      <IonTabBar className="schedulebutton">
+        <IonTabButton>
+          <IonRow>
+            <IonCol>
                 <IonButton
                   onClick={handleWerked}
                   color="success"
@@ -260,11 +266,9 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
                   Cancel
                 </IonButton>
               </IonCol>
-              <IonCol></IonCol>
-            </IonRow>
-          </form>
-        </IonGrid>
-      </IonContent>
+          </IonRow>
+        </IonTabButton>
+      </IonTabBar>
     </IonPage>
   );
 };

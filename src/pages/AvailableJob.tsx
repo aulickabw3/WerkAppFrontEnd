@@ -22,6 +22,7 @@ import {
   IonItem,
   useIonViewDidEnter,
   IonDatetime,
+  IonTabBar,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import "./AvailableJob.css";
@@ -223,23 +224,27 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
                 </IonItem>
               </IonCol>
             </IonRow>
-            <IonRow>
-              <IonCol></IonCol>
-              <IonCol>
-                <IonButton
-                  onClick={handleSubmit}
-                  color="danger"
-                  size="large"
-                  fill="solid"
-                >
-                  Werk Job
-                </IonButton>
-              </IonCol>
-              <IonCol></IonCol>
-            </IonRow>
           </form>
         </IonGrid>
       </IonContent>
+      <IonTabBar className="schedulebutton">
+        <IonTabButton>
+          <IonRow>
+            <IonCol></IonCol>
+            <IonCol>
+              <IonButton
+                onClick={handleSubmit}
+                color="danger"
+                size="large"
+                fill="solid"
+              >
+                Werk
+              </IonButton>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+        </IonTabButton>
+      </IonTabBar>
     </IonPage>
   );
 };

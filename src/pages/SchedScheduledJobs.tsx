@@ -68,9 +68,9 @@ const SchedScheduledJobs: React.FC = () => {
   const fetchScheduledJobs = () => {
     return axios
       .get(
-        "http://localhost:3000/shifts/SchedScheduledShifts/" +
-          profile.UserId,
-        {}
+        "http://localhost:3000/shifts/SchedScheduledShifts/" + profile.UserId, {
+          withCredentials: true,
+        }
       )
       .then((response) => {
         console.log(response);

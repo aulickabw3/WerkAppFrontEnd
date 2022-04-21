@@ -313,7 +313,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   const AssociateProfileActions: React.FC = () => {
     console.log(association.RequestStatus);
     if (association.RequestStatus == "RequestAccepted") {
-      return <MyAssociateProfile /> && <BackButton />;
+      return <MyAssociateProfile/>;
 
     }
     if (association.RequestStatus == "RequestReceived") {

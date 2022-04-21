@@ -16,6 +16,8 @@ import {
   IonTabButton,
   IonItem,
   IonDatetime,
+  useIonViewDidEnter,
+  IonTabBar,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import ExploreContainer from "../components/ExploreContainer";
@@ -37,7 +39,7 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
     UserId: 0,
   });
 
-  useEffect(() => {
+  useIonViewDidEnter(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
@@ -84,7 +86,7 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
 
   useEffect(() => {      
     fetchSchedPastJob().then((data) => setMyJob(data.WerkShift));
-  }, []);
+  }, [profile]);
 
   const handlePaid = () => {
     const JobPaid = {
@@ -224,9 +226,6 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
             <IonRow>
             <IonCol></IonCol>
             <IonCol>
-              {/* <IonButton onClick={handlePaid} color="success" size="large" fill="solid">
-                Paid
-              </IonButton> */}
               <h2>Paid/Not Paid</h2>
             </IonCol>
             <IonCol></IonCol>
@@ -235,6 +234,25 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
         </IonGrid>
 
       </IonContent>
+      <IonTabBar className="schedulebutton">
+        <IonTabButton>
+          <IonRow>
+            <IonCol></IonCol>
+            <IonCol>
+              <IonButton
+                onClick={handlePaid}
+                color="danger"
+                size="large"
+                fill="solid"
+                href="/SchedulerView"
+              >
+                Mark Paid
+              </IonButton>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+        </IonTabButton>
+      </IonTabBar>
     </IonPage>
           
 

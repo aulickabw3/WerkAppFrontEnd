@@ -16,6 +16,8 @@ import {
   IonTabButton,
   IonItem,
   IonDatetime,
+  useIonViewDidEnter,
+  IonTabBar,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import GetUser from "../components/GetUser";
@@ -36,7 +38,7 @@ const SchedScheduledJob: React.FC<SchedSchedJobProps> = ({match}) => {
     UserId: 0,
   });
 
-  useEffect(() => {
+  useIonViewDidEnter(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
@@ -83,7 +85,7 @@ const SchedScheduledJob: React.FC<SchedSchedJobProps> = ({match}) => {
 
   useEffect(() => {      
     fetchSchedJob().then((data) => setSchedJob(data.WerkShift));
-  }, []);
+  }, [profile]);
 
   const handleWerked = () => {
     const werkJob = {
@@ -233,20 +235,30 @@ const SchedScheduledJob: React.FC<SchedSchedJobProps> = ({match}) => {
                 </IonItem>
               </IonCol>
             </IonRow>
-            <IonRow>
-            <IonCol></IonCol>
-            
-            <IonCol>
-              <IonButton onClick={handleCancel} color="danger" size="large" fill="solid">
-                Cancel 
-              </IonButton>
-            </IonCol>
-            <IonCol></IonCol>
-          </IonRow>
+           
           </form>
           
         </IonGrid>
       </IonContent>
+      <IonTabBar className="schedulebutton">
+        <IonTabButton>
+          <IonRow>
+            <IonCol></IonCol>
+            <IonCol>
+              <IonButton
+                onClick={handleCancel}
+                color="danger"
+                size="large"
+                fill="solid"
+                href="/SchedulerView"
+              >
+                Cancel
+              </IonButton>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+        </IonTabButton>
+      </IonTabBar>
     </IonPage>      
 
   );
