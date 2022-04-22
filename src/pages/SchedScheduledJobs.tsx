@@ -21,6 +21,7 @@ import {
   useIonViewDidEnter,
   IonAvatar,
   IonDatetime,
+  IonThumbnail,
 } from "@ionic/react";
 import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
 import { Link } from "react-router-dom";
@@ -30,7 +31,6 @@ import GetUser from "../components/GetUser";
 import axios from "axios";
 
 const SchedScheduledJobs: React.FC = () => {
-
   interface ProfileData {
     UserId: number;
     FirstName: string;
@@ -55,7 +55,9 @@ const SchedScheduledJobs: React.FC = () => {
     DateDay: any;
   }
 
-  const [schedScheduledJobs, setSchedScheduledJobs] = React.useState<SchedScheduledJobsData[]>([
+  const [schedScheduledJobs, setSchedScheduledJobs] = React.useState<
+    SchedScheduledJobsData[]
+  >([
     {
       ShiftId: 0,
       ShiftIdentifier: 0,
@@ -68,7 +70,8 @@ const SchedScheduledJobs: React.FC = () => {
   const fetchScheduledJobs = () => {
     return axios
       .get(
-        "http://localhost:3000/shifts/SchedScheduledShifts/" + profile.UserId, {
+        "http://localhost:3000/shifts/SchedScheduledShifts/" + profile.UserId,
+        {
           withCredentials: true,
         }
       )
@@ -78,8 +81,10 @@ const SchedScheduledJobs: React.FC = () => {
       });
   };
 
-  useEffect(() => {      
-    fetchScheduledJobs().then((data) => setSchedScheduledJobs(data.SchedScheduledJob));
+  useEffect(() => {
+    fetchScheduledJobs().then((data) =>
+      setSchedScheduledJobs(data.SchedScheduledJob)
+    );
   }, [profile]);
 
   return (
@@ -100,41 +105,31 @@ const SchedScheduledJobs: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-            <Link to="/SchedulerView">
-                  <IonIcon size="large" icon={arrowBackCircle} />
-                </Link>
+              <Link to="/SchedulerView">
+                <IonIcon size="large" icon={arrowBackCircle} />
+              </Link>
             </IonCol>
           </IonRow>
         </IonGrid>
 
-        <IonGrid>
-          <IonRow>
-            <IonCol>
-              <IonList className="searchBar">
-                {schedScheduledJobs.map((val, key) => {
-                  return (
-                    <Link to={`/SchedScheduledJob/${val.ShiftId}`}>
-                      <IonItem className="searchBar">
-                        <IonCol size="2" className="listCol">
-                          {val.ShiftIdentifier}
-                        </IonCol>
-                        <IonCol size="2" className="listCol">
-                          {val.Company}
-                        </IonCol>
-                        <IonCol size="5" className="listCol">
-                          <IonDatetime
-                            displayFormat="DD-MMM-YY"
-                            value={val.DateDay}
-                          ></IonDatetime>
-                        </IonCol>
-                      </IonItem>
-                    </Link>
-                  );
-                })}
-              </IonList>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
+        <IonList>
+          {schedScheduledJobs.map((schedScheduledJob) => (
+              <IonItem href={`/SchedScheduledJob/${schedScheduledJob.ShiftId}`} className="listerillo" key={schedScheduledJob.ShiftId}>
+                <IonLabel slot="">
+                  <h1>{schedScheduledJob.Company}</h1>
+                  <p>
+                    {schedScheduledJob.ShiftIdentifier}/{" "}
+                    {schedScheduledJob.ShiftIdentifier}
+                  </p>
+                </IonLabel>
+                <IonDatetime
+                  slot="end"
+                  displayFormat="DD-MMM-YY"
+                  value={schedScheduledJob.DateDay}
+                ></IonDatetime>
+              </IonItem>
+          ))}
+        </IonList>
 
       </IonContent>
     </IonPage>

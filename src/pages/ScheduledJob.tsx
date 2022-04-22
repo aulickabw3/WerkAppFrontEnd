@@ -147,7 +147,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
           </IonRow>
           <form>
             <br></br>
-            <IonRow>
+            <IonRow className="jobGrid">
               <IonCol size="6">
                 <IonItem>
                   <IonLabel position="stacked">
@@ -200,7 +200,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
                   <IonLabel position="stacked">
                     <h1>Company:</h1>
                   </IonLabel>
-                  <h3>{myJob.Company}</h3>
+                  {myJob.Company}
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -208,10 +208,11 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
                   <IonLabel position="stacked">
                     <h1>Location:</h1>
                   </IonLabel>
-                  <h3>{myJob.Location}</h3>
+                  {myJob.Location}
                 </IonItem>
               </IonCol>
             </IonRow>
+            <br></br>
             <IonRow className="jobGrid">
               <IonCol size="6">
                 <IonItem>
@@ -235,7 +236,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
                   <IonLabel position="stacked">
                     <h1>Notes:</h1>
                   </IonLabel>
-                  <h3>{myJob.ShiftNotes}</h3>
+                  {myJob.ShiftNotes}
                 </IonItem>
               </IonCol>
             </IonRow>

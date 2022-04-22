@@ -102,37 +102,25 @@ const PastJobs: React.FC = () => {
           </IonRow>
         </IonGrid>
 
-        <IonGrid>
-          <IonRow>
-            <IonCol>
-              <IonList className="searchBar">
-                {myPastJobs.map((val, key) => {
-                  key = val.ShiftShiftId
-                  return (
-                    <Link to={`/PastJob/${val.ShiftShiftId}`}>
-                      <IonItem className="searchBar">
-                        <IonCol size="2" className="listCol">
-                          <IonAvatar>
-                            <img src={val.SchedulerProfilePicURL} />
-                          </IonAvatar>
-                        </IonCol>
-                        <IonCol size="2" className="listCol">
-                          {val.Company}
-                        </IonCol>
-                        <IonCol size="5" className="listCol">
-                          <IonDatetime
-                            displayFormat="DD-MMM-YY"
-                            value={val.Date}
-                          ></IonDatetime>
-                        </IonCol>
-                      </IonItem>
-                    </Link>
-                  );
-                })}
-              </IonList>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
+        <IonList>
+          {myPastJobs.map((myPastJob) => (
+            <IonItem href={`/PastJob/${myPastJob.ShiftShiftId}`} key={myPastJob.ShiftShiftId}>
+                <IonAvatar className="avatario" slot="start" >
+                  <img src={myPastJob.SchedulerProfilePicURL}  /> 
+                </IonAvatar>
+              <IonLabel className="labelo">
+                <h1>{myPastJob.Company}</h1>
+                <p>{myPastJob.Company}</p>
+              </IonLabel>
+              <IonDatetime
+                slot="end"
+                displayFormat="DD-MMM-YY"
+                value={myPastJob.Date}
+              ></IonDatetime>
+            </IonItem>
+          ))}
+        </IonList>
+        
       </IonContent>
     </IonPage>
   );

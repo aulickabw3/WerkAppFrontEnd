@@ -107,34 +107,25 @@ const SchedPastJobs: React.FC = () => {
           </IonRow>
         </IonGrid>
 
-        <IonGrid>
-          <IonRow>
-            <IonCol>
-              <IonList className="searchBar">
-                {myPastJobs.map((val, key) => {
-                  return (
-                    <Link to={`/SchedPastJob/${val.ShiftId}`}>
-                      <IonItem className="searchBar">
-                        <IonCol size="2" className="listCol">
-                          {val.ShiftIdentifier}
-                        </IonCol>
-                        <IonCol size="2" className="listCol">
-                          {val.Company}
-                        </IonCol>
-                        <IonCol size="5" className="listCol">
-                          <IonDatetime
-                            displayFormat="DD-MMM-YY"
-                            value={val.DateDay}
-                          ></IonDatetime>
-                        </IonCol>
-                      </IonItem>
-                    </Link>
-                  );
-                })}
-              </IonList>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
+        <IonList>
+          {myPastJobs.map((myPastJob) => (
+            // <Link to={`/SchedPastJob/${schedScheduledJob.ShiftId}`}>
+              <IonItem href={`/SchedPastJob/${myPastJob.ShiftId}`} className="listerillo" key={myPastJob.ShiftId}>
+                <IonLabel slot="">
+                  <h1>{myPastJob.Company}</h1>
+                  <p>
+                    {myPastJob.ShiftIdentifier}/{" "}
+                    {myPastJob.ShiftIdentifier}
+                  </p>
+                </IonLabel>
+                <IonDatetime
+                  slot="end"
+                  displayFormat="DD-MMM-YY"
+                  value={myPastJob.DateDay}
+                ></IonDatetime>
+              </IonItem>
+          ))}
+        </IonList>
 
       </IonContent>
     </IonPage>

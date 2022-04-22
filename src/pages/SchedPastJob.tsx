@@ -18,6 +18,7 @@ import {
   IonDatetime,
   useIonViewDidEnter,
   IonTabBar,
+  IonList,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import ExploreContainer from "../components/ExploreContainer";
@@ -71,6 +72,19 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
     ShiftNotes: "",
   });
 
+  interface SchedWerkersData {
+    UserId: number;
+    FirstName: string;
+    LastName: string;
+  }
+  const [werkers, setWerkers] = useState<SchedWerkersData[]>([
+    {
+      UserId: 0,
+      FirstName: "",
+      LastName: "",
+    },
+  ]);
+
   const fetchSchedPastJob = () => {
     return axios
       .get(
@@ -85,7 +99,10 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
   };
 
   useEffect(() => {      
-    fetchSchedPastJob().then((data) => setMyJob(data.WerkShift));
+    fetchSchedPastJob().then((data) => {
+      setMyJob(data.WerkShift);
+      setWerkers(data.Werkers);
+    });
   }, [profile]);
 
   const handlePaid = () => {
@@ -129,13 +146,13 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
           </IonRow>
           <form>
             <br></br>
-            <IonRow>
+            <IonRow className="jobGrid">
               <IonCol size="6">
                 <IonItem>
                   <IonLabel position="stacked">
                     <h1>Job ID/#:</h1>
                   </IonLabel>
-                  <h1>{myJob.ShiftIdentifier}</h1>
+                  {myJob.ShiftIdentifier}
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -182,7 +199,7 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
                   <IonLabel position="stacked">
                     <h1>Company:</h1>
                   </IonLabel>
-                  <h1>{myJob.Company}</h1>
+                  {myJob.Company}
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -190,47 +207,69 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
                   <IonLabel position="stacked">
                     <h1>Location:</h1>
                   </IonLabel>
-                  <h1>{myJob.Location}</h1>
+                  {myJob.Location}
                 </IonItem>
               </IonCol>
             </IonRow>
             <br></br>
             <IonRow className="jobGrid">
-              <IonCol size="6">
+              <IonCol size="5">
                 <IonItem>
                   <IonLabel position="stacked">
                     <h1>Pay: </h1>
                   </IonLabel>
                 </IonItem>
               </IonCol>
+              <IonCol size="1">
+                <h1>$</h1>
+              </IonCol>
               <IonCol size="6">
                 <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>$</h1>
-                  </IonLabel>
-                  <h1>{myJob.Pay}</h1>
+                  <h1 className="money">{myJob.Pay}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
-            <br></br>
             <IonRow className="jobGrid">
               <IonCol size="12">
                 <IonItem>
                   <IonLabel position="stacked">
                     <h1>Notes:</h1>
                   </IonLabel>
-                  <h1>{myJob.ShiftNotes}</h1>
+                  {myJob.ShiftNotes}
                 </IonItem>
               </IonCol>
             </IonRow>
-            <IonRow>
-            <IonCol></IonCol>
-            <IonCol>
-              <h2>Paid/Not Paid</h2>
-            </IonCol>
-            <IonCol></IonCol>
-          </IonRow>
           </form>
+        </IonGrid>
+
+        <IonGrid>
+          <IonRow className="jobGrid">
+            <IonCol size="12">
+              <IonItem>
+                <IonLabel position="stacked">
+                  <h1>Werkers:</h1>
+                </IonLabel>
+                <IonList className="searchBar">
+                  {werkers.map((val, key) => {
+                    return (
+                      <Link to={`/AssociateProfile/${val.UserId}`}>
+                        <IonItem className="searchBar">
+                          {/* <IonCol className="listCol">
+                            <IonAvatar>
+                              <img src={val.ProfilePicURL} />
+                            </IonAvatar>
+                          </IonCol> */}
+                          <IonCol size="" className="listCol">
+                            {val.FirstName} {val.LastName}
+                          </IonCol>
+                        </IonItem>
+                      </Link>
+                    );
+                  })}
+                </IonList>
+              </IonItem>
+            </IonCol>
+          </IonRow>
         </IonGrid>
 
       </IonContent>

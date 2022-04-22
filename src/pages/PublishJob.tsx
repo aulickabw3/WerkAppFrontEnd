@@ -109,13 +109,13 @@ const PublishJob: React.FC<PublishJobProps> = ({ match }) => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="warning">
+        <IonToolbar color="secondwarning">
           <IonTitle className="title2">Choose Werkers</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonHeader collapse="condense">
-          <IonToolbar color="warning">
+          <IonToolbar color="secondwarning">
             <IonTitle className="title2" size="large">
               Choose Werkers
             </IonTitle>

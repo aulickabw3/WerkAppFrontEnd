@@ -24,6 +24,7 @@ import {
   useIonViewDidEnter,
   IonTabBar,
   IonList,
+  IonAvatar,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import "./AvailableJob.css";
@@ -168,7 +169,7 @@ const SchedAvailableJob: React.FC<SchedAvailableJobProps> = ({ match }) => {
           </IonRow>
           <form>
             <br></br>
-            <IonRow>
+            <IonRow className="jobGrid">
               <IonCol size="6">
                 <IonItem>
                   <IonLabel position="stacked">
@@ -221,7 +222,7 @@ const SchedAvailableJob: React.FC<SchedAvailableJobProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Company:</h1>
                   </IonLabel>
-                  <h3>{werkShift.Company}</h3>
+                  {werkShift.Company}
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -229,10 +230,11 @@ const SchedAvailableJob: React.FC<SchedAvailableJobProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Location:</h1>
                   </IonLabel>
-                  <h3>{werkShift.Location}</h3>
+                  {werkShift.Location}
                 </IonItem>
               </IonCol>
             </IonRow>
+            <br></br>
             <IonRow className="jobGrid">
               <IonCol size="5">
                 <IonItem>
@@ -256,7 +258,7 @@ const SchedAvailableJob: React.FC<SchedAvailableJobProps> = ({ match }) => {
                   <IonLabel position="stacked">
                     <h1>Notes:</h1>
                   </IonLabel>
-                  <h3>{werkShift.ShiftNotes}</h3>
+                  {werkShift.ShiftNotes}
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -264,7 +266,7 @@ const SchedAvailableJob: React.FC<SchedAvailableJobProps> = ({ match }) => {
         </IonGrid>
 
         <IonGrid>
-          <IonRow>
+          <IonRow className="jobGrid">
             <IonCol size="12">
               <IonItem>
                 <IonLabel position="stacked">
@@ -275,6 +277,11 @@ const SchedAvailableJob: React.FC<SchedAvailableJobProps> = ({ match }) => {
                     return (
                       <Link to={`/AssociateProfile/${val.UserId}`}>
                         <IonItem className="searchBar">
+                          {/* <IonCol className="listCol">
+                            <IonAvatar>
+                              <img src={val.ProfilePicURL} />
+                            </IonAvatar>
+                          </IonCol> */}
                           <IonCol size="" className="listCol">
                             {val.FirstName} {val.LastName}
                           </IonCol>
@@ -287,7 +294,6 @@ const SchedAvailableJob: React.FC<SchedAvailableJobProps> = ({ match }) => {
             </IonCol>
           </IonRow>
         </IonGrid>
-        
       </IonContent>
       <IonTabBar className="schedulebutton">
         <IonTabButton>

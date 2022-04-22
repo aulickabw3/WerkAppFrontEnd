@@ -131,7 +131,7 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
           </IonRow>
           <form>
             <br></br>
-            <IonRow>
+            <IonRow className="jobGrid">
               <IonCol size="6">
                 <IonItem>
                   <IonLabel position="stacked">
@@ -184,7 +184,7 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
                   <IonLabel position="stacked">
                     <h1>Company:</h1>
                   </IonLabel>
-                  <h3>{myPastJob.Company}</h3>
+                  {myPastJob.Company}
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -192,20 +192,21 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
                   <IonLabel position="stacked">
                     <h1>Location:</h1>
                   </IonLabel>
-                  <h3>{myPastJob.Location}</h3>
+                  {myPastJob.Location}
                 </IonItem>
               </IonCol>
             </IonRow>
+            <br></br>
             <IonRow className="jobGrid">
-              <IonCol size="5">
+              <IonCol size="3">
                 <IonItem>
                   <IonLabel position="stacked">
                     <h1>Pay: </h1>
                   </IonLabel>
                 </IonItem>
               </IonCol>
-              <IonCol size="1">
-                <h1>$</h1>
+              <IonCol size="3">
+                <h2></h2>
               </IonCol>
               <IonCol size="6">
                 <IonItem>
@@ -219,7 +220,7 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
                   <IonLabel position="stacked">
                     <h1>Notes:</h1>
                   </IonLabel>
-                  <h3>{myPastJob.ShiftNotes}</h3>
+                  {myPastJob.ShiftNotes}
                 </IonItem>
               </IonCol>
             </IonRow>

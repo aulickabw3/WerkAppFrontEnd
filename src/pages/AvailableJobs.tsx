@@ -104,39 +104,25 @@ const AvailableJobs: React.FC = () => {
           </IonRow>
         </IonGrid>
 
-        <IonGrid>
-          <IonRow>
-            <IonCol>
-              <IonList className="searchBar">
-                {availableJobs.map((val, key) => {
-                  
-                  console.log(typeof val.JJobId);
-                  console.log(val.JJobId);
-                  return (
-                    <Link to={`/AvailableJob/${val.JJobId}`}>
-                      <IonItem className="searchBar">
-                        <IonCol size="2" className="listCol">
-                          <IonAvatar>
-                            <img src={val.SchedulerProfilePicURL} />
-                          </IonAvatar>
-                        </IonCol>
-                        <IonCol size="2" className="listCol">
-                          {val.Company}
-                        </IonCol>
-                        <IonCol size="5" className="listCol">
-                          <IonDatetime
-                            displayFormat="DD-MMM-YY"
-                            value={val.Date}
-                          ></IonDatetime>
-                        </IonCol>
-                      </IonItem>
-                    </Link>
-                  );
-                })}
-              </IonList>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
+        <IonList>
+          {availableJobs.map((availableJob) => (
+            <IonItem href={`/AvailableJob/${availableJob.JJobId}`} key={availableJob.JJobId}>
+                <IonAvatar className="avatario" slot="start" >
+                  <img src={availableJob.SchedulerProfilePicURL}  /> 
+                </IonAvatar>
+              <IonLabel className="labelo">
+                <h1>{availableJob.Company}</h1>
+                <p>{availableJob.Company}</p>
+              </IonLabel>
+              <IonDatetime
+                slot="end"
+                displayFormat="DD-MMM-YY"
+                value={availableJob.Date}
+              ></IonDatetime>
+            </IonItem>
+          ))}
+        </IonList>
+
       </IonContent>
     </IonPage>
   );

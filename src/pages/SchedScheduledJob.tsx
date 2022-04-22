@@ -18,6 +18,7 @@ import {
   IonDatetime,
   useIonViewDidEnter,
   IonTabBar,
+  IonList,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import GetUser from "../components/GetUser";
@@ -70,6 +71,26 @@ const SchedScheduledJob: React.FC<SchedSchedJobProps> = ({match}) => {
     ShiftNotes: "",
   });
 
+  interface SchedWerkersData {
+    UserId: number;
+    FirstName: string;
+    LastName: string;
+  }
+  const [werkers, setWerkers] = useState<SchedWerkersData[]>([
+    {
+      UserId: 0,
+      FirstName: "",
+      LastName: "",
+    },
+  ]);
+
+  interface OpenShiftData {
+    unfilledshifts: number;
+  }
+  const [openShifts, setOpenShifts] = useState<OpenShiftData>({
+    unfilledshifts: 0,
+  });
+
   const fetchSchedJob = () => {
     return axios
       .get(
@@ -84,7 +105,11 @@ const SchedScheduledJob: React.FC<SchedSchedJobProps> = ({match}) => {
   };
 
   useEffect(() => {      
-    fetchSchedJob().then((data) => setSchedJob(data.WerkShift));
+    fetchSchedJob().then((data) => {
+      setSchedJob(data.WerkShift);
+      setWerkers(data.Werkers);
+      setOpenShifts(data.OpenShifts);
+    });
   }, [profile]);
 
   const handleWerked = () => {
@@ -141,13 +166,13 @@ const SchedScheduledJob: React.FC<SchedSchedJobProps> = ({match}) => {
           </IonRow>
           <form>
             <br></br>
-            <IonRow>
+            <IonRow className="jobGrid">
               <IonCol size="6">
                 <IonItem>
                   <IonLabel position="stacked">
                     <h1>Job ID/#:</h1>
                   </IonLabel>
-                  <h1>{schedJob.ShiftIdentifier}</h1>
+                  {schedJob.ShiftIdentifier}
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -194,7 +219,7 @@ const SchedScheduledJob: React.FC<SchedSchedJobProps> = ({match}) => {
                   <IonLabel position="stacked">
                     <h1>Company:</h1>
                   </IonLabel>
-                  <h1>{schedJob.Company}</h1>
+                  {schedJob.Company}
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -202,43 +227,71 @@ const SchedScheduledJob: React.FC<SchedSchedJobProps> = ({match}) => {
                   <IonLabel position="stacked">
                     <h1>Location:</h1>
                   </IonLabel>
-                  <h1>{schedJob.Location}</h1>
+                  {schedJob.Location}
                 </IonItem>
               </IonCol>
             </IonRow>
             <br></br>
             <IonRow className="jobGrid">
-              <IonCol size="6">
+              <IonCol size="5">
                 <IonItem>
                   <IonLabel position="stacked">
                     <h1>Pay: </h1>
                   </IonLabel>
                 </IonItem>
               </IonCol>
+              <IonCol size="1">
+                <h1>$</h1>
+              </IonCol>
               <IonCol size="6">
                 <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>$</h1>
-                  </IonLabel>
-                  <h1>{schedJob.Pay}</h1>
+                  <h1 className="money">{schedJob.Pay}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
-            <br></br>
             <IonRow className="jobGrid">
               <IonCol size="12">
                 <IonItem>
                   <IonLabel position="stacked">
                     <h1>Notes:</h1>
                   </IonLabel>
-                  <h1>{schedJob.ShiftNotes}</h1>
+                  {schedJob.ShiftNotes}
                 </IonItem>
               </IonCol>
             </IonRow>
-           
           </form>
-          
         </IonGrid>
+
+        <IonGrid>
+          <IonRow className="jobGrid">
+            <IonCol size="12">
+              <IonItem>
+                <IonLabel position="stacked">
+                  <h1>Werkers:</h1>
+                </IonLabel>
+                <IonList className="searchBar">
+                  {werkers.map((val, key) => {
+                    return (
+                      <Link to={`/AssociateProfile/${val.UserId}`}>
+                        <IonItem className="searchBar">
+                          {/* <IonCol className="listCol">
+                            <IonAvatar>
+                              <img src={val.ProfilePicURL} />
+                            </IonAvatar>
+                          </IonCol> */}
+                          <IonCol size="" className="listCol">
+                            {val.FirstName} {val.LastName}
+                          </IonCol>
+                        </IonItem>
+                      </Link>
+                    );
+                  })}
+                </IonList>
+              </IonItem>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+
       </IonContent>
       <IonTabBar className="schedulebutton">
         <IonTabButton>

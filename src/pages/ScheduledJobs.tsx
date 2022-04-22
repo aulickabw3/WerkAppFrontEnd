@@ -21,6 +21,7 @@ import {
   useIonViewDidEnter,
   IonAvatar,
   IonDatetime,
+  IonThumbnail,
 } from "@ionic/react";
 import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
 import { Link } from "react-router-dom";
@@ -82,7 +83,7 @@ const ScheduledJobs: React.FC = () => {
   }, [profile]);
 
   console.log(myScheduledJobs);
-  
+
   return (
     <IonPage>
       <IonHeader>
@@ -108,37 +109,25 @@ const ScheduledJobs: React.FC = () => {
           </IonRow>
         </IonGrid>
 
-        <IonGrid>
-          <IonRow>
-            <IonCol>
-              <IonList className="searchBar">
-                {myScheduledJobs.map((val, key) => {
-                  key = val.ShiftShiftId
-                  return (
-                    <Link to={`/ScheduledJob/${val.ShiftShiftId}`}>
-                      <IonItem className="searchBar">
-                        <IonCol size="2" className="listCol">
-                          <IonAvatar>
-                            <img src={val.SchedulerProfilePicURL} />
-                          </IonAvatar>
-                        </IonCol>
-                        <IonCol size="2" className="listCol">
-                          {val.Company}
-                        </IonCol>
-                        <IonCol size="5" className="listCol">
-                          <IonDatetime
-                            displayFormat="DD-MMM-YY"
-                            value={val.Date}
-                          ></IonDatetime>
-                        </IonCol>
-                      </IonItem>
-                    </Link>
-                  );
-                })}
-              </IonList>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
+        <IonList>
+          {myScheduledJobs.map((myScheduledJob) => (
+            <IonItem href={`/ScheduledJob/${myScheduledJob.ShiftShiftId}`} key={myScheduledJob.ShiftShiftId}>
+                <IonAvatar className="avatario" slot="start" >
+                  <img src={myScheduledJob.SchedulerProfilePicURL}  /> 
+                </IonAvatar>
+              <IonLabel className="labelo">
+                <h1>{myScheduledJob.Company}</h1>
+                <p>{myScheduledJob.Company}</p>
+              </IonLabel>
+              <IonDatetime
+                slot="end"
+                displayFormat="DD-MMM-YY"
+                value={myScheduledJob.Date}
+              ></IonDatetime>
+            </IonItem>
+          ))}
+        </IonList>
+
       </IonContent>
     </IonPage>
   );

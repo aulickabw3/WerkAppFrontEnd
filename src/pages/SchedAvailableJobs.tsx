@@ -15,6 +15,7 @@ import {
   useIonViewDidEnter,
   IonAvatar,
   IonDatetime,
+  IonThumbnail,
 } from "@ionic/react";
 import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
 import "./AvailableJobs.css";
@@ -59,7 +60,10 @@ const SchedAvailableJobs: React.FC = () => {
 
   const fetchAvailableJobs = () => {
     return axios
-      .get("http://localhost:3000/shifts/SchedAvailableShifts/" + profile.UserId, {})
+      .get(
+        "http://localhost:3000/shifts/SchedAvailableShifts/" + profile.UserId,
+        {}
+      )
       .then((response) => {
         console.log(response);
         return response.data;
@@ -100,34 +104,29 @@ const SchedAvailableJobs: React.FC = () => {
           </IonRow>
         </IonGrid>
 
-        <IonGrid>
-          <IonRow>
-            <IonCol>
-              <IonList className="searchBar">
-                {availableJobs.map((val, key) => {
-                  return (
-                    <Link to={`/SchedAvailableJob/${val.ShiftId}`}>
-                      <IonItem className="searchBar">
-                        <IonCol size="2" className="listCol">
-                          {val.ShiftIdentifier}
-                        </IonCol>
-                        <IonCol size="2" className="listCol">
-                          {val.Company}
-                        </IonCol>
-                        <IonCol size="5" className="listCol">
-                          <IonDatetime
-                            displayFormat="DD-MMM-YY"
-                            value={val.DateDay}
-                          ></IonDatetime>
-                        </IonCol>
-                      </IonItem>
-                    </Link>
-                  );
-                })}
-              </IonList>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
+        <IonList>
+          {availableJobs.map((availableJob) => (
+            // <Link to={`/SchedPastJob/${schedScheduledJob.ShiftId}`}>
+            <IonItem
+              href={`/SchedAvailableJob/${availableJob.ShiftId}`}
+              className="listerillo"
+              key={availableJob.ShiftId}
+            >
+              <IonLabel slot="">
+                <h1>{availableJob.Company}</h1>
+                <p>
+                  {availableJob.ShiftIdentifier}/{" "}
+                  {availableJob.ShiftIdentifier}
+                </p>
+              </IonLabel>
+              <IonDatetime
+                slot="end"
+                displayFormat="DD-MMM-YY"
+                value={availableJob.DateDay}
+              ></IonDatetime>
+            </IonItem>
+          ))}
+        </IonList>
       </IonContent>
     </IonPage>
   );
