@@ -16,25 +16,24 @@ import {
   IonAvatar,
   IonImg,
   useIonViewDidEnter,
+  IonDatetime,
+  IonSearchbar,
 } from "@ionic/react";
 import axios from "axios";
 import { person, arrowBackCircle, arrowBack, people } from "ionicons/icons";
 import { Link } from "react-router-dom";
-import "./Associates.css";
-import "./Search.css";
+// import "./Associates.css";
+// import "./Search.css";
+import "./AvailableJobs.css";
 import GetUser from "../components/GetUser";
 
 const Associates: React.FC = () => {
   //GET MY PROFILE DATA
   interface ProfileData {
     UserId: number;
-    FirstName: string;
-    LastName: string;
   }
   const [profile, setProfile] = React.useState<ProfileData>({
     UserId: 0,
-    FirstName: "",
-    LastName: "",
   });
 
   useIonViewDidEnter(() => {
@@ -58,7 +57,7 @@ const Associates: React.FC = () => {
       LastName: "",
       Company: "",
       Occupation: "",
-      ProfilePicURL: "",
+      ProfilePicURL: "../assets/profilePic.png",
     },
   ]);
 
@@ -75,9 +74,11 @@ const Associates: React.FC = () => {
       });
   };
 
-  React.useEffect (() => {      
-     fetchAssociates().then((data) => setAssociates(data.listOfAssociates2));
+  React.useEffect(() => {
+    fetchAssociates().then((data) => setAssociates(data.listOfAssociates2));
   }, [profile]);
+
+  const [searchText, setSearchText] = useState("");
 
   return (
     <IonPage>
@@ -94,42 +95,56 @@ const Associates: React.FC = () => {
             </IonTitle>
           </IonToolbar>
         </IonHeader>
-        <br></br>
-        <IonGrid>
-          <IonRow className="">
-            <IonCol className="title2">
-              <IonIcon size="large" icon={people} />
-            </IonCol>
-          </IonRow>
-        </IonGrid>
+
         <IonGrid>
           <IonRow>
-            <IonCol>
-              <IonList className="searchBar">
-                {associates.map((val, key) => {
-                  console.log(val.ProfilePicURL);
-                  return (
-                    <Link to={`/AssociateProfile/${val.UserId}`}>
-                      <IonItem className="searchBar">
-                        <IonCol size="2" className="listCol">
-                          <IonAvatar>
-                            <img src={val.ProfilePicURL} />
-                          </IonAvatar>
-                        </IonCol>
-                        <IonCol size="4" className="listCol">
-                          {val.FirstName} {val.LastName}
-                        </IonCol>
-                        <IonCol size="2" className="listCol">
-                          {val.Company}
-                        </IonCol>
-                      </IonItem>
-                    </Link>
-                  );
-                })}
-              </IonList>
+            <IonCol className="listCol">
+              <IonSearchbar
+                value={searchText}
+                onIonChange={(e) => setSearchText(e.detail.value!)}
+                animated
+              ></IonSearchbar>
             </IonCol>
           </IonRow>
         </IonGrid>
+
+        <IonList>
+          {associates
+          .filter((value) => {
+            if (searchText == "") {
+              return value;
+            } else if (
+              value.FirstName.toLowerCase().includes(
+                searchText.toLowerCase()
+              )
+            ) {
+              return value;
+            } else if (
+              value.LastName.toLowerCase().includes(
+                searchText.toLowerCase()
+              )
+            ) {
+              return value;
+            }
+          })
+          .map((associate) => (
+            <IonItem
+              href={`/AssociateProfile/${associate.UserId}`}
+              key={associate.UserId}
+            >
+              <IonAvatar className="avatario" slot="start">
+                <img src={associate.ProfilePicURL} />
+              </IonAvatar>
+              <IonLabel className="labelo">
+                <h1>
+                  {associate.FirstName} {associate.LastName}
+                </h1>
+                <p>{associate.Company}</p>
+              </IonLabel>
+              <br></br>
+            </IonItem>
+          ))}
+        </IonList>
       </IonContent>
     </IonPage>
   );

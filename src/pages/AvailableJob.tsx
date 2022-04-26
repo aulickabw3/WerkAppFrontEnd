@@ -228,6 +228,7 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
           </form>
         </IonGrid>
       </IonContent>
+
       <IonTabBar className="schedulebutton">
         <IonTabButton>
           <IonRow>
@@ -246,6 +247,7 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
           </IonRow>
         </IonTabButton>
       </IonTabBar>
+      
     </IonPage>
   );
 };

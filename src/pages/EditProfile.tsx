@@ -28,7 +28,6 @@ import "./Profile.css";
 import GetUser from "../components/GetUser";
 
 
-
 const EditProfile: React.FC = () => {
 
   interface ProfileData {
@@ -121,7 +120,6 @@ const EditProfile: React.FC = () => {
         </IonGrid>
         <IonGrid>
           <form>
-            <br></br>
             <IonRow className="profileGrid">
               <IonCol>
                 <IonImg src={editProfile.ProfilePicURL}></IonImg>

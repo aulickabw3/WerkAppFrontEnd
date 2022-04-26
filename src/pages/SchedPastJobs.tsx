@@ -33,13 +33,9 @@ const SchedPastJobs: React.FC = () => {
 
   interface ProfileData {
     UserId: number;
-    FirstName: string;
-    LastName: string;
   }
   const [profile, setProfile] = useState<ProfileData>({
     UserId: 0,
-    FirstName: "",
-    LastName: "",
   });
 
   useIonViewDidEnter(() => {
@@ -109,7 +105,6 @@ const SchedPastJobs: React.FC = () => {
 
         <IonList>
           {myPastJobs.map((myPastJob) => (
-            // <Link to={`/SchedPastJob/${schedScheduledJob.ShiftId}`}>
               <IonItem href={`/SchedPastJob/${myPastJob.ShiftId}`} className="listerillo" key={myPastJob.ShiftId}>
                 <IonLabel slot="">
                   <h1>{myPastJob.Company}</h1>

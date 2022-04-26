@@ -37,13 +37,9 @@ import "./Search.css";
 export const Search: React.FC<RouteComponentProps> = ({ match }) => {
   interface ProfileData {
     UserId: number;
-    FirstName: string;
-    LastName: string;
   }
   const [profile, setProfile] = React.useState<ProfileData>({
     UserId: 0,
-    FirstName: "",
-    LastName: "",
   });
 
   React.useEffect(() => {

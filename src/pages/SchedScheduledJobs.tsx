@@ -33,13 +33,9 @@ import axios from "axios";
 const SchedScheduledJobs: React.FC = () => {
   interface ProfileData {
     UserId: number;
-    FirstName: string;
-    LastName: string;
   }
   const [profile, setProfile] = useState<ProfileData>({
     UserId: 0,
-    FirstName: "",
-    LastName: "",
   });
 
   useIonViewDidEnter(() => {
@@ -115,7 +111,7 @@ const SchedScheduledJobs: React.FC = () => {
         <IonList>
           {schedScheduledJobs.map((schedScheduledJob) => (
               <IonItem href={`/SchedScheduledJob/${schedScheduledJob.ShiftId}`} className="listerillo" key={schedScheduledJob.ShiftId}>
-                <IonLabel slot="">
+                <IonLabel>
                   <h1>{schedScheduledJob.Company}</h1>
                   <p>
                     {schedScheduledJob.ShiftIdentifier}/{" "}
