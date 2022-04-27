@@ -17,7 +17,7 @@ import {
   IonButton,
   IonAvatar,
 } from "@ionic/react";
-import { person, arrowBackCircle, people, pencilSharp } from "ionicons/icons";
+import { person, arrowBackCircle, people, pencilSharp, ellipsisHorizontalOutline, ellipsisHorizontal } from "ionicons/icons";
 import { Link } from "react-router-dom";
 import "./Profile.css";
 import GetUser from "../components/GetUser";
@@ -55,7 +55,6 @@ const Profile: React.FC = () => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
-
   return (
     <IonPage>
       <IonHeader>
@@ -79,14 +78,9 @@ const Profile: React.FC = () => {
               </Link>
             </IonCol>
             <IonCol></IonCol>
-            <IonCol>
-              <Link to="/EditProfile">
-                <IonButton color="danger" fill="outline">
-                  edit profile
-                  {/* <IonIcon size="large" icon={pencilSharp} /> */}
-                </IonButton>
-              </Link>
-            </IonCol>
+            {/* <IonCol>
+                {profile.isScheduler}
+            </IonCol> */}
           </IonRow>
         </IonGrid>
         <IonGrid>
@@ -102,37 +96,59 @@ const Profile: React.FC = () => {
               <h1>{profile.LastName}</h1> */}
             </IonCol>
           </IonRow>
-          <br></br>
+          {/* <br></br> */}
           <IonRow className="profileGrid">
             {/* <IonCol size=""></IonCol> */}
             <IonCol size="">
-              <h1>{profile.FirstName} {profile.LastName}</h1>
+              <h1>
+                {profile.FirstName} {profile.LastName}
+              </h1>
             </IonCol>
           </IonRow>
           <IonRow className="profileGrid">
-          {/* <IonCol size="">
+            {/* <IonCol size="">
             </IonCol> */}
-            <IonCol >
-              <p>{profile.Occupation} @ {profile.Company}</p>
+            <IonCol>
+              <p>
+                {profile.Occupation} @ {profile.Company}
+              </p>
               <p>{profile.Email}</p>
             </IonCol>
           </IonRow>
-          {/* <IonRow className="profileGrid">
-            <IonCol size="1">
+          <br></br>
+          <IonRow className="profileGrid">
+            <IonCol size="8">
+              <Link to="/EditProfile">
+                <IonButton
+                  color="warning"
+                  // size="large"
+                  expand="block"
+                  fill="solid"
+                >
+                  <IonIcon icon={pencilSharp} />
+                  Edit Profile
+                </IonButton>
+              </Link>
             </IonCol>
-            <IonCol >
-              {profile.Email}
+            <IonCol size="3">
+              <Link to="/EditProfile">
+                <IonButton
+                  color="medium"
+                  // size="large"
+                  expand="block"
+                  fill="solid"
+                >
+                 <IonIcon icon={ellipsisHorizontal} />
+                </IonButton>
+              </Link>
             </IonCol>
-          </IonRow> */}
-          <br></br>
-          <br></br>
-          <br></br>
+          </IonRow>
           <br></br>
           <IonRow className="profileGrid">
             {/* <IonCol size="1"></IonCol> */}
-            <IonCol >
-                This is a temporary bio! Just a quick few sentence or about who
-                I am or whatever. I am a robot and I used to be a clown.
+            <IonCol>
+              This is a temporary bio! Just a quick few sentence or about who I
+              am or whatever. I am a robot and I used to be a clown.
             </IonCol>
             <IonCol size="1"></IonCol>
           </IonRow>
@@ -148,8 +164,7 @@ const Profile: React.FC = () => {
           </IonRow> */}
           <br></br>
           <br></br>
-          
-          
+
           <IonRow className="listCol1">
             <IonCol className="listJobs">
               <Link to="/Associates">

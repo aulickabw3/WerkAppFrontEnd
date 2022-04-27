@@ -19,6 +19,7 @@ import {
   useIonViewDidEnter,
   IonTabBar,
   IonList,
+  IonAvatar,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import GetUser from "../components/GetUser";
@@ -264,30 +265,36 @@ const SchedScheduledJob: React.FC<SchedSchedJobProps> = ({match}) => {
 
         <IonGrid>
           <IonRow className="jobGrid">
-            <IonCol size="12">
+            <IonCol size="">
               <IonItem>
                 <IonLabel position="stacked">
                   <h1>Werkers:</h1>
                 </IonLabel>
-                <IonList className="searchBar">
-                  {werkers.map((val, key) => {
-                    return (
-                      <Link to={`/AssociateProfile/${val.UserId}`}>
-                        <IonItem className="searchBar">
-                          {/* <IonCol className="listCol">
-                            <IonAvatar>
-                              <img src={val.ProfilePicURL} />
-                            </IonAvatar>
-                          </IonCol> */}
-                          <IonCol size="" className="listCol">
-                            {val.FirstName} {val.LastName}
-                          </IonCol>
-                        </IonItem>
-                      </Link>
-                    );
-                  })}
+                <IonList>
+                  {werkers.map((werker) => (
+                    <IonItem
+                      href={`/AssociateProfile/${werker.UserId}`}
+                      key={werker.UserId}
+                    >
+                      <IonAvatar className="avatario" slot="start">
+                        <img src={"../assets/profilePic.png"} />
+                      </IonAvatar>
+                      <IonLabel className="labelo">
+                        <h1>
+                          {werker.FirstName} {werker.LastName}
+                        </h1>
+                        {/* <p>{werker.WerkersCompany}</p> */}
+                      </IonLabel>
+                      <br></br>
+                    </IonItem>
+                  ))}
                 </IonList>
               </IonItem>
+            </IonCol>
+            <IonCol className="somethingHoribleHasHappened" size="7">
+              {/* <h3 >
+                Need {openShifts.unfilledshifts} More!!
+              </h3> */}
             </IonCol>
           </IonRow>
         </IonGrid>

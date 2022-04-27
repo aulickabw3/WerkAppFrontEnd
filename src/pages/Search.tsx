@@ -29,6 +29,7 @@ import {
   IonRow,
   IonItem,
   IonAvatar,
+  IonLabel,
 } from "@ionic/react";
 import axios from "axios";
 import GetUser from "../components/GetUser";
@@ -146,24 +147,23 @@ export const Search: React.FC<RouteComponentProps> = ({ match }) => {
                       return value;
                     }
                   })
-                  .map((val, key) => {
-                    return (
-                      <Link to={`/AssociateProfile/${val.UserId}`}>
-                          <IonItem >
-                            <IonCol className="listCol">
-                              <IonAvatar>
-                                <img src={val.ProfilePicURL} />
-                              </IonAvatar>
-                            </IonCol>
-                            <IonCol >
-                              {val.FirstName} {val.LastName}
-                            </IonCol>
-                            <IonCol className="listCol">{val.Company}</IonCol>
-                            <IonCol></IonCol>
-                          </IonItem>
-                        </Link>
-                      );
-                  })}
+                  .map((user) => (
+                    <IonItem
+                      href={`/AssociateProfile/${user.UserId}`}
+                      key={user.UserId}
+                    >
+                      <IonAvatar className="avatario" slot="start">
+                        <img src={user.ProfilePicURL} />
+                      </IonAvatar>
+                      <IonLabel className="labelo">
+                        <h1>
+                          {user.FirstName} {user.LastName}
+                        </h1>
+                        <p>{user.Company}</p>
+                      </IonLabel>
+                      <br></br>
+                    </IonItem>
+                  ))}
               </IonList>
             </IonCol>
           </IonRow>

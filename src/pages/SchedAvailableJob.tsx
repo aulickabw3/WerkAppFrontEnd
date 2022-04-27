@@ -80,12 +80,14 @@ const SchedAvailableJob: React.FC<SchedAvailableJobProps> = ({ match }) => {
     UserId: number;
     FirstName: string;
     LastName: string;
+    // WerkersCompany: string;
   }
   const [werkers, setWerkers] = useState<SchedWerkersData[]>([
     {
       UserId: 0,
       FirstName: "",
       LastName: "",
+      // WerkersCompany: ""
     },
   ]);
 
@@ -163,137 +165,142 @@ const SchedAvailableJob: React.FC<SchedAvailableJobProps> = ({ match }) => {
                 <IonIcon size="large" icon={arrowBackCircle} />
               </Link>
             </IonCol>
-            <IonCol size="6">
-              <h3>{openShifts.unfilledshifts} Shifts Unfilled</h3>
+            <IonCol className="somethingHoribleHasHappened" size="6">
+              {/* <h3>{openShifts.unfilledshifts} Shifts Unfilled</h3> */}
             </IonCol>
           </IonRow>
-          <form>
-            <br></br>
-            <IonRow className="jobGrid">
-              <IonCol size="6">
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>Job ID/#:</h1>
-                  </IonLabel>
-                  {werkShift.ShiftIdentifier}
-                </IonItem>
-              </IonCol>
-              <IonCol size="6">
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>Date:</h1>
-                  </IonLabel>
-                  <IonDatetime
-                    displayFormat="DD-MMM-YY"
-                    value={werkShift.DateDay}
-                  ></IonDatetime>
-                </IonItem>
-              </IonCol>
-            </IonRow>
-            <IonRow className="jobGrid">
-              <IonCol size="6">
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>Start:</h1>
-                  </IonLabel>
-                  <IonDatetime
-                    // hourValues={12}
-                    // hour-cycle="h12"
-                    displayFormat="HH:mm"
-                    value={werkShift.StartDateTime}
-                  ></IonDatetime>
-                </IonItem>
-              </IonCol>
-              <IonCol size="6">
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>End:</h1>
-                  </IonLabel>
-                  <IonDatetime
-                    displayFormat="HH:mm"
-                    value={werkShift.FinishDateTime}
-                  ></IonDatetime>
-                </IonItem>
-              </IonCol>
-            </IonRow>
-            <IonRow className="jobGrid">
-              <IonCol size="6">
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>Company:</h1>
-                  </IonLabel>
-                  {werkShift.Company}
-                </IonItem>
-              </IonCol>
-              <IonCol size="6">
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>Location:</h1>
-                  </IonLabel>
-                  {werkShift.Location}
-                </IonItem>
-              </IonCol>
-            </IonRow>
-            <br></br>
-            <IonRow className="jobGrid">
-              <IonCol size="5">
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>Pay: </h1>
-                  </IonLabel>
-                </IonItem>
-              </IonCol>
-              <IonCol size="1">
-                <h1>$</h1>
-              </IonCol>
-              <IonCol size="6">
-                <IonItem>
-                  <h1 className="money">{werkShift.Pay}</h1>
-                </IonItem>
-              </IonCol>
-            </IonRow>
-            <IonRow className="jobGrid">
-              <IonCol size="12">
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>Notes:</h1>
-                  </IonLabel>
-                  {werkShift.ShiftNotes}
-                </IonItem>
-              </IonCol>
-            </IonRow>
-          </form>
-        </IonGrid>
-
-        <IonGrid>
+          <br></br>
+          <IonRow className="jobGrid">
+            <IonCol size="6">
+              <IonItem>
+                <IonLabel position="stacked">
+                  <h1>Job ID/#:</h1>
+                </IonLabel>
+                {werkShift.ShiftIdentifier}
+              </IonItem>
+            </IonCol>
+            <IonCol size="6">
+              <IonItem>
+                <IonLabel position="stacked">
+                  <h1>Date:</h1>
+                </IonLabel>
+                <IonDatetime
+                  displayFormat="DD-MMM-YY"
+                  value={werkShift.DateDay}
+                ></IonDatetime>
+              </IonItem>
+            </IonCol>
+          </IonRow>
+          <IonRow className="jobGrid">
+            <IonCol size="6">
+              <IonItem>
+                <IonLabel position="stacked">
+                  <h1>Start:</h1>
+                </IonLabel>
+                <IonDatetime
+                  // hourValues={12}
+                  // hour-cycle="h12"
+                  displayFormat="HH:mm"
+                  value={werkShift.StartDateTime}
+                ></IonDatetime>
+              </IonItem>
+            </IonCol>
+            <IonCol size="6">
+              <IonItem>
+                <IonLabel position="stacked">
+                  <h1>End:</h1>
+                </IonLabel>
+                <IonDatetime
+                  displayFormat="HH:mm"
+                  value={werkShift.FinishDateTime}
+                ></IonDatetime>
+              </IonItem>
+            </IonCol>
+          </IonRow>
+          <IonRow className="jobGrid">
+            <IonCol size="6">
+              <IonItem>
+                <IonLabel position="stacked">
+                  <h1>Company:</h1>
+                </IonLabel>
+                {werkShift.Company}
+              </IonItem>
+            </IonCol>
+            <IonCol size="6">
+              <IonItem>
+                <IonLabel position="stacked">
+                  <h1>Location:</h1>
+                </IonLabel>
+                {werkShift.Location}
+              </IonItem>
+            </IonCol>
+          </IonRow>
+          <br></br>
+          <IonRow className="jobGrid">
+            <IonCol size="5">
+              <IonItem>
+                <IonLabel position="stacked">
+                  <h1>Pay: </h1>
+                </IonLabel>
+              </IonItem>
+            </IonCol>
+            <IonCol size="1">
+              <h1>$</h1>
+            </IonCol>
+            <IonCol size="6">
+              <IonItem>
+                <h1 className="money">{werkShift.Pay}</h1>
+              </IonItem>
+            </IonCol>
+          </IonRow>
           <IonRow className="jobGrid">
             <IonCol size="12">
               <IonItem>
                 <IonLabel position="stacked">
-                  <h1>Werkers:</h1>
+                  <h1>Notes:</h1>
                 </IonLabel>
-                <IonList className="searchBar">
-                  {werkers.map((val, key) => {
-                    return (
-                      <Link to={`/AssociateProfile/${val.UserId}`}>
-                        <IonItem className="searchBar">
-                          {/* <IonCol className="listCol">
-                            <IonAvatar>
-                              <img src={val.ProfilePicURL} />
-                            </IonAvatar>
-                          </IonCol> */}
-                          <IonCol size="" className="listCol">
-                            {val.FirstName} {val.LastName}
-                          </IonCol>
-                        </IonItem>
-                      </Link>
-                    );
-                  })}
-                </IonList>
+                {werkShift.ShiftNotes}
               </IonItem>
             </IonCol>
           </IonRow>
         </IonGrid>
+
+        <IonGrid>
+          <IonRow className="jobGrid">
+            <IonCol size="">
+              <IonItem>
+                <IonLabel position="stacked">
+                  <h1>Werkers:</h1>
+                </IonLabel>
+                <IonList>
+                  {werkers.map((werker) => (
+                    <IonItem
+                      href={`/AssociateProfile/${werker.UserId}`}
+                      key={werker.UserId}
+                    >
+                      <IonAvatar className="avatario" slot="start">
+                        <img src={"../assets/profilePic.png"} />
+                      </IonAvatar>
+                      <IonLabel className="labelo">
+                        <h1>
+                          {werker.FirstName} {werker.LastName}
+                        </h1>
+                        {/* <p>{werker.WerkersCompany}</p> */}
+                      </IonLabel>
+                      <br></br>
+                    </IonItem>
+                  ))}
+                </IonList>
+              </IonItem>
+            </IonCol>
+            <IonCol className="somethingHoribleHasHappened" size="7">
+              <h3 >
+                Need {openShifts.unfilledshifts} More!!
+              </h3>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+
       </IonContent>
       <IonTabBar className="schedulebutton">
         <IonTabButton>
@@ -306,7 +313,7 @@ const SchedAvailableJob: React.FC<SchedAvailableJobProps> = ({ match }) => {
                 size="large"
                 fill="solid"
               >
-                Cancel
+                Cancel Job
               </IonButton>
             </IonCol>
             <IonCol></IonCol>

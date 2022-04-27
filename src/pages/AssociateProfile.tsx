@@ -25,7 +25,13 @@ import {
   IonTabButton,
   IonAvatar,
 } from "@ionic/react";
-import { person, arrowBackCircle, people } from "ionicons/icons";
+import {
+  person,
+  arrowBackCircle,
+  people,
+  ellipsisHorizontal,
+  pencilSharp,
+} from "ionicons/icons";
 import axios from "axios";
 import {
   Link,
@@ -154,19 +160,29 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
 
   const NotMyAssociateProfile: React.FC = () => {
     return (
-      <IonRow className="listCol1">
-        <IonCol className="listJobs">
-          <br></br>
+      <IonRow >
+        <IonCol size="6">
           <IonButton
             onClick={handleAssociateRequest}
             color="warning"
-            size="large"
+            // size="large"
             expand="block"
             fill="solid"
           >
             Add Associate
           </IonButton>
-          <br></br>
+        </IonCol>
+        <IonCol size="2">
+          {/* <Link to="/EditProfile"> */}
+            <IonButton
+              color="medium"
+              // size="large"
+              expand="block"
+              fill="solid"
+            >
+              <IonIcon icon={ellipsisHorizontal} />
+            </IonButton>
+          {/* </Link> */}
         </IonCol>
       </IonRow>
     );
@@ -205,32 +221,30 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
 
   const PendingAssociateProfile: React.FC = () => {
     return (
-      <IonRow className="listCol1">
-        <IonCol className="listJobs">
-          <br></br>
+      <IonRow >
+        <IonCol size="5">
           <IonButton
             onClick={handleAcceptRequest}
             color="success"
-            size="large"
+            // size="large"
             expand="block"
             fill="solid"
           >
             Accept Request
           </IonButton>
-          <br></br>
         </IonCol>
-        <IonCol className="listJobs">
-          <br></br>
-          <IonButton
-            onClick={handleDeclineRequest}
-            color="danger"
-            size="large"
-            expand="block"
-            fill="solid"
-          >
-            Deny Request
-          </IonButton>
-          <br></br>
+        <IonCol size="2">
+          {/* <Link to="/EditProfile"> */}
+            <IonButton
+              onClick={handleDeclineRequest}
+              color="danger"
+              // size="large"
+              expand="block"
+              fill="solid"
+            >
+              Deny Request
+            </IonButton>
+          {/* </Link> */}
         </IonCol>
       </IonRow>
     );
@@ -253,19 +267,29 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
 
   const PendingSentAssociateProfile: React.FC = () => {
     return (
-      <IonRow className="listCol1">
-        <IonCol className="listJobs">
-          <br></br>
+      <IonRow >
+        <IonCol size="5">
           <IonButton
             onClick={handleCancelRequest}
             color="danger"
-            size="large"
+            // size="large"
             expand="block"
             fill="solid"
           >
             Cancel Request
           </IonButton>
-          <br></br>
+        </IonCol>
+        <IonCol size="2">
+          {/* <Link to="/EditProfile"> */}
+            <IonButton
+              color="medium"
+              // size="large"
+              expand="block"
+              fill="solid"
+            >
+              <IonIcon icon={ellipsisHorizontal} />
+            </IonButton>
+          {/* </Link> */}
         </IonCol>
       </IonRow>
     );
@@ -288,19 +312,29 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
 
   const MyAssociateProfile: React.FC = () => {
     return (
-      <IonRow className="listCol1">
-        <IonCol className="listJobs">
-          <br></br>
+      <IonRow >
+        <IonCol size="6">
           <IonButton
             onClick={handleFireAssociate}
             color="danger"
-            size="large"
+            // size="large"
             expand="block"
             fill="solid"
           >
             Fire Associate
           </IonButton>
-          <br></br>
+        </IonCol>
+        <IonCol size="2">
+          {/* <Link to="/EditProfile"> */}
+            <IonButton
+              color="medium"
+              // size="large"
+              expand="block"
+              fill="solid"
+            >
+              <IonIcon icon={ellipsisHorizontal} />
+            </IonButton>
+          {/* </Link> */}
         </IonCol>
       </IonRow>
     );
@@ -388,33 +422,35 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
               <h1>{profile.LastName}</h1> */}
             </IonCol>
           </IonRow>
-          <br></br>
-          <IonRow >
-            <IonCol size=""></IonCol>
-            <IonCol size="11">
+          {/* <br></br> */}
+          <IonRow className="profileGrid">
+            {/* <IonCol size=""></IonCol> */}
+            <IonCol size="">
               <h1>
                 {ListProfile.FirstName} {ListProfile.LastName}
               </h1>
             </IonCol>
           </IonRow>
-          <IonRow >
-            <IonCol size="1"></IonCol>
-            <IonCol size="11">
-              {ListProfile.Occupation} @ {ListProfile.Company}
-            </IonCol>
-          </IonRow>
           <IonRow className="profileGrid">
-            <IonCol size="1"></IonCol>
+            {/* <IonCol size="">
+            </IonCol> */}
             <IonCol>
-              {ListProfile.Email}
+              <p>
+                {ListProfile.Occupation} @ {ListProfile.Company}
+              </p>
+              <p>{ListProfile.Email}</p>
             </IonCol>
           </IonRow>
           <br></br>
+
+              <AssociateProfileActions />
+
+          <br></br>
           <IonRow className="profileGrid">
-            <IonCol size="1"></IonCol>
-            <IonCol size="10">
-                This is a temporary bio! Just a quick few sentence or about who
-                I am or whatever. I am a robot and I used to be a clown.
+            {/* <IonCol size="1"></IonCol> */}
+            <IonCol>
+              This is a temporary bio! Just a quick few sentence or about who I
+              am or whatever. I am a robot and I used to be a clown.
             </IonCol>
             <IonCol size="1"></IonCol>
           </IonRow>
@@ -431,7 +467,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
         </IonGrid>
       </IonContent>
 
-      <IonTabBar className="schedulebutton">
+      {/* <IonTabBar className="schedulebutton">
         <IonTabButton>
           <IonRow>
             <IonCol></IonCol>
@@ -441,7 +477,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
             <IonCol></IonCol>
           </IonRow>
         </IonTabButton>
-      </IonTabBar>
+      </IonTabBar> */}
     </IonPage>
   );
 };

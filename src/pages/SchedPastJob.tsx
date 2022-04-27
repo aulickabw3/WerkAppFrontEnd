@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, match, RouteComponentProps, matchPath, useRouteMatch } from "react-router-dom";
+import {
+  Link,
+  match,
+  RouteComponentProps,
+  matchPath,
+  useRouteMatch,
+} from "react-router-dom";
 import { IonReactRouter } from "@ionic/react-router";
 import {
   IonContent,
@@ -19,6 +25,7 @@ import {
   useIonViewDidEnter,
   IonTabBar,
   IonList,
+  IonAvatar,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
 import ExploreContainer from "../components/ExploreContainer";
@@ -30,8 +37,7 @@ interface SchedPastJobProps
     id: string;
   }> {}
 
-const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
-
+const SchedPastJob: React.FC<SchedPastJobProps> = ({ match }) => {
   interface ProfileData {
     UserId: number;
   }
@@ -88,7 +94,8 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
   const fetchSchedPastJob = () => {
     return axios
       .get(
-        "http://localhost:3000/shifts/SchedShiftDetails/" + match.params.id, {
+        "http://localhost:3000/shifts/SchedShiftDetails/" + match.params.id,
+        {
           withCredentials: true,
         }
       )
@@ -98,7 +105,7 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
       });
   };
 
-  useEffect(() => {      
+  useEffect(() => {
     fetchSchedPastJob().then((data) => {
       setMyJob(data.WerkShift);
       setWerkers(data.Werkers);
@@ -117,9 +124,7 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
       });
   };
 
-
   return (
-    
     <IonPage>
       <IonHeader>
         <IonToolbar color="secondwarning">
@@ -141,6 +146,9 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
                 <Link to="/SchedPastJobs">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
+              </IonCol>
+              <IonCol className="somethingHoribleHasHappened" size="6">
+                <h3>{/*{PastShifts.unpaidShifts} Still Unpaid!! */}</h3>
               </IonCol>
             </IonRow>
           </IonRow>
@@ -244,34 +252,40 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
 
         <IonGrid>
           <IonRow className="jobGrid">
-            <IonCol size="12">
+            <IonCol size="">
               <IonItem>
                 <IonLabel position="stacked">
                   <h1>Werkers:</h1>
                 </IonLabel>
-                <IonList className="searchBar">
-                  {werkers.map((val, key) => {
-                    return (
-                      <Link to={`/AssociateProfile/${val.UserId}`}>
-                        <IonItem className="searchBar">
-                          {/* <IonCol className="listCol">
-                            <IonAvatar>
-                              <img src={val.ProfilePicURL} />
-                            </IonAvatar>
-                          </IonCol> */}
-                          <IonCol size="" className="listCol">
-                            {val.FirstName} {val.LastName}
-                          </IonCol>
-                        </IonItem>
-                      </Link>
-                    );
-                  })}
+
+                <IonList>
+                  {werkers.map((werker) => (
+                    <IonItem
+                      href={`/AssociateProfile/${werker.UserId}`}
+                      key={werker.UserId}
+                    >
+                      <IonAvatar className="avatario" slot="start">
+                        <img src={"../assets/profilePic.png"} />
+                      </IonAvatar>
+                      <IonLabel className="labelo">
+                        <h1>
+                          {werker.FirstName} {werker.LastName}
+                        </h1>
+                        {/* <p>{werker.WerkersCompany}</p> */}
+                      </IonLabel>
+                      <br></br>
+                    </IonItem>
+                  ))}
                 </IonList>
+                
               </IonItem>
+            </IonCol>
+            <IonCol className="somethingHoribleHasHappened" size="7">
+              <h3>{/*{PastShifts.unpaidShifts} Still Unpaid!! */}</h3>
             </IonCol>
           </IonRow>
         </IonGrid>
-
+        
       </IonContent>
       <IonTabBar className="schedulebutton">
         <IonTabButton>
@@ -293,8 +307,6 @@ const SchedPastJob: React.FC<SchedPastJobProps> = ({match}) => {
         </IonTabButton>
       </IonTabBar>
     </IonPage>
-          
-
   );
 };
 

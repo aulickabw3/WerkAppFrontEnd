@@ -235,12 +235,12 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
             <IonCol>
               <IonButton
                 onClick={handlePaid}
-                color="danger"
+                color="success"
                 size="large"
                 fill="solid"
                 href="/SchedulerView"
               >
-                Schedule
+                Mark Paid
               </IonButton>
             </IonCol>
             <IonCol></IonCol>
