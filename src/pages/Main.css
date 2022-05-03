@@ -12,6 +12,29 @@
     padding: 15px;
 }
 
+.tinyavatar {
+    margin-left: 4px;
+    width: 35px;
+    height: 35px;
+}
+
+.bckgrnd {
+    /* background-color: #92949c; */
+    background-color: #ffc409;
+}
+
+.smallfont {
+    font-size: x-small;
+}
+
+.srchbr {
+    margin-left: 1px;
+}
+
+.tpmrgn {
+    margin-top: 6px;
+}
+
 /* .btns {
     background-color: #e48820;
 } */

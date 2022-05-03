@@ -107,15 +107,6 @@ export const Search: React.FC<RouteComponentProps> = ({ match }) => {
             </IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonRow>
-          <IonCol>
-            <Link to="/Main">
-              <IonIcon size="large" icon={arrowBackCircle} />
-            </Link>
-          </IonCol>
-          <IonCol></IonCol>
-          <IonCol></IonCol>
-        </IonRow>
         <IonGrid className="wholeGrid">
           <IonRow>
             <IonCol className="listCol">

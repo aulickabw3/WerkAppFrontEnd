@@ -165,19 +165,21 @@ const CreateAccount: React.FC = () => {
                 </IonItem>
               </IonCol>
             </IonRow>
+            <br></br>
+            <br></br>
             <IonRow>
               <IonCol></IonCol>
-              <IonCol>
+              <IonCol >
                 <IonButton
                   href="/Login"
-                  color="success"
+                  color="danger"
                   size="large"
                   fill="solid"
                   onClick={handleSubmit}
-                >Submit
+                >Create Account
                 </IonButton>
               </IonCol>
-              <IonCol>
+              {/* <IonCol>
               <IonButton
                   href="/Login"
                   color="danger"
@@ -185,7 +187,7 @@ const CreateAccount: React.FC = () => {
                   fill="solid"
                 >Cancel
                 </IonButton>
-              </IonCol>
+              </IonCol> */}
               <IonCol></IonCol>
             </IonRow>
           </form>

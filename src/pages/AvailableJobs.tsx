@@ -44,6 +44,7 @@ const AvailableJobs: React.FC = () => {
     JJobId2: any;
     SchedulerId: any;
     Company: any;
+    Location: string;
     Date: any;
     SchedulerProfilePicURL: any;
   }
@@ -54,6 +55,7 @@ const AvailableJobs: React.FC = () => {
       JJobId2: 0,
       SchedulerId: 0,
       Company: "No     Jobs",
+      Location: "",
       Date: "Yet",
       SchedulerProfilePicURL: "../assets/profilePic.png",
     },
@@ -112,7 +114,7 @@ const AvailableJobs: React.FC = () => {
                 </IonAvatar>
               <IonLabel className="labelo">
                 <h1>{availableJob.Company}</h1>
-                <p>{availableJob.Company}</p>
+                <p>{availableJob.Location}</p>
               </IonLabel>
               <IonDatetime
                 slot="end"

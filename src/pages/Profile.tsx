@@ -17,10 +17,18 @@ import {
   IonButton,
   IonAvatar,
 } from "@ionic/react";
-import { person, arrowBackCircle, people, pencilSharp, ellipsisHorizontalOutline, ellipsisHorizontal } from "ionicons/icons";
+import {
+  person,
+  arrowBackCircle,
+  people,
+  pencilSharp,
+  ellipsisHorizontalOutline,
+  ellipsisHorizontal,
+} from "ionicons/icons";
 import { Link } from "react-router-dom";
 import "./Profile.css";
 import GetUser from "../components/GetUser";
+import axios from "axios";
 
 // const checkboxList = [{ val: "Scheduler", isChecked: true }];
 
@@ -55,6 +63,16 @@ const Profile: React.FC = () => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
+  const handleLogout = () => {
+    axios
+      .get("http://localhost:3000/user/Logout", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -71,17 +89,8 @@ const Profile: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonGrid>
-          <IonRow>
-            <IonCol>
-              <Link to="/Main">
-                <IonIcon size="large" icon={arrowBackCircle} />
-              </Link>
-            </IonCol>
-            <IonCol></IonCol>
-            {/* <IonCol>
-                {profile.isScheduler}
-            </IonCol> */}
-          </IonRow>
+          <br></br>
+          <br></br>
         </IonGrid>
         <IonGrid>
           <IonRow className="profileGrid">
@@ -108,7 +117,7 @@ const Profile: React.FC = () => {
           <IonRow className="profileGrid">
             {/* <IonCol size="">
             </IonCol> */}
-            <IonCol>
+            <IonCol size="11">
               <p>
                 {profile.Occupation} @ {profile.Company}
               </p>
@@ -138,7 +147,7 @@ const Profile: React.FC = () => {
                   expand="block"
                   fill="solid"
                 >
-                 <IonIcon icon={ellipsisHorizontal} />
+                  <IonIcon icon={ellipsisHorizontal} />
                 </IonButton>
               </Link>
             </IonCol>
@@ -164,20 +173,31 @@ const Profile: React.FC = () => {
           </IonRow> */}
           <br></br>
           <br></br>
-
-          <IonRow className="listCol1">
-            <IonCol className="listJobs">
-              <Link to="/Associates">
-                <IonIcon size="large" icon={people} />
-                <br></br>
-                <IonLabel>Associates</IonLabel>
-              </Link>
-            </IonCol>
-          </IonRow>
+          
+          <br></br>
+          <br></br>
+          <br></br>
+          
           <br></br>
           <IonRow className="profileGrid">
             <IonCol></IonCol>
           </IonRow>
+
+          <IonRow className="grid1">
+            <IonCol>
+              <IonButton
+                onClick={handleLogout}
+                href="/Login"
+                color="medium"
+                size="large"
+                expand="block"
+                fill="solid"
+              >
+                Log Out
+              </IonButton>
+            </IonCol>
+          </IonRow>
+          
         </IonGrid>
       </IonContent>
     </IonPage>

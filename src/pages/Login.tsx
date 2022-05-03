@@ -116,7 +116,7 @@ const Login: React.FC = () => {
               <IonCol>
                 <IonButton
                   onClick={handleClick}
-                  color="medium"
+                  color="warning"
                   size="large"
                   expand="block"
                   fill="solid"
@@ -131,7 +131,7 @@ const Login: React.FC = () => {
               <IonCol>
                 <IonButton
                   href="/CreateAccount"
-                  color="warning"
+                  color="medium"
                   size="large"
                   expand="block"
                   fill="solid"

@@ -41,31 +41,31 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
 
   // GET ARRAY OF ALL NEW REQUESTS
   interface NotificationsDate {
-    NotificationId: number;
-    isRead: boolean;
-    SenderPicUrl: string;
-    NotificationType: string
-    Message: string;
-    MessageDate: string;
-    NotificationLink: string
+    id: number;
+    IsRead: boolean;
+    UserActionTakenUserProfilePicURL: string;
+    UserActionTakenUserActionTyped: string
+    UserActionTakenUserActionTypeDescription: string;
+    createdAt: string;
+    // NotificationLink: string
   }
 
   const [notifications, setNotifications] = React.useState<NotificationsDate[]>([
     {
-      NotificationId: 0,
-      isRead: false,
-      SenderPicUrl: "../assets/profilePic.png",
-      NotificationType: "No Notifications",
-      Message: "Here Yet! Go do stuff!",
-      MessageDate: "Yet!",
-      NotificationLink: ""
+      id: 0,
+      IsRead: false,
+      UserActionTakenUserProfilePicURL: "../assets/profilePic.png",
+      UserActionTakenUserActionTyped: "No Notifications",
+      UserActionTakenUserActionTypeDescription: "Here Yet! Go do stuff!",
+      createdAt: "Yet!",
+      // NotificationLink: ""
     },
   ]);
 
   const fetchRequests = () => {
     return axios
       .get(
-        "http://localhost:3000/notifications/WhatWillItBeCalled?" + profile.UserId,
+        "http://localhost:3000/notifications/ListOfNotifications/" + profile.UserId,
         {
           withCredentials: true,
         }
@@ -77,7 +77,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
   };
 
   React.useEffect(() => {
-    fetchRequests().then((data) => setNotifications(data.happyResult2));
+    fetchRequests().then((data) => setNotifications(data.listOfNotifications));
   }, [profile]);
 
 
@@ -111,18 +111,18 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
 
         <IonList>
           {notifications.map((notification) => (
-            <IonItem href={`${notification.NotificationLink}`} key={notification.NotificationId}>
+            <IonItem href={`${notification}`} key={notification.id}>
                 <IonAvatar className="avatario" slot="start" >
-                  <img src={notification.SenderPicUrl}  /> 
+                  <img src={notification.UserActionTakenUserProfilePicURL}  /> 
                 </IonAvatar>
               <IonLabel className="labelo">
-                <h1>{notification.NotificationType}</h1>
-                <p>{notification.Message}</p>
+                <h2>{notification.id}</h2>
               </IonLabel>
+              {notification.UserActionTakenUserActionTypeDescription}
               <IonDatetime
                 slot="end"
                 displayFormat="DD-MMM-YY"
-                value={notification.MessageDate}
+                value={notification.createdAt}
               ></IonDatetime>
             </IonItem>
           ))}

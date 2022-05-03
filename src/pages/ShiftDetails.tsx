@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Link,
   matchPath,
@@ -6,7 +6,6 @@ import {
   useRouteMatch,
   RouteComponentProps,
 } from "react-router-dom";
-import { IonReactRouter } from "@ionic/react-router";
 import {
   IonContent,
   IonHeader,
@@ -21,36 +20,27 @@ import {
   IonLabel,
   IonTabButton,
   IonItem,
-  IonDatetime,
   useIonViewDidEnter,
+  IonDatetime,
   IonTabBar,
 } from "@ionic/react";
 import { person, arrowBackCircle } from "ionicons/icons";
-import GetUser from "../components/GetUser";
+import "./AvailableJob.css";
 import axios from "axios";
+import GetUser from "../components/GetUser";
 
-interface ScheduledJobProps
+interface ShiftDetailsProps
   extends RouteComponentProps<{
     id: string;
   }> {}
 
-const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
-  interface ProfileData {
-    UserId: number;
-  }
+const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
+  console.log(match.params.id);
 
-  const [profile, setProfile] = useState<ProfileData>({
-    UserId: 0,
-  });
-
-  useIonViewDidEnter(() => {
-    GetUser().then((data) => setProfile(data.personDataFound));
-  }, []);
-
-  interface MyJobData {
+  interface ShiftDetailsData {
     ShiftId: number;
     ShiftIdentifier: string;
-    SchedulerId: string;
+    UserUserId: string;
     DateDay: string;
     StartDateTime: string;
     FinishDateTime: string;
@@ -60,10 +50,10 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
     ShiftNotes: string;
   }
 
-  const [myJob, setMyJob] = useState<MyJobData>({
+  const [shiftDetails, setshiftDetails] = useState<ShiftDetailsData>({
     ShiftId: 0,
     ShiftIdentifier: "",
-    SchedulerId: "",
+    UserUserId: "",
     DateDay: "",
     StartDateTime: "",
     FinishDateTime: "",
@@ -73,51 +63,199 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
     ShiftNotes: "",
   });
 
-  const fetchMyJob = () => {
+  const fetchAvailableJob = () => {
     return axios
-      .get("http://localhost:3000/shifts/ShiftDetails/" + match.params.id, {})
+      .get("http://localhost:3000/shifts/ShiftDetails/" + match.params.id, {
+        withCredentials: true,
+      })
       .then((response) => {
         console.log(response);
         return response.data;
       });
   };
 
+  interface ProfileData {
+    UserId: number;
+  }
+
+  const [profile, setProfile] = useState<ProfileData>({
+    UserId: 0,
+  });
+
+  useIonViewDidEnter(() => {
+    fetchAvailableJob().then((data) => setshiftDetails(data.werkShift));
+  }, []);
+
   useEffect(() => {
-    fetchMyJob().then((data) => setMyJob(data.werkShift));
-  }, [profile]);
+    GetUser().then((data) => setProfile(data.personDataFound));
+  }, [shiftDetails]);
 
 
+  // Button for available job summary
+  //////////////////////////////////////////
+  const handleWerk = () => {
+    const werkJob = {
+      UserId: profile.UserId,
+      ShiftId: shiftDetails.ShiftId,
+    };
+
+    axios
+      .post("http://localhost:3000/shifts/WerkShift/", {
+        werkJob,
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        window.location.href = "/ShiftDetails/" + shiftDetails.ShiftId;
+      });
+  };
+
+  const AvailableJobButton: React.FC = () => {
+    return (
+      <IonTabBar className="schedulebutton">
+        <IonTabButton>
+          <IonRow>
+            <IonCol></IonCol>
+            <IonCol>
+              <IonButton
+                onClick={handleWerk}
+                color="danger"
+                size="large"
+                fill="solid"
+              >
+                Werk
+              </IonButton>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+        </IonTabButton>
+      </IonTabBar>
+    );
+  };
+
+
+  // Button for scheduled job summary
+  /////////////////////////////
   const handleWerked = () => {
     const updateWerkerShiftStatus = {
       UserId: profile.UserId,
-      ShiftId: myJob.ShiftId,
-      UpdateStatus: 'Werked'
+      ShiftId: shiftDetails.ShiftId,
+      UpdateStatus: "Werked",
     };
     axios
       .put("http://localhost:3000/shifts/ShiftStatusUpdate/", {
         updateWerkerShiftStatus,
       })
-      .then(() => 
-        window.location.href = "/PastJob/" + myJob.ShiftId
-      );
+      .then((response) => {
+        console.log(response);
+        window.location.href = "/PastJob/" + shiftDetails.ShiftId;
+      });
   };
 
   const handleCancel = () => {
     const updateWerkerShiftStatus = {
       UserId: profile.UserId,
-      ShiftId: myJob.ShiftId,
-      UpdateStatus: 'Cancelled'
+      ShiftId: shiftDetails.ShiftId,
+      UpdateStatus: "Cancelled",
     };
     axios
       .put("http://localhost:3000/shifts/ShiftStatusUpdate/", {
         updateWerkerShiftStatus,
-
       })
       .then((response) => {
         console.log(response);
-        window.location.href = "/PastJob/" + myJob.ShiftId;
+        window.location.href = "/PastJob/" + shiftDetails.ShiftId;
       });
   };
+
+  const ScheduledJobButton: React.FC = () => {
+    return (
+      <IonTabBar className="schedulebutton">
+        <IonTabButton>
+          <IonRow>
+            <IonCol>
+              <IonButton
+                onClick={handleWerked}
+                color="success"
+                size="large"
+                fill="solid"
+              >
+                Werked
+              </IonButton>
+            </IonCol>
+            <IonCol>
+              <IonButton
+                onClick={handleCancel}
+                color="danger"
+                size="large"
+                fill="solid"
+              >
+                Cancel
+              </IonButton>
+            </IonCol>
+          </IonRow>
+        </IonTabButton>
+      </IonTabBar>
+    );
+  };
+
+
+  // Button for past job summary
+  ///////////////////////////////////////////
+  const handlePaid = () => {
+    const updateWerkerShiftStatus = {
+      UserId: profile.UserId,
+      ShiftId: shiftDetails.ShiftId,
+      IsPaid: true,
+    };
+
+    axios
+      .put("http://localhost:3000/shifts/WerkerIsPaid/", {
+        updateWerkerShiftStatus,
+      })
+      .then((response) => {
+        console.log(response);
+        // window.location.href = "/PastJob/" + myPastJob.ShiftId;
+      });
+  };
+
+  const PastJobButton: React.FC = () => {
+    return (
+      <IonTabBar className="schedulebutton">
+        <IonTabButton>
+          <IonRow>
+            <IonCol></IonCol>
+            <IonCol>
+              <IonButton
+                onClick={handlePaid}
+                color="success"
+                size="large"
+                fill="solid"
+                href="/SchedulerView"
+              >
+                Mark Paid
+              </IonButton>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+        </IonTabButton>
+      </IonTabBar>
+    );
+  };
+
+
+// Conditionally render action butons
+///////////////////////////////////////
+  // const JobSummaryActions: React.FC = () => {
+  //   if (shiftDetails.ShiftStatus == "Open") {
+  //     return <AvailableJobButton />;
+  //   }
+  //   if (shiftDetails.ShiftStatus == "Scheduled") {
+  //     return <ScheduledJobButton />;
+  //   }
+  //   return <PastJobButton />;
+  // };
+
 
   return (
     <IonPage>
@@ -138,7 +276,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
           <IonRow className="">
             <IonRow>
               <IonCol>
-                <Link to="/ScheduledJobs">
+                <Link to="/Main">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
               </IonCol>
@@ -152,7 +290,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
                   <IonLabel position="stacked">
                     <h1>Job ID/#:</h1>
                   </IonLabel>
-                  {myJob.ShiftIdentifier}
+                  {shiftDetails.ShiftIdentifier}
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -162,7 +300,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
                   </IonLabel>
                   <IonDatetime
                     displayFormat="DD-MMM-YY"
-                    value={myJob.DateDay}
+                    value={shiftDetails.DateDay}
                   ></IonDatetime>
                 </IonItem>
               </IonCol>
@@ -177,7 +315,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
                     // hourValues={12}
                     // hour-cycle="h12"
                     displayFormat="HH:mm"
-                    value={myJob.StartDateTime}
+                    value={shiftDetails.StartDateTime}
                   ></IonDatetime>
                 </IonItem>
               </IonCol>
@@ -188,7 +326,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
                   </IonLabel>
                   <IonDatetime
                     displayFormat="HH:mm"
-                    value={myJob.FinishDateTime}
+                    value={shiftDetails.FinishDateTime}
                   ></IonDatetime>
                 </IonItem>
               </IonCol>
@@ -199,7 +337,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
                   <IonLabel position="stacked">
                     <h1>Company:</h1>
                   </IonLabel>
-                  {myJob.Company}
+                  {shiftDetails.Company}
                 </IonItem>
               </IonCol>
               <IonCol size="6">
@@ -207,7 +345,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
                   <IonLabel position="stacked">
                     <h1>Location:</h1>
                   </IonLabel>
-                  {myJob.Location}
+                  {shiftDetails.Location}
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -225,7 +363,7 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
               </IonCol>
               <IonCol size="5">
                 <IonItem>
-                  <h1 className="money">{myJob.Pay}</h1>
+                  <h1 className="money">{shiftDetails.Pay}</h1>
                 </IonItem>
               </IonCol>
             </IonRow>
@@ -235,44 +373,18 @@ const ScheduledJob: React.FC<ScheduledJobProps> = ({match}) => {
                   <IonLabel position="stacked">
                     <h1>Notes:</h1>
                   </IonLabel>
-                  {myJob.ShiftNotes}
+                  {shiftDetails.ShiftNotes}
                 </IonItem>
               </IonCol>
             </IonRow>
-            <br></br>
           </form>
         </IonGrid>
       </IonContent>
 
-      <IonTabBar className="schedulebutton">
-        <IonTabButton>
-          <IonRow>
-            <IonCol>
-                <IonButton
-                  onClick={handleWerked}
-                  color="success"
-                  size="large"
-                  fill="solid"
-                >
-                  Werked
-                </IonButton>
-              </IonCol>
-              <IonCol>
-                <IonButton
-                  onClick={handleCancel}
-                  color="danger"
-                  size="large"
-                  fill="solid"
-                >
-                  Cancel
-                </IonButton>
-              </IonCol>
-          </IonRow>
-        </IonTabButton>
-      </IonTabBar>
-      
+      {/* <JobSummaryActions /> */}
+
     </IonPage>
   );
 };
 
-export default ScheduledJob;
+export default ShiftDetails;

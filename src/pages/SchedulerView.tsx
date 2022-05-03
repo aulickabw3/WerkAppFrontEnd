@@ -22,7 +22,7 @@ export const SchedulerView: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="warning">
+        <IonToolbar color="secondwarning">
           <IonTitle className="title1">WerkApp</IonTitle>
         </IonToolbar>
       </IonHeader>

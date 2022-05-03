@@ -45,7 +45,6 @@ const PastJobs: React.FC = () => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
-  // Get Array Of All My Associates
   interface MyPastJobsData {
     ShiftShiftId: number;
     // ShiftIdentifier: string;

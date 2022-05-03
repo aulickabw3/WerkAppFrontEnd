@@ -54,6 +54,7 @@ import SchedAvailableJobs from "./pages/SchedAvailableJobs";
 import SchedAvailableJob from "./pages/SchedAvailableJob";
 import SchedPastJobs from "./pages/SchedPastJobs";
 import SchedPastJob from "./pages/SchedPastJob";
+import ShiftDetails from "./pages/ShiftDetails";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -106,6 +107,7 @@ const App: React.FC = () => (
           <Route path="/SchedAvailableJob/:id" component={SchedAvailableJob} />
           <Route path="/SchedPastJobs" component={SchedPastJobs} />
           <Route path="/SchedPastJob/:id" component={SchedPastJob} />
+          <Route path="/ShiftDetails/:id" component={ShiftDetails} />
           <Route
             path="/"
             render={() => <Redirect to="/Login" />}

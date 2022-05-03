@@ -228,6 +228,7 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
           </form>
         </IonGrid>
       </IonContent>
+
       <IonTabBar className="schedulebutton">
         <IonTabButton>
           <IonRow>
@@ -247,6 +248,7 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
           </IonRow>
         </IonTabButton>
       </IonTabBar>
+      
     </IonPage> 
 
   );

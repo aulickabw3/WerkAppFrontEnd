@@ -46,6 +46,7 @@ const SchedAvailableJobs: React.FC = () => {
     UserUserId: any;
     Company: any;
     DateDay: any;
+    Location: string;
   }
 
   const [availableJobs, setAvailableJobs] = React.useState<AvailableJobData[]>([
@@ -55,6 +56,7 @@ const SchedAvailableJobs: React.FC = () => {
       UserUserId: 0,
       Company: "No     Jobs",
       DateDay: "Yet",
+      Location: ""
     },
   ]);
 
@@ -115,8 +117,8 @@ const SchedAvailableJobs: React.FC = () => {
               <IonLabel slot="">
                 <h1>{availableJob.Company}</h1>
                 <p>
-                  {availableJob.ShiftIdentifier}/{" "}
-                  {availableJob.ShiftIdentifier}
+                Job#: {availableJob.ShiftIdentifier} -{" "}
+                    {availableJob.Location}
                 </p>
               </IonLabel>
               <IonDatetime
