@@ -20,7 +20,7 @@ import {
 import axios from "axios";
 import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
 import { Link, RouteComponentProps } from "react-router-dom";
-import "./AvailableJobs.css";
+import "./Main.css";
 import "./Search.css";
 import GetUser from "../components/GetUser";
 

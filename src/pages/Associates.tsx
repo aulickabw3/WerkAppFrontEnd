@@ -24,7 +24,7 @@ import { person, arrowBackCircle, arrowBack, people } from "ionicons/icons";
 import { Link } from "react-router-dom";
 // import "./Associates.css";
 // import "./Search.css";
-import "./AvailableJobs.css";
+import "./Main.css";
 import GetUser from "../components/GetUser";
 
 const Associates: React.FC = () => {

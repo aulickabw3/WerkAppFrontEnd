@@ -26,8 +26,6 @@ import {
   people,
 } from "ionicons/icons";
 import Main from "./pages/Main";
-import AvailableJobs from "./pages/AvailableJobs";
-import MyJobs from "./pages/MyJobs";
 import ScheduleJob from "./pages/ScheduleJob";
 import Profile from "./pages/Profile";
 import AvailableJob from "./pages/AvailableJob";
@@ -43,16 +41,10 @@ import EditProfile from "./pages/EditProfile";
 import SchedulerView from "./pages/SchedulerView";
 import CreateJob from "./pages/CreateJob";
 import Crews from "./pages/Crews";
-import AddNewCrew from "./pages/AddNewCrew";
-import PastJobs from "./pages/PastJobs";
-import ScheduledJobs from "./pages/ScheduledJobs";
 import PublishJob from "./pages/PublishJob";
 import PastJob from "./pages/PastJob";
-import SchedScheduledJobs from "./pages/SchedScheduledJobs";
 import SchedScheduledJob from "./pages/SchedScheduledJob";
-import SchedAvailableJobs from "./pages/SchedAvailableJobs";
 import SchedAvailableJob from "./pages/SchedAvailableJob";
-import SchedPastJobs from "./pages/SchedPastJobs";
 import SchedPastJob from "./pages/SchedPastJob";
 import ShiftDetails from "./pages/ShiftDetails";
 
@@ -81,8 +73,6 @@ const App: React.FC = () => (
       <IonTabs>
         <IonRouterOutlet>
           <Route path="/Main" component={Main} exact={true} />
-          <Route path="/AvailableJobs" component={AvailableJobs} exact={true} />
-          <Route path="/MyJobs" component={MyJobs} />
           <Route path="/ScheduleJob" component={ScheduleJob} />
           <Route path="/Profile" component={Profile} />
           <Route path="/AvailableJob/:id" component={AvailableJob} />
@@ -96,16 +86,10 @@ const App: React.FC = () => (
           <Route path="/SchedulerView" component={SchedulerView} />
           <Route path="/CreateJob" component={CreateJob} />
           <Route path="/Crews" component={Crews} />
-          <Route path="/AddNewCrew" component={AddNewCrew} />
-          <Route path="/PastJobs" component={PastJobs} />
-          <Route path="/ScheduledJobs" component={ScheduledJobs} />
           <Route path="/PublishJob/:id" component={PublishJob} />
           <Route path="/PastJob/:id" component={PastJob} />
-          <Route path="/SchedScheduledJobs" component={SchedScheduledJobs} />
           <Route path="/SchedScheduledJob/:id" component={SchedScheduledJob} />
-          <Route path="/SchedAvailableJobs" component={SchedAvailableJobs} />
           <Route path="/SchedAvailableJob/:id" component={SchedAvailableJob} />
-          <Route path="/SchedPastJobs" component={SchedPastJobs} />
           <Route path="/SchedPastJob/:id" component={SchedPastJob} />
           <Route path="/ShiftDetails/:id" component={ShiftDetails} />
           <Route
