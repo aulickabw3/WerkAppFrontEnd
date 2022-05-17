@@ -313,29 +313,17 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   const MyAssociateProfile: React.FC = () => {
     return (
       <IonRow>
-        <IonCol size="6">
+        <IonCol size="10">
           <IonButton
             onClick={handleFireAssociate}
             color="warning"
-            // size="large"
             expand="block"
             fill="solid"
           >
-            Fire Associate
+            Associate
           </IonButton>
         </IonCol>
-        <IonCol size="2">
-          {/* <Link to="/EditProfile"> */}
-          <IonButton
-            color="medium"
-            // size="large"
-            expand="block"
-            fill="solid"
-          >
-            <IonIcon icon={ellipsisHorizontal} />
-          </IonButton>
-          {/* </Link> */}
-        </IonCol>
+        
       </IonRow>
     );
   };

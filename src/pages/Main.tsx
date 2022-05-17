@@ -41,6 +41,7 @@ import {
   wine,
   warning,
   walk,
+  arrowUp,
 } from "ionicons/icons";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -113,10 +114,10 @@ export const Main: React.FC = () => {
                 <img src={"../assets/profilePic.png"} />
               </IonAvatar>
               <IonLabel>
-                <h2>Dave Wigley</h2>
+                <h2>Scheduler Name</h2>
               </IonLabel>
               <IonButton
-                href={`/AvailableJob/${availableJob.JJobId}`}
+                href={`/ShiftDetails/${availableJob.JJobId}`}
                 color="medium"
                 slot="end"
               >
@@ -125,6 +126,10 @@ export const Main: React.FC = () => {
             </IonItem>
             <IonCardContent>
               <IonGrid>
+                <IonRow>
+                  <IonCol>Job#:</IonCol>
+                  <IonCol>{}</IonCol>
+                </IonRow>
                 <IonRow>
                   <IonCol>Company:</IonCol>
                   <IonCol>{availableJob.Company}</IonCol>
@@ -135,15 +140,16 @@ export const Main: React.FC = () => {
                 </IonRow>
                 <IonRow>
                   <IonCol>Pay:</IonCol>
-                  <IonCol>$75/hr + 2</IonCol>
+                  <IonCol>{}</IonCol>
                 </IonRow>
+                <br></br>
                 <IonRow>
                   <IonCol>Date:</IonCol>
                   <IonDatetime
-                      className="daterino"
-                      displayFormat="DD-MMM-YY"
-                      value={availableJob.Date}
-                    ></IonDatetime>
+                    className=""
+                    displayFormat="DD-MMM-YY"
+                    value={availableJob.Date}
+                  ></IonDatetime>
                 </IonRow>
               </IonGrid>
             </IonCardContent>
@@ -194,10 +200,10 @@ export const Main: React.FC = () => {
                 <img src={"../assets/profilePic.png"} />
               </IonAvatar>
               <IonLabel>
-                <h2>Dave Wigley</h2>
+                <h2>Scheduler Name</h2>
               </IonLabel>
               <IonButton
-                href={`/ScheduledJob/${myScheduledJob.ShiftShiftId}`}
+                href={`/ShiftDetails/${myScheduledJob.ShiftShiftId}`}
                 color="medium"
                 slot="end"
               >
@@ -206,6 +212,10 @@ export const Main: React.FC = () => {
             </IonItem>
             <IonCardContent>
               <IonGrid>
+                <IonRow>
+                  <IonCol>Job#:</IonCol>
+                  <IonCol>{}</IonCol>
+                </IonRow>
                 <IonRow>
                   <IonCol>Company:</IonCol>
                   <IonCol>{myScheduledJob.Company}</IonCol>
@@ -216,15 +226,15 @@ export const Main: React.FC = () => {
                 </IonRow>
                 <IonRow>
                   <IonCol>Pay:</IonCol>
-                  <IonCol>$75/hr + 2</IonCol>
+                  <IonCol>{}</IonCol>
                 </IonRow>
+                <br></br>
                 <IonRow>
                   <IonCol>Date:</IonCol>
                   <IonDatetime
-                      className="daterino"
-                      displayFormat="DD-MMM-YY"
-                      value={myScheduledJob.Date}
-                    ></IonDatetime>
+                    displayFormat="DD-MMM-YY"
+                    value={myScheduledJob.Date}
+                  ></IonDatetime>
                 </IonRow>
               </IonGrid>
             </IonCardContent>
@@ -273,10 +283,10 @@ export const Main: React.FC = () => {
                 <img src={"../assets/profilePic.png"} />
               </IonAvatar>
               <IonLabel>
-                <h2>Dave Wigley</h2>
+                <h2>Scheduler Name</h2>
               </IonLabel>
               <IonButton
-                href={`/PastJob/${myPastJob.ShiftShiftId}`}
+                href={`/ShiftDetails/${myPastJob.ShiftShiftId}`}
                 color="medium"
                 slot="end"
               >
@@ -285,6 +295,10 @@ export const Main: React.FC = () => {
             </IonItem>
             <IonCardContent>
               <IonGrid>
+                <IonRow>
+                  <IonCol>Job#:</IonCol>
+                  <IonCol>{}</IonCol>
+                </IonRow>
                 <IonRow>
                   <IonCol>Company:</IonCol>
                   <IonCol>{myPastJob.Company}</IonCol>
@@ -295,15 +309,15 @@ export const Main: React.FC = () => {
                 </IonRow>
                 <IonRow>
                   <IonCol>Pay:</IonCol>
-                  <IonCol>$75/hr + 2</IonCol>
+                  <IonCol>{}</IonCol>
                 </IonRow>
+                <br></br>
                 <IonRow>
                   <IonCol>Date:</IonCol>
                   <IonDatetime
-                      className="daterino"
-                      displayFormat="DD-MMM-YY"
-                      value={myPastJob.Date}
-                    ></IonDatetime>
+                    displayFormat="DD-MMM-YY"
+                    value={myPastJob.Date}
+                  ></IonDatetime>
                 </IonRow>
               </IonGrid>
             </IonCardContent>
@@ -314,6 +328,35 @@ export const Main: React.FC = () => {
   };
 
   console.log(myPastJobs);
+
+  const SelectAJobList: React.FC = () => {
+    return (
+      <React.Fragment>
+      <IonRow>
+          <IonCol></IonCol>
+          <IonCol>
+            <IonIcon slot="" size="large" icon={arrowUp} />
+          </IonCol>
+          <IonCol></IonCol>
+          <IonCol>
+            <IonIcon size="large" icon={arrowUp} />
+          </IonCol>
+          <IonCol></IonCol>
+          <IonCol>
+            <IonIcon size="large" icon={arrowUp} />
+          </IonCol>
+          <IonCol></IonCol>
+        </IonRow>
+        <IonRow>
+          <IonCol></IonCol>
+          <IonCol size="7">
+            <h1>Select A Job List</h1>
+          </IonCol>
+          <IonCol></IonCol>
+        </IonRow>
+    </React.Fragment>
+    );
+  };
 
   useEffect(() => {
     fetchAvailableJobs().then((data) => {
@@ -337,24 +380,21 @@ export const Main: React.FC = () => {
     if (mainSegment == "available") {
       return <AvailableJobsSegment />;
     }
-    return <h2></h2>;
+    return <SelectAJobList />
   };
 
   const [checked, setChecked] = React.useState<boolean>(false);
 
   const handleToggle = () => {
-    if (!checked)
-    window.location.href = "/SchedulerView";
-    return
-  }
+    if (!checked) window.location.href = "/SchedulerView";
+    return;
+  };
 
   const handleSearch = () => {
-
     window.location.href = "/Search";
+  };
 
-  }
-
-  // const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState("");
 
   return (
     <IonPage>
@@ -376,23 +416,20 @@ export const Main: React.FC = () => {
           <IonGrid>
             <IonRow className="tpmrgn">
               <IonCol size="2">
-                {/* <IonIcon size="large" icon={reorderThreeOutline}></IonIcon> */}
-                <IonToggle 
-                checked={checked} 
-                onIonChange={e => {
-                  setChecked(e.detail.checked);
-                  handleToggle();
-                }
-              }
-                color="danger">
-
-                </IonToggle>
+                <IonToggle
+                  checked={checked}
+                  onIonChange={(e) => {
+                    setChecked(e.detail.checked);
+                    handleToggle();
+                  }}
+                  color="danger"
+                ></IonToggle>
                 <IonLabel className="smallfont">Scheduler</IonLabel>
               </IonCol>
               <IonCol size="8">
                 <IonSearchbar
                   className="srchbr"
-                  // value={searchText}
+                  value={searchText}
                   onIonChange={handleSearch}
                   animated
                 ></IonSearchbar>
@@ -407,7 +444,6 @@ export const Main: React.FC = () => {
               <IonCol size="12">
                 <IonSegment
                   className="bckgrnd"
-                  // value=""
                   onIonChange={(e: any) => {
                     setMainSegment(e.detail.value!);
                     console.log(mainSegment);
@@ -433,7 +469,7 @@ export const Main: React.FC = () => {
             </IonRow>
           </IonGrid>
         </IonToolbar>
-
+        
         <MainSegmentActions />
 
       </IonContent>

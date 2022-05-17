@@ -116,9 +116,9 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
                   <img src={notification.UserActionTakenUserProfilePicURL}  /> 
                 </IonAvatar>
               <IonLabel className="labelo">
-                <h2>{notification.id}</h2>
+              <h2>This Guy</h2>
               </IonLabel>
-              {notification.UserActionTakenUserActionTypeDescription}
+              {notification.id} {notification.UserActionTakenUserActionTypeDescription}
               <IonDatetime
                 slot="end"
                 displayFormat="DD-MMM-YY"

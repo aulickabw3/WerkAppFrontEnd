@@ -41,6 +41,7 @@ const EditProfile: React.FC = () => {
     Company: string;
     Occupation: string;
     ProfilePicURL: string;
+    UserBio: string;
   }
 
   // const checkboxList = [{ val: "Scheduler", isChecked: true }];
@@ -56,6 +57,7 @@ const EditProfile: React.FC = () => {
     Company: "",
     Occupation: "",
     ProfilePicURL: "",
+    UserBio: "",
   });
 
   useIonViewDidEnter(() => {
@@ -106,10 +108,7 @@ const EditProfile: React.FC = () => {
             <IonCol>
             <IonButton
                   href="/Profile"
-                  // type="submit"
                   color="danger"
-                  // size="large"
-                  // expand="block"
                   fill="solid"
                   onClick={handleSubmit}
                 >
@@ -252,57 +251,32 @@ const EditProfile: React.FC = () => {
                 </IonItem>
               </IonCol>
             </IonRow>
-            <IonRow>
+            <IonRow className="jobGrid">
               <IonCol>
-                <IonLabel>Scheduler: </IonLabel>
-                <IonCheckbox
-                  className="listCol1"
-                  // checked={checked}
-                  // onIonChange={(e) => setChecked(e.detail.checked)}
-                />
+                <IonItem>
+                  <IonLabel position="stacked">
+                    <h1>About:</h1>
+                  </IonLabel>
+                  <IonInput
+                    type="text"
+                    name="Occupation"
+                    // value={editProfile.UserBio}
+                    placeholder="About Me..."
+                    onIonChange={(e: any) =>
+                      setEditProfile({
+                        ...editProfile,
+                        // UserBio: e.target.value,
+                      })
+                    }
+                    clearInput
+                  ></IonInput>
+                </IonItem>
               </IonCol>
             </IonRow>
             <br></br>
-            {/* <IonRow>
-              <IonCol></IonCol>
-              <IonCol>
-                <IonButton
-                  href="/Profile"
-                  // type="submit"
-                  color="danger"
-                  size="large"
-                  expand="block"
-                  fill="outline"
-                  onClick={handleSubmit}
-                >
-                  Save
-                </IonButton>
-              </IonCol>
-              <IonCol></IonCol>
-            </IonRow> */}
           </form>
         </IonGrid>
       </IonContent>
-
-      {/* <IonTabBar className="schedulebutton">
-        <IonTabButton>
-          <IonRow>
-            <IonCol></IonCol>
-            <IonCol>
-              <IonButton
-                onClick={handleSubmit}
-                color="danger"
-                size="large"
-                fill="solid"
-                href="/Profile"
-              >
-                Save
-              </IonButton>
-            </IonCol>
-            <IonCol></IonCol>
-          </IonRow>
-        </IonTabButton>
-      </IonTabBar> */}
 
     </IonPage>
   );

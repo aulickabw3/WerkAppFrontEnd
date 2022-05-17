@@ -22,12 +22,21 @@ import {
   IonItem,
   IonCardContent,
   IonDatetime,
+  IonTabBar,
+  IonTabButton,
 } from "@ionic/react";
 import "./Main.css";
 import axios from "axios";
 import GetUser from "../components/GetUser";
 import "./Main.css";
-import { arrowBackCircle } from "ionicons/icons";
+import {
+  add,
+  addCircle,
+  addCircleOutline,
+  addCircleSharp,
+  arrowBackCircle,
+  arrowUp,
+} from "ionicons/icons";
 
 export const SchedulerView: React.FC = () => {
   // Get self Data
@@ -59,7 +68,9 @@ export const SchedulerView: React.FC = () => {
     Location: string;
   }
 
-  const [schedAvailableJobs, setSchedAvailableJobs] = React.useState<AvailableJobData[]>([
+  const [schedAvailableJobs, setSchedAvailableJobs] = React.useState<
+    AvailableJobData[]
+  >([
     {
       ShiftId: 0,
       ShiftIdentifier: 0,
@@ -92,10 +103,10 @@ export const SchedulerView: React.FC = () => {
                 <img src={"../assets/profilePic.png"} />
               </IonAvatar>
               <IonLabel>
-                <h2>Dave Wigley</h2>
+                <h2>Scheduler Name</h2>
               </IonLabel>
               <IonButton
-                href={`/SchedAvailableJob/${availableJob.ShiftId}`}
+                href={`/SchedShiftDetails/${availableJob.ShiftId}`}
                 fill="outline"
                 slot="end"
               >
@@ -104,6 +115,10 @@ export const SchedulerView: React.FC = () => {
             </IonItem>
             <IonCardContent>
               <IonGrid>
+                <IonRow>
+                  <IonCol>Job#:</IonCol>
+                  <IonCol>{}</IonCol>
+                </IonRow>
                 <IonRow>
                   <IonCol>Company:</IonCol>
                   <IonCol>{availableJob.Company}</IonCol>
@@ -114,12 +129,12 @@ export const SchedulerView: React.FC = () => {
                 </IonRow>
                 <IonRow>
                   <IonCol>Pay:</IonCol>
-                  <IonCol>$75/hr + 2</IonCol>
+                  <IonCol>{}</IonCol>
                 </IonRow>
+                <br></br>
                 <IonRow>
                   <IonCol>Date:</IonCol>
                   <IonDatetime
-                    className="daterino"
                     displayFormat="DD-MMM-YY"
                     value={availableJob.DateDay}
                   ></IonDatetime>
@@ -180,10 +195,10 @@ export const SchedulerView: React.FC = () => {
                 <img src={"../assets/profilePic.png"} />
               </IonAvatar>
               <IonLabel>
-                <h2>Dave Wigley</h2>
+                <h2>Scheduler Name</h2>
               </IonLabel>
               <IonButton
-                href={`/SchedScheduledJob/${schedScheduledJob.ShiftId}`}
+                href={`/SchedShiftDetails/${schedScheduledJob.ShiftId}`}
                 fill="outline"
                 slot="end"
               >
@@ -192,6 +207,10 @@ export const SchedulerView: React.FC = () => {
             </IonItem>
             <IonCardContent>
               <IonGrid>
+                <IonRow>
+                  <IonCol>Job#:</IonCol>
+                  <IonCol>{}</IonCol>
+                </IonRow>
                 <IonRow>
                   <IonCol>Company:</IonCol>
                   <IonCol>{schedScheduledJob.Company}</IonCol>
@@ -202,12 +221,12 @@ export const SchedulerView: React.FC = () => {
                 </IonRow>
                 <IonRow>
                   <IonCol>Pay:</IonCol>
-                  <IonCol>$75/hr + 2</IonCol>
+                  <IonCol>{}</IonCol>
                 </IonRow>
+                <br></br>
                 <IonRow>
                   <IonCol>Date:</IonCol>
                   <IonDatetime
-                    className="daterino"
                     displayFormat="DD-MMM-YY"
                     value={schedScheduledJob.DateDay}
                   ></IonDatetime>
@@ -261,10 +280,10 @@ export const SchedulerView: React.FC = () => {
                 <img src={"../assets/profilePic.png"} />
               </IonAvatar>
               <IonLabel>
-                <h2>Dave Wigley</h2>
+                <h2>Scheduler Name</h2>
               </IonLabel>
               <IonButton
-                href={`/SchedPastJob/${myPastJob.ShiftId}`}
+                href={`/SchedShiftDetails/${myPastJob.ShiftId}`}
                 fill="outline"
                 slot="end"
                 color="medium"
@@ -275,6 +294,10 @@ export const SchedulerView: React.FC = () => {
             <IonCardContent>
               <IonGrid>
                 <IonRow>
+                  <IonCol>Job#:</IonCol>
+                  <IonCol>{}</IonCol>
+                </IonRow>
+                <IonRow>
                   <IonCol>Company:</IonCol>
                   <IonCol>{myPastJob.Company}</IonCol>
                 </IonRow>
@@ -284,12 +307,12 @@ export const SchedulerView: React.FC = () => {
                 </IonRow>
                 <IonRow>
                   <IonCol>Pay:</IonCol>
-                  <IonCol>$75/hr + 2</IonCol>
+                  <IonCol>{}</IonCol>
                 </IonRow>
+                <br></br>
                 <IonRow>
                   <IonCol>Date:</IonCol>
                   <IonDatetime
-                    className="daterino"
                     displayFormat="DD-MMM-YY"
                     value={myPastJob.DateDay}
                   ></IonDatetime>
@@ -309,10 +332,37 @@ export const SchedulerView: React.FC = () => {
     fetchScheduledJobs().then((data) =>
       setSchedScheduledJobs(data.SchedScheduledJob)
     );
-    fetchPastJobs().then((data) => 
-    setMyPastJobs(data.SchedPastJob)
-    );
+    fetchPastJobs().then((data) => setMyPastJobs(data.SchedPastJob));
   }, [profile]);
+
+  const SelectAJobList: React.FC = () => {
+    return (
+      <React.Fragment>
+        <IonRow>
+          <IonCol></IonCol>
+          <IonCol>
+            <IonIcon slot="" size="large" icon={arrowUp} />
+          </IonCol>
+          <IonCol></IonCol>
+          <IonCol>
+            <IonIcon size="large" icon={arrowUp} />
+          </IonCol>
+          <IonCol></IonCol>
+          <IonCol>
+            <IonIcon size="large" icon={arrowUp} />
+          </IonCol>
+          <IonCol></IonCol>
+        </IonRow>
+        <IonRow>
+          <IonCol></IonCol>
+          <IonCol size="7">
+            <h1>Select A Job List</h1>
+          </IonCol>
+          <IonCol></IonCol>
+        </IonRow>
+      </React.Fragment>
+    );
+  };
 
   //Segment Actions Logic
   /////////////////////////////////////
@@ -328,17 +378,16 @@ export const SchedulerView: React.FC = () => {
     if (mainSegment == "open") {
       return <AvailableJobsSegment />;
     }
-    return <h2></h2>;
+    return <SelectAJobList />;
   };
 
   //Toggle
   //////////////////////////
   const [checked, setChecked] = React.useState<boolean>(true);
   const handleToggle = () => {
-    if (checked)
-    window.location.href = "/Main";
-    return
-  }
+    if (checked) window.location.href = "/Main";
+    return;
+  };
 
   const [searchText, setSearchText] = useState("");
 
@@ -366,11 +415,10 @@ export const SchedulerView: React.FC = () => {
                 <IonToggle
                   checked
                   // checked={checked}
-                  onIonChange={e => {
+                  onIonChange={(e) => {
                     setChecked(e.detail.checked);
                     handleToggle();
-                  }
-                }
+                  }}
                   color="danger"
                 ></IonToggle>
                 <IonLabel className="smallfont">Scheduler</IonLabel>
@@ -419,11 +467,26 @@ export const SchedulerView: React.FC = () => {
             </IonRow>
           </IonGrid>
         </IonToolbar>
-
+        
         {/* Segment Lists */}
         <MainSegmentActions />
-
+        {/* /////////////// */}
       </IonContent>
+
+      <IonRow>
+        <IonCol size="1"></IonCol>
+        <IonCol size="10">
+          <IonButton
+            expand="block"
+            color="secondwarning"
+            fill="solid"
+            href="/ScheduleJob"
+          >
+            + Schedule New Job
+          </IonButton>
+        </IonCol>
+        <IonCol size="1"></IonCol>
+      </IonRow>
     </IonPage>
   );
 };

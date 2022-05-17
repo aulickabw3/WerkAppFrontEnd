@@ -95,7 +95,7 @@ const ScheduleJob: React.FC = () => {
           <IonRow className="">
             <IonRow>
               <IonCol>
-                <Link to="/Main">
+                <Link to="/SchedulerView">
                   <IonIcon size="large" icon={arrowBackCircle} />
                 </Link>
               </IonCol>
@@ -191,7 +191,7 @@ const ScheduleJob: React.FC = () => {
               <IonCol size="6">
                 <IonItem>
                   <IonLabel position="stacked">
-                    <h1>Pay: $</h1>
+                    <h1>Pay: </h1>
                   </IonLabel>
                   <IonInput
                     type="text"

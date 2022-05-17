@@ -16,6 +16,8 @@ import {
   IonCheckbox,
   IonButton,
   IonAvatar,
+  useIonActionSheet,
+  IonModal,
 } from "@ionic/react";
 import {
   person,
@@ -73,6 +75,35 @@ const Profile: React.FC = () => {
       });
   };
 
+  const [present, dismiss] = useIonActionSheet();
+
+  const canDismiss = () => {
+    return new Promise(async (resolve) => {
+      await present({
+        header: "Are you sure you want to discard your changes?",
+        buttons: [
+          {
+            text: "Discard Changes",
+            role: "destructive",
+          },
+          {
+            text: "Keep Editing",
+            role: "cancel",
+          },
+        ],
+        onDidDismiss: (ev: CustomEvent) => {
+          const role = ev.detail.role;
+
+          if (role === "destructive") {
+            resolve(true);
+          }
+
+          resolve(false);
+        },
+      });
+    });
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -98,16 +129,10 @@ const Profile: React.FC = () => {
               <IonAvatar className="avatarino">
                 <img src={profile.ProfilePicURL}></img>
               </IonAvatar>
-              {/* <IonImg src={profile.ProfilePicURL}></IonImg> */}
             </IonCol>
-            <IonCol className="title2">
-              {/* <h1>{profile.FirstName}</h1>
-              <h1>{profile.LastName}</h1> */}
-            </IonCol>
+            <IonCol className="title2"></IonCol>
           </IonRow>
-          {/* <br></br> */}
           <IonRow className="profileGrid">
-            {/* <IonCol size=""></IonCol> */}
             <IonCol size="">
               <h1>
                 {profile.FirstName} {profile.LastName}
@@ -115,8 +140,6 @@ const Profile: React.FC = () => {
             </IonCol>
           </IonRow>
           <IonRow className="profileGrid">
-            {/* <IonCol size="">
-            </IonCol> */}
             <IonCol size="11">
               <p>
                 {profile.Occupation} @ {profile.Company}
@@ -140,8 +163,12 @@ const Profile: React.FC = () => {
               </Link>
             </IonCol>
             <IonCol size="3">
+              {/* <IonModal trigger="trigger-button">
+                <IonContent>Modal Content</IonContent>
+              </IonModal> */}
               <Link to="/EditProfile">
                 <IonButton
+                  id="trigger-button"
                   color="medium"
                   // size="large"
                   expand="block"
@@ -173,11 +200,11 @@ const Profile: React.FC = () => {
           </IonRow> */}
           <br></br>
           <br></br>
-          
+
           <br></br>
           <br></br>
           <br></br>
-          
+
           <br></br>
           <IonRow className="profileGrid">
             <IonCol></IonCol>
@@ -197,7 +224,6 @@ const Profile: React.FC = () => {
               </IonButton>
             </IonCol>
           </IonRow>
-          
         </IonGrid>
       </IonContent>
     </IonPage>
