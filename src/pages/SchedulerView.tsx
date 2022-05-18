@@ -66,6 +66,7 @@ export const SchedulerView: React.FC = () => {
     Company: any;
     DateDay: any;
     Location: string;
+    Pay: string;
   }
 
   const [schedAvailableJobs, setSchedAvailableJobs] = React.useState<
@@ -78,6 +79,7 @@ export const SchedulerView: React.FC = () => {
       Company: "No     Jobs",
       DateDay: "Yet",
       Location: "",
+      Pay: "",
     },
   ]);
 
@@ -100,10 +102,10 @@ export const SchedulerView: React.FC = () => {
           <IonCard key={availableJob.ShiftId}>
             <IonItem>
               <IonAvatar className="avtr" slot="start">
-                <img src={"../assets/profilePic.png"} />
+                <img src={profile.ProfilePicURL} />
               </IonAvatar>
               <IonLabel>
-                <h2>Scheduler Name</h2>
+                <h2>{profile.FirstName} {profile.LastName}</h2>
               </IonLabel>
               <IonButton
                 href={`/SchedShiftDetails/${availableJob.ShiftId}`}
@@ -117,19 +119,19 @@ export const SchedulerView: React.FC = () => {
               <IonGrid>
                 <IonRow>
                   <IonCol>Job#:</IonCol>
-                  <IonCol>{}</IonCol>
+                  <IonCol>{availableJob.ShiftIdentifier}</IonCol>
                 </IonRow>
                 <IonRow>
                   <IonCol>Company:</IonCol>
                   <IonCol>{availableJob.Company}</IonCol>
                 </IonRow>
                 <IonRow>
-                  <IonCol>Location::</IonCol>
+                  <IonCol>Location:</IonCol>
                   <IonCol>{availableJob.Location}</IonCol>
                 </IonRow>
                 <IonRow>
                   <IonCol>Pay:</IonCol>
-                  <IonCol>{}</IonCol>
+                  <IonCol>{availableJob.Pay}</IonCol>
                 </IonRow>
                 <br></br>
                 <IonRow>
@@ -156,6 +158,7 @@ export const SchedulerView: React.FC = () => {
     Company: any;
     DateDay: any;
     Location: string;
+    Pay: string;
   }
 
   const [schedScheduledJobs, setSchedScheduledJobs] = React.useState<
@@ -168,6 +171,7 @@ export const SchedulerView: React.FC = () => {
       Company: "No Jobs",
       DateDay: "Sched Yet",
       Location: "",
+      Pay: "",
     },
   ]);
 
@@ -192,10 +196,10 @@ export const SchedulerView: React.FC = () => {
           <IonCard key={schedScheduledJob.ShiftId}>
             <IonItem>
               <IonAvatar className="avtr" slot="start">
-                <img src={"../assets/profilePic.png"} />
+                <img src={profile.ProfilePicURL} />
               </IonAvatar>
               <IonLabel>
-                <h2>Scheduler Name</h2>
+                <h2>{profile.FirstName} {profile.LastName}</h2>
               </IonLabel>
               <IonButton
                 href={`/SchedShiftDetails/${schedScheduledJob.ShiftId}`}
@@ -209,7 +213,7 @@ export const SchedulerView: React.FC = () => {
               <IonGrid>
                 <IonRow>
                   <IonCol>Job#:</IonCol>
-                  <IonCol>{}</IonCol>
+                  <IonCol>{schedScheduledJob.ShiftIdentifier}</IonCol>
                 </IonRow>
                 <IonRow>
                   <IonCol>Company:</IonCol>
@@ -221,7 +225,7 @@ export const SchedulerView: React.FC = () => {
                 </IonRow>
                 <IonRow>
                   <IonCol>Pay:</IonCol>
-                  <IonCol>{}</IonCol>
+                  <IonCol>{schedScheduledJob.Pay}</IonCol>
                 </IonRow>
                 <br></br>
                 <IonRow>
@@ -248,6 +252,7 @@ export const SchedulerView: React.FC = () => {
     Company: any;
     DateDay: any;
     Location: string;
+    Pay: string;
   }
 
   const [myPastJobs, setMyPastJobs] = React.useState<SchedPastJobsData[]>([
@@ -258,6 +263,7 @@ export const SchedulerView: React.FC = () => {
       Company: "No Past",
       DateDay: "Jobs Yet",
       Location: "",
+      Pay: "",
     },
   ]);
 
@@ -277,10 +283,10 @@ export const SchedulerView: React.FC = () => {
           <IonCard key={myPastJob.ShiftId}>
             <IonItem>
               <IonAvatar className="avtr" slot="start">
-                <img src={"../assets/profilePic.png"} />
+                <img src={profile.ProfilePicURL} />
               </IonAvatar>
               <IonLabel>
-                <h2>Scheduler Name</h2>
+                <h2>{profile.FirstName} {profile.LastName}</h2>
               </IonLabel>
               <IonButton
                 href={`/SchedShiftDetails/${myPastJob.ShiftId}`}
@@ -295,7 +301,7 @@ export const SchedulerView: React.FC = () => {
               <IonGrid>
                 <IonRow>
                   <IonCol>Job#:</IonCol>
-                  <IonCol>{}</IonCol>
+                  <IonCol>{myPastJob.ShiftIdentifier}</IonCol>
                 </IonRow>
                 <IonRow>
                   <IonCol>Company:</IonCol>
@@ -307,7 +313,7 @@ export const SchedulerView: React.FC = () => {
                 </IonRow>
                 <IonRow>
                   <IonCol>Pay:</IonCol>
-                  <IonCol>{}</IonCol>
+                  <IonCol>{myPastJob.Pay}</IonCol>
                 </IonRow>
                 <br></br>
                 <IonRow>

@@ -90,12 +90,14 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     UserId: number;
     FirstName: string;
     LastName: string;
+    ProfilePicURL: string;
   }
   const [werkers, setWerkers] = useState<SchedWerkersData[]>([
     {
       UserId: 0,
       FirstName: "",
       LastName: "",
+      ProfilePicURL: "",
     },
   ]);
 
@@ -268,11 +270,25 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             </IonTitle>
           </IonToolbar>
         </IonHeader>
-        <Link to="/SchedulerView">
-          <IonIcon size="large" icon={arrowBackCircle} />
-        </Link>
-        <br></br>
         <IonGrid>
+          <IonRow>
+            <IonCol>
+              <Link to="/SchedulerView">
+                <IonIcon size="large" icon={arrowBackCircle} />
+              </Link>
+            </IonCol>
+            <IonCol></IonCol>
+            {/* <IonCol>
+              <Link to="/EditJob">
+                <IonButton fill="outline" color="danger">Edit Job</IonButton>
+              </Link>
+            </IonCol> */}
+          </IonRow>
+        </IonGrid>
+        {/* <br></br> */}
+        <IonGrid>
+          
+          <br></br>
           <IonRow>
             <IonCol size="1"></IonCol>
             <IonCol>Date:</IonCol>
@@ -327,46 +343,25 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             <IonCol size="1"></IonCol>
           </IonRow>
 
-          <br></br>
           <IonRow>
-            <IonCol size="1"></IonCol>
-            <IonCol>Notes:</IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol size="1"></IonCol>
-            <IonCol size="10">{schedJob.ShiftNotes}</IonCol>
-            <IonCol size="1"></IonCol>
-          </IonRow>
-          <br></br>
-          <IonRow>
-            {/* <IonCol size="1"></IonCol> */}
             <IonCol size="4">
-              <h2>Werkers:</h2>
-            </IonCol>
-            <IonCol></IonCol>
-            <IonCol></IonCol>
-            <IonCol>
-              <IonLabel>Paid</IonLabel>
-            </IonCol>
-            <IonCol>
-              <IonLabel>Cancel</IonLabel>
+              <h3>Werkers:</h3>
             </IonCol>
           </IonRow>
-
           <IonRow className="jobGrid">
             <IonCol size="">
               <IonList>
                 {werkers.map((werker) => (
                   <IonItem key={werker.UserId}>
                     <IonAvatar className="avatario" slot="start">
-                      <img src={"../assets/profilePic.png"} />
+                      <img src={werker.ProfilePicURL} />
                     </IonAvatar>
                     <IonLabel className="labelo">
                       <h1>
                         {werker.FirstName} {werker.LastName}
                       </h1>
                     </IonLabel>
-                    <IonCheckbox className="paidbox"></IonCheckbox>
+                    {/* <IonCheckbox className="paidbox"></IonCheckbox> */}
                     <IonIcon
                       // onClick={CancelThisWerker}
                       className="cancelbox"
@@ -378,12 +373,32 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
                 ))}
               </IonList>
             </IonCol>
-            <IonCol className="somethingHoribleHasHappened" size="7">
-              {/* <h3 >
-                Need {openShifts.unfilledshifts} More!!
-              </h3> */}
-            </IonCol>
           </IonRow>
+          <IonRow>
+            <IonCol size="3"></IonCol>
+            <IonCol size="9">
+              <h3>{openShifts.unfilledshifts} More Needed</h3>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+
+          <br></br>
+          
+          <IonRow>
+            <IonCol size="1"></IonCol>
+            <IonCol>Notes:</IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol size="2"></IonCol>
+            <IonCol size="9">{schedJob.ShiftNotes}</IonCol>
+            <IonCol size="1"></IonCol>
+          </IonRow>
+          {/* <IonRow>
+            <IonCol size="2"></IonCol>
+            <IonCol size="9">{schedJob.WerkerNotes}</IonCol>
+            <IonCol size="1"></IonCol>
+          </IonRow> */}
+          <br></br>
         </IonGrid>
       </IonContent>
       <br></br>

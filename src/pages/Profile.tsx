@@ -18,6 +18,7 @@ import {
   IonAvatar,
   // useIonActionSheet,
   IonModal,
+  useIonAlert,
 } from "@ionic/react";
 import {
   person,
@@ -32,9 +33,11 @@ import "./Profile.css";
 import GetUser from "../components/GetUser";
 import axios from "axios";
 
-// const checkboxList = [{ val: "Scheduler", isChecked: true }];
 
 const Profile: React.FC = () => {
+
+  const [present] = useIonAlert();
+
   interface ProfileData {
     UserId: number;
     FirstName: string;
@@ -74,37 +77,9 @@ const Profile: React.FC = () => {
       })
       .then((response) => {
         console.log(response);
+        window.location.href = "/Login";
       });
   };
-
-  // const [present, dismiss] = useIonActionSheet();
-
-  // const canDismiss = () => {
-  //   return new Promise(async (resolve) => {
-  //     await present({
-  //       header: "Are you sure you want to discard your changes?",
-  //       buttons: [
-  //         {
-  //           text: "Discard Changes",
-  //           role: "destructive",
-  //         },
-  //         {
-  //           text: "Keep Editing",
-  //           role: "cancel",
-  //         },
-  //       ],
-  //       onDidDismiss: (ev: CustomEvent) => {
-  //         const role = ev.detail.role;
-
-  //         if (role === "destructive") {
-  //           resolve(true);
-  //         }
-
-  //         resolve(false);
-  //       },
-  //     });
-  //   });
-  // };
 
   return (
     <IonPage>
@@ -165,65 +140,35 @@ const Profile: React.FC = () => {
               </Link>
             </IonCol>
             <IonCol size="3">
-              {/* <IonModal trigger="trigger-button">
-                <IonContent>Modal Content</IonContent>
-              </IonModal> */}
-              <Link to="/EditProfile">
-                <IonButton
-                  id="trigger-button"
-                  color="medium"
-                  // size="large"
-                  expand="block"
-                  fill="solid"
-                >
-                  <IonIcon icon={ellipsisHorizontal} />
-                </IonButton>
-              </Link>
+              <IonButton
+                color="medium"
+                expand="block"
+                fill="solid"
+                onClick={() =>
+                  present({
+                    header: "Logout",
+                    buttons: ["Cancel", { text: "Ok", handler: handleLogout }],
+                    onDidDismiss: (e) => console.log("did dismiss"),
+                  })
+                }
+              >
+                <IonIcon icon={ellipsisHorizontal} />
+              </IonButton>
             </IonCol>
           </IonRow>
           <br></br>
           <IonRow className="profileGrid">
-            {/* <IonCol size="1"></IonCol> */}
-            <IonCol>
-              {profile.UserBio}
-            </IonCol>
+            <IonCol>{profile.UserBio}</IonCol>
             <IonCol size="1"></IonCol>
           </IonRow>
-          {/* <IonRow>
-            <IonCol>
-              <IonLabel>Scheduler: </IonLabel>
-              <IonCheckbox
-                className="listCol1"
-                // checked={checked}
-                // onIonChange={(e) => setChecked(e.detail.checked)}
-              />
-            </IonCol>
-          </IonRow> */}
-          <br></br>
-          <br></br>
-
           <br></br>
           <br></br>
           <br></br>
-
+          <br></br>
+          <br></br>
           <br></br>
           <IonRow className="profileGrid">
             <IonCol></IonCol>
-          </IonRow>
-
-          <IonRow className="grid1">
-            <IonCol>
-              <IonButton
-                onClick={handleLogout}
-                href="/Login"
-                color="medium"
-                size="large"
-                expand="block"
-                fill="solid"
-              >
-                Log Out
-              </IonButton>
-            </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>

@@ -72,10 +72,13 @@ export const Main: React.FC = () => {
   interface AvailableJobData {
     JJobId: number;
     JJobId2: any;
+    dentifier: string;
     SchedulerId: any;
     Company: any;
     Location: string;
     Date: any;
+    Pay: string;
+    FirstName: string;
     SchedulerProfilePicURL: any;
   }
 
@@ -83,10 +86,13 @@ export const Main: React.FC = () => {
     {
       JJobId: 0,
       JJobId2: 0,
+      dentifier: "",
       SchedulerId: 0,
       Company: "No     Jobs",
       Location: "",
       Date: "Yet",
+      Pay: "",
+      FirstName: "",
       SchedulerProfilePicURL: "../assets/profilePic.png",
     },
   ]);
@@ -111,10 +117,10 @@ export const Main: React.FC = () => {
           <IonCard key={availableJob.JJobId}>
             <IonItem>
               <IonAvatar className="avtr" slot="start">
-                <img src={"../assets/profilePic.png"} />
+                <img src={availableJob.SchedulerProfilePicURL} />
               </IonAvatar>
               <IonLabel>
-                <h2>Scheduler Name</h2>
+                <h2>{availableJob.FirstName}</h2>
               </IonLabel>
               <IonButton
                 href={`/ShiftDetails/${availableJob.JJobId}`}
@@ -126,9 +132,21 @@ export const Main: React.FC = () => {
             </IonItem>
             <IonCardContent>
               <IonGrid>
+              
+                <IonRow>
+                  <IonCol>Date:</IonCol>
+                  <h1>
+                  <IonDatetime
+                    className=""
+                    displayFormat="DD-MMM-YY"
+                    value={availableJob.Date}
+                  ></IonDatetime>
+                  </h1>
+                </IonRow>
+                <br></br>
                 <IonRow>
                   <IonCol>Job#:</IonCol>
-                  <IonCol>{}</IonCol>
+                  <IonCol>{availableJob.dentifier}</IonCol>
                 </IonRow>
                 <IonRow>
                   <IonCol>Company:</IonCol>
@@ -140,17 +158,19 @@ export const Main: React.FC = () => {
                 </IonRow>
                 <IonRow>
                   <IonCol>Pay:</IonCol>
-                  <IonCol>{}</IonCol>
+                  <IonCol>{availableJob.Pay}</IonCol>
                 </IonRow>
-                <br></br>
+                {/* <br></br>
                 <IonRow>
                   <IonCol>Date:</IonCol>
+                  <h1>
                   <IonDatetime
                     className=""
                     displayFormat="DD-MMM-YY"
                     value={availableJob.Date}
                   ></IonDatetime>
-                </IonRow>
+                  </h1>
+                </IonRow> */}
               </IonGrid>
             </IonCardContent>
           </IonCard>
@@ -166,6 +186,7 @@ export const Main: React.FC = () => {
     Company: string;
     Location: string;
     Date: string;
+    FirstName: string;
     SchedulerProfilePicURL: string;
   }
 
@@ -177,6 +198,7 @@ export const Main: React.FC = () => {
       Company: "Go Get",
       Location: "",
       Date: "Some Work!!",
+      FirstName: "",
       SchedulerProfilePicURL: "../assets/profilePic.png",
     },
   ]);
@@ -197,10 +219,10 @@ export const Main: React.FC = () => {
           <IonCard key={myScheduledJob.ShiftShiftId}>
             <IonItem>
               <IonAvatar className="avtr" slot="start">
-                <img src={"../assets/profilePic.png"} />
+                <img src={myScheduledJob.SchedulerProfilePicURL} />
               </IonAvatar>
               <IonLabel>
-                <h2>Scheduler Name</h2>
+                <h2>{myScheduledJob.FirstName}</h2>
               </IonLabel>
               <IonButton
                 href={`/ShiftDetails/${myScheduledJob.ShiftShiftId}`}
@@ -212,6 +234,16 @@ export const Main: React.FC = () => {
             </IonItem>
             <IonCardContent>
               <IonGrid>
+              <IonRow>
+                  <IonCol>Date:</IonCol>
+                  <h1>
+                  <IonDatetime
+                    className=""
+                    displayFormat="DD-MMM-YY"
+                    value={myScheduledJob.Date}
+                  ></IonDatetime>
+                  </h1>
+                </IonRow>
                 <IonRow>
                   <IonCol>Job#:</IonCol>
                   <IonCol>{}</IonCol>
@@ -228,14 +260,14 @@ export const Main: React.FC = () => {
                   <IonCol>Pay:</IonCol>
                   <IonCol>{}</IonCol>
                 </IonRow>
-                <br></br>
+                {/* <br></br>
                 <IonRow>
                   <IonCol>Date:</IonCol>
                   <IonDatetime
                     displayFormat="DD-MMM-YY"
                     value={myScheduledJob.Date}
                   ></IonDatetime>
-                </IonRow>
+                </IonRow> */}
               </IonGrid>
             </IonCardContent>
           </IonCard>
@@ -251,6 +283,7 @@ export const Main: React.FC = () => {
     Company: string;
     Location: string;
     Date: string;
+    FirstName: string;
     SchedulerProfilePicURL: string;
   }
 
@@ -260,6 +293,7 @@ export const Main: React.FC = () => {
       Company: "Go Get",
       Location: "",
       Date: "Some Work!!",
+      FirstName: "",
       SchedulerProfilePicURL: "../assets/profilePic.png",
     },
   ]);
@@ -280,10 +314,10 @@ export const Main: React.FC = () => {
           <IonCard key={myPastJob.ShiftShiftId}>
             <IonItem>
               <IonAvatar className="avtr" slot="start">
-                <img src={"../assets/profilePic.png"} />
+                <img src={myPastJob.SchedulerProfilePicURL} />
               </IonAvatar>
               <IonLabel>
-                <h2>Scheduler Name</h2>
+                <h2>{myPastJob.FirstName}</h2>
               </IonLabel>
               <IonButton
                 href={`/ShiftDetails/${myPastJob.ShiftShiftId}`}
@@ -295,6 +329,16 @@ export const Main: React.FC = () => {
             </IonItem>
             <IonCardContent>
               <IonGrid>
+              <IonRow>
+                  <IonCol>Date:</IonCol>
+                  <h1>
+                  <IonDatetime
+                    className=""
+                    displayFormat="DD-MMM-YY"
+                    value={myPastJob.Date}
+                  ></IonDatetime>
+                  </h1>
+                </IonRow>
                 <IonRow>
                   <IonCol>Job#:</IonCol>
                   <IonCol>{}</IonCol>
@@ -311,14 +355,14 @@ export const Main: React.FC = () => {
                   <IonCol>Pay:</IonCol>
                   <IonCol>{}</IonCol>
                 </IonRow>
-                <br></br>
+                {/* <br></br>
                 <IonRow>
                   <IonCol>Date:</IonCol>
                   <IonDatetime
                     displayFormat="DD-MMM-YY"
                     value={myPastJob.Date}
                   ></IonDatetime>
-                </IonRow>
+                </IonRow> */}
               </IonGrid>
             </IonCardContent>
           </IonCard>

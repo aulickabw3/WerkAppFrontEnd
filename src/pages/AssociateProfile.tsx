@@ -24,6 +24,7 @@ import {
   IonTabBar,
   IonTabButton,
   IonAvatar,
+  useIonAlert,
 } from "@ionic/react";
 import {
   person,
@@ -44,7 +45,6 @@ import "./AssociateProfile.css";
 import GetUser from "../components/GetUser";
 import { profile } from "console";
 
-// const checkboxList = [{ val: "Scheduler", isChecked: true }];
 
 interface AssociateProfileProps
   extends RouteComponentProps<{
@@ -52,8 +52,7 @@ interface AssociateProfileProps
   }> {}
 
 const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
-  console.log(match.params.id);
-
+  const [present] = useIonAlert();
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
   // Get Self Data
@@ -168,7 +167,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
           <IonButton
             onClick={handleAssociateRequest}
             color="warning"
-            // size="large"
             expand="block"
             fill="solid"
           >
@@ -176,16 +174,13 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
           </IonButton>
         </IonCol>
         <IonCol size="2">
-          {/* <Link to="/EditProfile"> */}
           <IonButton
             color="medium"
-            // size="large"
             expand="block"
             fill="solid"
           >
             <IonIcon icon={ellipsisHorizontal} />
           </IonButton>
-          {/* </Link> */}
         </IonCol>
       </IonRow>
     );
@@ -229,7 +224,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
           <IonButton
             onClick={handleAcceptRequest}
             color="warning"
-            // size="large"
             expand="block"
             fill="solid"
           >
@@ -237,11 +231,9 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
           </IonButton>
         </IonCol>
         <IonCol size="5">
-          {/* <Link to="/EditProfile"> */}
           <IonButton
             onClick={handleDeclineRequest}
-            color="danger"
-            // size="large"
+            color="medium"
             expand="block"
             fill="solid"
           >
@@ -273,26 +265,28 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
       <IonRow>
         <IonCol size="5">
           <IonButton
-            onClick={handleCancelRequest}
-            color="danger"
-            // size="large"
+            color="warning"
             expand="block"
             fill="solid"
           >
-            Cancel Request
+            Request Pending...
           </IonButton>
         </IonCol>
         <IonCol size="2">
-          {/* <Link to="/EditProfile"> */}
-          <IonButton
-            color="medium"
-            // size="large"
-            expand="block"
-            fill="solid"
-          >
-            <IonIcon icon={ellipsisHorizontal} />
-          </IonButton>
-          {/* </Link> */}
+        <IonButton
+                color="medium"
+                expand="block"
+                fill="solid"
+                onClick={() =>
+                  present({
+                    header: "Rescind Request",
+                    buttons: ["Cancel", { text: "Ok", handler: handleCancelRequest }],
+                    onDidDismiss: (e) => console.log("did dismiss"),
+                  })
+                }
+              >
+                <IonIcon icon={ellipsisHorizontal} />
+              </IonButton>
         </IonCol>
       </IonRow>
     );
@@ -316,9 +310,8 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   const MyAssociateProfile: React.FC = () => {
     return (
       <IonRow>
-        <IonCol size="10">
+        <IonCol size="8">
           <IonButton
-            onClick={handleFireAssociate}
             color="warning"
             expand="block"
             fill="solid"
@@ -326,7 +319,22 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
             Associate
           </IonButton>
         </IonCol>
-        
+        <IonCol size="3">
+        <IonButton
+                color="medium"
+                expand="block"
+                fill="solid"
+                onClick={() =>
+                  present({
+                    header: "Fire Associate",
+                    buttons: ["Cancel", { text: "Ok", handler: handleFireAssociate }],
+                    onDidDismiss: (e) => console.log("did dismiss"),
+                  })
+                }
+              >
+                <IonIcon icon={ellipsisHorizontal} />
+              </IonButton>
+        </IonCol>
       </IonRow>
     );
   };
@@ -428,16 +436,6 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
               {ListProfile.UserBio}
             </IonCol>
             <IonCol size="1"></IonCol>
-          </IonRow>
-          <IonRow>
-            {/* <IonCol>
-                <IonLabel>Scheduler: </IonLabel>
-                <IonCheckbox
-                  className="listCol1"
-                  // checked={checked}
-                  // onIonChange={(e) => setChecked(e.detail.checked)}
-                />
-              </IonCol> */}
           </IonRow>
         </IonGrid>
       </IonContent>

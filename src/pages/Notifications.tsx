@@ -46,6 +46,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
     UserActionTakenUserProfilePicURL: string;
     UserActionTakenUserActionTyped: string
     UserActionTakenUserActionTypeDescription: string;
+    UserActionTakenUserName: string;
     createdAt: string;
     // NotificationLink: string
   }
@@ -57,6 +58,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
       UserActionTakenUserProfilePicURL: "../assets/profilePic.png",
       UserActionTakenUserActionTyped: "No Notifications",
       UserActionTakenUserActionTypeDescription: "Here Yet! Go do stuff!",
+      UserActionTakenUserName: "",
       createdAt: "Yet!",
       // NotificationLink: ""
     },
@@ -99,7 +101,8 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
           </IonToolbar>
         </IonHeader>
 
-        <IonGrid>
+        <br></br>
+        {/* <IonGrid>
           <IonRow>
             <IonCol>
               <Link to="/Main">
@@ -107,8 +110,8 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
               </Link>
             </IonCol>
           </IonRow>
-        </IonGrid>
-
+        </IonGrid> */}
+        <br></br>
         <IonList>
           {notifications.map((notification) => (
             <IonItem href={`${notification}`} key={notification.id}>
@@ -118,7 +121,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
               <IonLabel className="labelo">
               <h2>This Guy</h2>
               </IonLabel>
-              {notification.id} {notification.UserActionTakenUserActionTypeDescription}
+              {notification.UserActionTakenUserName} {notification.UserActionTakenUserActionTypeDescription}
               <IonDatetime
                 slot="end"
                 displayFormat="DD-MMM-YY"

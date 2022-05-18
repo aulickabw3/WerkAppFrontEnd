@@ -38,7 +38,6 @@ interface ShiftDetailsProps
   }> {}
 
 const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
-  console.log(match.params.id);
 
   interface ShiftDetailsData {
     ShiftId: number;
