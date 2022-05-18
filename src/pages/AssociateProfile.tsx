@@ -42,6 +42,7 @@ import {
 } from "react-router-dom";
 import "./AssociateProfile.css";
 import GetUser from "../components/GetUser";
+import { profile } from "console";
 
 // const checkboxList = [{ val: "Scheduler", isChecked: true }];
 
@@ -76,6 +77,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     Company: string;
     Occupation: string;
     ProfilePicURL: string;
+    UserBio: string;
   }
 
   const [ListProfile, setListProfile] = React.useState<ProfileData>({
@@ -89,6 +91,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     Company: "",
     Occupation: "",
     ProfilePicURL: "",
+    UserBio: "",
   });
 
   const fetchProfile = () => {
@@ -422,8 +425,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
           <br></br>
           <IonRow className="profileGrid">
             <IonCol>
-              This is a temporary bio! Just a quick few sentence or about who I
-              am or whatever. I am a robot and I used to be a clown.
+              {ListProfile.UserBio}
             </IonCol>
             <IonCol size="1"></IonCol>
           </IonRow>
