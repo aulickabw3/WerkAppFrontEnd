@@ -16,7 +16,7 @@ import {
   IonCheckbox,
   IonButton,
   IonAvatar,
-  useIonActionSheet,
+  // useIonActionSheet,
   IonModal,
 } from "@ionic/react";
 import {
@@ -46,6 +46,7 @@ const Profile: React.FC = () => {
     Company: string;
     Occupation: string;
     ProfilePicURL: string;
+    UserBio: string;
   }
 
   const [profile, setProfile] = useState<ProfileData>({
@@ -59,6 +60,7 @@ const Profile: React.FC = () => {
     Company: "",
     Occupation: "",
     ProfilePicURL: "",
+    UserBio: "",
   });
 
   useEffect(() => {
@@ -75,34 +77,34 @@ const Profile: React.FC = () => {
       });
   };
 
-  const [present, dismiss] = useIonActionSheet();
+  // const [present, dismiss] = useIonActionSheet();
 
-  const canDismiss = () => {
-    return new Promise(async (resolve) => {
-      await present({
-        header: "Are you sure you want to discard your changes?",
-        buttons: [
-          {
-            text: "Discard Changes",
-            role: "destructive",
-          },
-          {
-            text: "Keep Editing",
-            role: "cancel",
-          },
-        ],
-        onDidDismiss: (ev: CustomEvent) => {
-          const role = ev.detail.role;
+  // const canDismiss = () => {
+  //   return new Promise(async (resolve) => {
+  //     await present({
+  //       header: "Are you sure you want to discard your changes?",
+  //       buttons: [
+  //         {
+  //           text: "Discard Changes",
+  //           role: "destructive",
+  //         },
+  //         {
+  //           text: "Keep Editing",
+  //           role: "cancel",
+  //         },
+  //       ],
+  //       onDidDismiss: (ev: CustomEvent) => {
+  //         const role = ev.detail.role;
 
-          if (role === "destructive") {
-            resolve(true);
-          }
+  //         if (role === "destructive") {
+  //           resolve(true);
+  //         }
 
-          resolve(false);
-        },
-      });
-    });
-  };
+  //         resolve(false);
+  //       },
+  //     });
+  //   });
+  // };
 
   return (
     <IonPage>
@@ -183,8 +185,7 @@ const Profile: React.FC = () => {
           <IonRow className="profileGrid">
             {/* <IonCol size="1"></IonCol> */}
             <IonCol>
-              This is a temporary bio! Just a quick few sentence or about who I
-              am or whatever. I am a robot and I used to be a clown.
+              {profile.UserBio}
             </IonCol>
             <IonCol size="1"></IonCol>
           </IonRow>

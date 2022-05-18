@@ -260,12 +260,12 @@ const EditProfile: React.FC = () => {
                   <IonInput
                     type="text"
                     name="Occupation"
-                    // value={editProfile.UserBio}
+                    value={editProfile.UserBio}
                     placeholder="About Me..."
                     onIonChange={(e: any) =>
                       setEditProfile({
                         ...editProfile,
-                        // UserBio: e.target.value,
+                        UserBio: e.target.value,
                       })
                     }
                     clearInput
