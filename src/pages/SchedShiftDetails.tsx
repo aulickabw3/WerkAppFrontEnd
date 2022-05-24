@@ -103,9 +103,11 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
 
   interface OpenShiftData {
     unfilledshifts: number;
+    ShiftStatus: string;
   }
   const [openShifts, setOpenShifts] = useState<OpenShiftData>({
     unfilledshifts: 0,
+    ShiftStatus: "",
   });
 
   const fetchSchedJob = () => {
@@ -160,7 +162,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
               fill="solid"
               expand="block"
             >
-              Werk
+              Cancel
             </IonButton>
           </IonCol>
           <IonCol></IonCol>
@@ -187,7 +189,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
       });
   };
 
-  const ScheduledJobButton: React.FC = () => {
+  const SchedScheduledJobButton: React.FC = () => {
     return (
       <React.Fragment>
         <IonRow>
@@ -195,7 +197,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           <IonCol size="11">
             <IonButton
               onClick={handleCancel}
-              color="medium"
+              color="secondwarning"
               fill="solid"
               expand="block"
             >
@@ -222,7 +224,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
       });
   };
 
-  const PastJobButton: React.FC = () => {
+  const SchedPastJobButton: React.FC = () => {
     return (
       <React.Fragment>
         <IonRow>
@@ -245,15 +247,15 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
 
   // Conditionally render action butons
   ///////////////////////////////////////
-  // const JobSummaryActions: React.FC = () => {
-  //   if (shiftDetails.ShiftStatus == "Open") {
-  //     return <SchedAvailableJobButton />;
-  //   }
-  //   if (shiftDetails.ShiftStatus == "Scheduled") {
-  //     return <SchedScheduledJobButton />;
-  //   }
-  //   return <SchedPastJobButton />;
-  // };
+  const JobSummaryActions: React.FC = () => {
+    if (openShifts.ShiftStatus == "Open") {
+      return <SchedAvailableJobButton />;
+    }
+    if (openShifts.ShiftStatus == "Scheduled") {
+      return <SchedScheduledJobButton />;
+    }
+    return <SchedPastJobButton />;
+  };
 
   return (
     <IonPage>
@@ -403,17 +405,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
       </IonContent>
       <br></br>
 
-      <IonRow>
-        <IonCol></IonCol>
-        <IonCol size="11">
-          <IonButton color="secondwarning" fill="solid" expand="block">
-            Action Button
-          </IonButton>
-        </IonCol>
-        <IonCol></IonCol>
-      </IonRow>
-
-      {/* <JobSummaryActions/> */}
+      <JobSummaryActions/>
     </IonPage>
   );
 };
