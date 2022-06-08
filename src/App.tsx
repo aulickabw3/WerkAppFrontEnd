@@ -30,7 +30,6 @@ import ScheduleJob from "./pages/ScheduleJob";
 import Profile from "./pages/Profile";
 import AvailableJob from "./pages/AvailableJob";
 import Notifications from "./pages/Notifications";
-import ScheduledJob from "./pages/ScheduledJob";
 import Associates from "./pages/Associates";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
@@ -75,7 +74,6 @@ const App: React.FC = () => (
           <Route path="/Profile" component={Profile} />
           <Route path="/AvailableJob/:id" component={AvailableJob} />
           <Route path="/Notifications" component={Notifications} />
-          <Route path="/ScheduledJob/:id" component={ScheduledJob} />
           <Route path="/Associates" component={Associates} />
           <Route path="/Logout" component={Logout} />
           <Route path="/Search" component={Search} />

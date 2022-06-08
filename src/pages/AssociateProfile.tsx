@@ -163,7 +163,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   const NotMyAssociateProfile: React.FC = () => {
     return (
       <IonRow>
-        <IonCol size="6">
+        <IonCol size="8">
           <IonButton
             onClick={handleAssociateRequest}
             color="warning"
