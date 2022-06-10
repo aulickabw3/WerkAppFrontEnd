@@ -50,6 +50,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     Location: string;
     Pay: string;
     ShiftNotes: string;
+    ShiftStatus: any;
   }
 
   const [shiftDetails, setshiftDetails] = useState<ShiftDetailsData>({
@@ -63,6 +64,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     Location: "",
     Pay: "",
     ShiftNotes: "",
+    ShiftStatus: "",
   });
 
   const fetchAvailableJob = () => {
@@ -98,6 +100,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     const werkJob = {
       UserId: profile.UserId,
       ShiftId: shiftDetails.ShiftId,
+      SchedID: shiftDetails.UserUserId
     };
 
     axios
@@ -153,6 +156,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
       UserId: profile.UserId,
       ShiftId: shiftDetails.ShiftId,
       UpdateStatus: "Werked",
+      SchedID: shiftDetails.UserUserId,
     };
     axios
       .put("http://localhost:3000/shifts/ShiftStatusUpdate/", {
@@ -222,6 +226,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
       UserId: profile.UserId,
       ShiftId: shiftDetails.ShiftId,
       IsPaid: true,
+      SchedID: shiftDetails.UserUserId,
     };
 
     axios
@@ -269,17 +274,21 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     );
   };
 
-  // Conditionally render action butons
+  console.log(shiftDetails.ShiftStatus);
+  // Conditionally render action buttons
   ///////////////////////////////////////
-  // const JobSummaryActions: React.FC = () => {
-  //   if (shiftDetails.ShiftStatus == "Open") {
-  //     return <AvailableJobButton />;
-  //   }
-  //   if (shiftDetails.ShiftStatus == "Scheduled") {
-  //     return <ScheduledJobButton />;
-  //   }
-  //   return <PastJobButton />;
-  // };
+  const JobSummaryActions: React.FC = () => {
+    if (shiftDetails.ShiftStatus == "Scheduled") {
+      return <ScheduledJobButton />;
+    }
+    if (shiftDetails.ShiftStatus == "Cancelled") {
+      return <PastJobButton />;
+    }
+    if (shiftDetails.ShiftStatus == "Werked") {
+      return <PastJobButton />;
+    }
+    return <AvailableJobButton />;
+  };
 
   return (
     <IonPage>
@@ -366,7 +375,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           </IonRow>
           <br></br>
 
-          <IonRow>
+          {/* <IonRow>
             <IonCol></IonCol>
             <IonCol size="11">
               <IonButton color="warning" fill="solid" expand="block">
@@ -383,9 +392,9 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
               </IonButton>
             </IonCol>
             <IonCol></IonCol>
-          </IonRow>
+          </IonRow> */}
 
-          {/* <JobSummaryActions/> */}
+          <JobSummaryActions/>
 
           <br></br>
           <IonRow>

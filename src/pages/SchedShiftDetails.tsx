@@ -171,23 +171,6 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     );
   };
 
-  // Button for scheduled job summary
-  /////////////////////////////
-  const handleCancel = () => {
-    const werkJob = {
-      UserId: profile.UserId,
-    };
-
-    axios
-      .put(
-        "http://localhost:3000/shifts/SchedulerCancelShift/" + schedJob.ShiftId,
-        { werkJob }
-      )
-      .then((response) => {
-        console.log(response);
-        window.location.href = "/SchedShiftDetails/" + schedJob.ShiftId;
-      });
-  };
 
   const SchedScheduledJobButton: React.FC = () => {
     return (
@@ -196,7 +179,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           <IonCol></IonCol>
           <IonCol size="11">
             <IonButton
-              onClick={handleCancel}
+              onClick={handleSchedCancel}
               color="secondwarning"
               fill="solid"
               expand="block"
@@ -245,7 +228,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     );
   };
 
-  // Conditionally render action butons
+  // Conditionally render action buttons
   ///////////////////////////////////////
   const JobSummaryActions: React.FC = () => {
     if (openShifts.ShiftStatus == "Open") {
