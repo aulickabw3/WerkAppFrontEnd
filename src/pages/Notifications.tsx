@@ -48,7 +48,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
     UserActionTakenUserActionTypeDescription: string;
     UserActionTakenUserName: string;
     createdAt: string;
-    // NotificationLink: string
+    UserActionTakenAppLink: string
   }
 
   const [notifications, setNotifications] = React.useState<NotificationsDate[]>([
@@ -60,7 +60,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
       UserActionTakenUserActionTypeDescription: "Here Yet! Go do stuff!",
       UserActionTakenUserName: "",
       createdAt: "Yet!",
-      // NotificationLink: ""
+      UserActionTakenAppLink: ""
     },
   ]);
 
@@ -114,7 +114,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
         <br></br>
         <IonList>
           {notifications.map((notification) => (
-            <IonItem href={`${notification}`} key={notification.id}>
+            <IonItem href={`${notification.UserActionTakenAppLink}`} key={notification.id}>
                 <IonAvatar className="avatario" slot="start" >
                   <img src={notification.UserActionTakenUserProfilePicURL}  /> 
                 </IonAvatar>
