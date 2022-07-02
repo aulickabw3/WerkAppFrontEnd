@@ -26,8 +26,11 @@ import {
   IonCard,
   IonAvatar,
   IonCardContent,
+  IonSegment,
+  IonSegmentButton,
+  IonList,
 } from "@ionic/react";
-import { person, arrowBackCircle } from "ionicons/icons";
+import { person, arrowBackCircle, documentTextOutline, peopleOutline, chatboxOutline } from "ionicons/icons";
 import "./AvailableJob.css";
 import axios from "axios";
 import GetUser from "../components/GetUser";
@@ -131,20 +134,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           </IonCol>
           <IonCol></IonCol>
         </IonRow>
-        <IonRow>
-          <IonCol></IonCol>
-          <IonCol size="11">
-            <IonButton
-              // onClick={handleCant}
-              color="medium"
-              fill="solid"
-              expand="block"
-            >
-              Can't Do It
-            </IonButton>
-          </IonCol>
-          <IonCol></IonCol>
-        </IonRow>
+        
       </React.Fragment>
     );
   };
@@ -164,7 +154,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
       })
       .then((response) => {
         console.log(response);
-        window.location.href = "/PastJob/" + shiftDetails.ShiftId;
+        window.location.href = "/ShiftDetails/" + shiftDetails.ShiftId;
       });
   };
 
@@ -256,20 +246,6 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           </IonCol>
           <IonCol></IonCol>
         </IonRow>
-        <IonRow>
-          <IonCol></IonCol>
-          <IonCol size="11">
-            <IonButton
-              // onClick={handleComplaint}
-              color="medium"
-              fill="solid"
-              expand="block"
-            >
-              Complain
-            </IonButton>
-          </IonCol>
-          <IonCol></IonCol>
-        </IonRow>
       </React.Fragment>
     );
   };
@@ -306,10 +282,30 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           </IonToolbar>
         </IonHeader>
 
-              {/* <Link to="/Main">
-                <IonIcon size="large" icon={arrowBackCircle} />
-              </Link> */}
-        <br></br>
+        <IonToolbar>
+          <IonGrid>
+            <IonRow>
+              <IonCol>
+                <IonSegment value="/ShiftDetails" onIonChange={(e: any) => {
+                  window.location.href = "/ShiftChat/" + match.params.id;
+                }}>
+                  <IonSegmentButton  value="/ShiftDetails">
+                    <IonIcon icon={documentTextOutline} />
+                    <IonLabel>
+                      <h2>Details</h2>
+                    </IonLabel>
+                  </IonSegmentButton>
+                  <IonSegmentButton value="/ShiftChat">
+                    <IonIcon icon={chatboxOutline} />
+                    <IonLabel>
+                      <h2>Chat</h2>
+                    </IonLabel>
+                  </IonSegmentButton>
+                </IonSegment>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
+        </IonToolbar>
         <IonItem>
           <IonAvatar className="avtr" slot="start">
             <img src={"../assets/profilePic.png"} />
@@ -347,14 +343,13 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             ></IonDatetime>
             <IonCol size="1"></IonCol>
           </IonRow>
-          <br></br>
           <IonRow>
             <IonCol size="1"></IonCol>
             <IonCol>Pay:</IonCol>
-            <h1>{shiftDetails.Pay}</h1>
+            <h2>{shiftDetails.Pay}</h2>
             <IonCol size="1"></IonCol>
           </IonRow>
-          <br></br>
+          
           <IonRow>
             <IonCol size="1"></IonCol>
             <IonCol>Company:</IonCol>
@@ -374,41 +369,20 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             <IonCol size="1"></IonCol>
           </IonRow>
           <br></br>
-
-          {/* <IonRow>
-            <IonCol></IonCol>
-            <IonCol size="11">
-              <IonButton color="warning" fill="solid" expand="block">
-                Action Button
-              </IonButton>
-            </IonCol>
-            <IonCol></IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol></IonCol>
-            <IonCol size="11">
-              <IonButton color="medium" fill="solid" expand="block">
-                Other Action Button
-              </IonButton>
-            </IonCol>
-            <IonCol></IonCol>
-          </IonRow> */}
-
-          <JobSummaryActions/>
-
-          <br></br>
           <IonRow>
             <IonCol size="1"></IonCol>
             <IonCol>Notes:</IonCol>
           </IonRow>
           <IonRow>
-            <IonCol size="1"></IonCol>
-            <IonCol size="10">{shiftDetails.ShiftNotes}</IonCol>
+            <IonCol size="2"></IonCol>
+            <IonCol size="9">{shiftDetails.ShiftNotes}</IonCol>
             <IonCol size="1"></IonCol>
           </IonRow>
           <br></br>
         </IonGrid>
       </IonContent>
+      <JobSummaryActions/>
+       
     </IonPage>
   );
 };

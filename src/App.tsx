@@ -38,12 +38,13 @@ import Search from "./pages/Search";
 import AssociateProfile from "./pages/AssociateProfile";
 import EditProfile from "./pages/EditProfile";
 import SchedulerView from "./pages/SchedulerView";
-import CreateJob from "./pages/CreateJob";
 import Crews from "./pages/Crews";
 import PublishJob from "./pages/PublishJob";
 import PastJob from "./pages/PastJob";
 import ShiftDetails from "./pages/ShiftDetails";
 import SchedShiftDetails from "./pages/SchedShiftDetails";
+import EditShift from "./pages/EditShift";
+import ShiftChat from "./pages/ShiftChat";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -80,12 +81,15 @@ const App: React.FC = () => (
           <Route path="/AssociateProfile/:id" component={AssociateProfile} />
           <Route path="/EditProfile" component={EditProfile} />
           <Route path="/SchedulerView" component={SchedulerView} />
-          <Route path="/CreateJob" component={CreateJob} />
           <Route path="/Crews" component={Crews} />
           <Route path="/PublishJob/:id" component={PublishJob} />
           <Route path="/PastJob/:id" component={PastJob} />
           <Route path="/ShiftDetails/:id" component={ShiftDetails} />
           <Route path="/SchedShiftDetails/:id" component={SchedShiftDetails} />
+          <Route path="/EditShift" component={EditProfile} />
+          <Route path="/ShiftChat/:id" component={ShiftChat} />
+
+          
           <Route
             path="/"
             render={() => <Redirect to="/Login" />}

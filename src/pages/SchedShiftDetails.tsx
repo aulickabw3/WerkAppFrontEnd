@@ -28,6 +28,8 @@ import {
   IonCardContent,
   IonList,
   IonCheckbox,
+  IonSegment,
+  IonSegmentButton,
 } from "@ionic/react";
 import {
   person,
@@ -35,6 +37,13 @@ import {
   closeOutline,
   closeCircleOutline,
   closeCircle,
+  chatbubbleOutline,
+  people,
+  document,
+  documentOutline,
+  documentTextOutline,
+  peopleOutline,
+  chatboxOutline,
 } from "ionicons/icons";
 import "./AvailableJob.css";
 import axios from "axios";
@@ -162,7 +171,21 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
               fill="solid"
               expand="block"
             >
-              Cancel
+              Cancel Job
+            </IonButton>
+          </IonCol>
+          <IonCol></IonCol>
+        </IonRow>
+        <IonRow>
+          <IonCol></IonCol>
+          <IonCol size="11">
+            <IonButton
+              //onClick={}
+              color="medium"
+              fill="solid"
+              expand="block"
+            >
+              Edit Job
             </IonButton>
           </IonCol>
           <IonCol></IonCol>
@@ -170,7 +193,6 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
       </React.Fragment>
     );
   };
-
 
   const SchedScheduledJobButton: React.FC = () => {
     return (
@@ -184,7 +206,21 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
               fill="solid"
               expand="block"
             >
-              Cancel
+              Cancel Job
+            </IonButton>
+          </IonCol>
+          <IonCol></IonCol>
+        </IonRow>
+        <IonRow>
+          <IonCol></IonCol>
+          <IonCol size="11">
+            <IonButton
+              //onClick={}
+              color="medium"
+              fill="solid"
+              expand="block"
+            >
+              Edit Job
             </IonButton>
           </IonCol>
           <IonCol></IonCol>
@@ -219,7 +255,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
               fill="solid"
               expand="block"
             >
-              Mark Paid
+              Mark Closed
             </IonButton>
           </IonCol>
           <IonCol></IonCol>
@@ -255,6 +291,36 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             </IonTitle>
           </IonToolbar>
         </IonHeader>
+
+        <IonToolbar>
+          <IonGrid>
+            <IonRow>
+              <IonCol size="12">
+                <IonSegment onIonChange={(e: any) => {}}>
+                  <IonSegmentButton value="available">
+                    <IonIcon icon={documentTextOutline} />
+                    <IonLabel>
+                      <h2>Details</h2>
+                    </IonLabel>
+                  </IonSegmentButton>
+                  <IonSegmentButton value="scheduled">
+                    <IonIcon icon={peopleOutline} />
+                    <IonLabel>
+                      <h2>Werkers</h2>
+                    </IonLabel>
+                  </IonSegmentButton>
+                  <IonSegmentButton value="past">
+                    <IonIcon icon={chatboxOutline} />
+                    <IonLabel>
+                      <h2>Chat</h2>
+                    </IonLabel>
+                  </IonSegmentButton>
+                </IonSegment>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
+        </IonToolbar>
+
         <IonGrid>
           <IonRow>
             <IonCol>
@@ -263,16 +329,14 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
               </Link>
             </IonCol>
             <IonCol></IonCol>
-            {/* <IonCol>
-              <Link to="/EditJob">
+            <IonCol>
+              {/* <Link to="/EditJob">
                 <IonButton fill="outline" color="danger">Edit Job</IonButton>
-              </Link>
-            </IonCol> */}
+              </Link> */}
+            </IonCol>
           </IonRow>
         </IonGrid>
-        {/* <br></br> */}
         <IonGrid>
-          
           <br></br>
           <IonRow>
             <IonCol size="1"></IonCol>
@@ -328,7 +392,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             <IonCol size="1"></IonCol>
           </IonRow>
 
-          <IonRow>
+          {/* <IonRow>
             <IonCol size="4">
               <h3>Werkers:</h3>
             </IonCol>
@@ -346,9 +410,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
                         {werker.FirstName} {werker.LastName}
                       </h1>
                     </IonLabel>
-                    {/* <IonCheckbox className="paidbox"></IonCheckbox> */}
                     <IonIcon
-                      // onClick={CancelThisWerker}
                       className="cancelbox"
                       color="danger"
                       size="large"
@@ -365,10 +427,10 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
               <h3>{openShifts.unfilledshifts} More Needed</h3>
             </IonCol>
             <IonCol></IonCol>
-          </IonRow>
+          </IonRow> */}
 
           <br></br>
-          
+
           <IonRow>
             <IonCol size="1"></IonCol>
             <IonCol>Notes:</IonCol>
@@ -378,17 +440,12 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             <IonCol size="9">{schedJob.ShiftNotes}</IonCol>
             <IonCol size="1"></IonCol>
           </IonRow>
-          {/* <IonRow>
-            <IonCol size="2"></IonCol>
-            <IonCol size="9">{schedJob.WerkerNotes}</IonCol>
-            <IonCol size="1"></IonCol>
-          </IonRow> */}
           <br></br>
         </IonGrid>
       </IonContent>
       <br></br>
 
-      <JobSummaryActions/>
+      <JobSummaryActions />
     </IonPage>
   );
 };

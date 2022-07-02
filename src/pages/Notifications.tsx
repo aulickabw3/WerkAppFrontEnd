@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import {
   IonIcon,
   IonContent,
@@ -100,27 +100,16 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
             </IonTitle>
           </IonToolbar>
         </IonHeader>
-
         <br></br>
-        {/* <IonGrid>
-          <IonRow>
-            <IonCol>
-              <Link to="/Main">
-                <IonIcon size="large" icon={arrowBackCircle} />
-              </Link>
-            </IonCol>
-          </IonRow>
-        </IonGrid> */}
         <br></br>
         <IonList>
           {notifications.map((notification) => (
+            <Fragment>
+              <br></br>
             <IonItem href={`${notification.UserActionTakenAppLink}`} key={notification.id}>
                 <IonAvatar className="avatario" slot="start" >
                   <img src={notification.UserActionTakenUserProfilePicURL}  /> 
                 </IonAvatar>
-              <IonLabel className="labelo">
-              <h2>This Guy</h2>
-              </IonLabel>
               {notification.UserActionTakenUserName} {notification.UserActionTakenUserActionTypeDescription}
               <IonDatetime
                 slot="end"
@@ -128,9 +117,9 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
                 value={notification.createdAt}
               ></IonDatetime>
             </IonItem>
+            </Fragment>
           ))}
         </IonList>
-
       </IonContent>
     </IonPage>
   );

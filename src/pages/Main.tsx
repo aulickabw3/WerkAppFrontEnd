@@ -337,14 +337,6 @@ export const Main: React.FC = () => {
                   <IonCol>Pay:</IonCol>
                   <IonCol>{myPastJob.Pay}</IonCol>
                 </IonRow>
-                {/* <br></br>
-                <IonRow>
-                  <IonCol>Date:</IonCol>
-                  <IonDatetime
-                    displayFormat="DD-MMM-YY"
-                    value={myPastJob.Date}
-                  ></IonDatetime>
-                </IonRow> */}
               </IonGrid>
             </IonCardContent>
           </IonCard>
