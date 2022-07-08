@@ -1,5 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import { RouteComponentProps } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {
+  Link,
+  matchPath,
+  match,
+  useRouteMatch,
+  RouteComponentProps,
+} from "react-router-dom";
 import {
   IonContent,
   IonHeader,
@@ -12,10 +18,14 @@ import {
   IonButton,
   IonIcon,
   IonLabel,
+  IonTabButton,
   IonItem,
   useIonViewDidEnter,
   IonDatetime,
+  IonTabBar,
+  IonCard,
   IonAvatar,
+  IonCardContent,
   IonSegment,
   IonSegmentButton,
   IonInput,
@@ -23,8 +33,13 @@ import {
   IonItemDivider,
 } from "@ionic/react";
 import {
+  person,
+  arrowBackCircle,
   documentTextOutline,
+  peopleOutline,
   chatboxOutline,
+  text,
+  sendOutline,
   paperPlaneOutline,
 } from "ionicons/icons";
 import "./AvailableJob.css";
@@ -36,7 +51,7 @@ interface ShiftChatProps
     id: string;
   }> {}
 
-const ShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
+const SchedShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
   interface ShiftDetailsData {
     ShiftId: number;
     ShiftIdentifier: string;
@@ -126,29 +141,14 @@ const ShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
 
   useIonViewDidEnter(() => {
     fetchAvailableJob().then((data) => setshiftDetails(data.werkShift));
-    fetchShiftMessages().then((data) => setGetShiftMessages(data.shiftMessages));
-  }, []);
-
-  const bottomRef = useRef<null | HTMLDivElement>(null);
-
-  useEffect(() => {
-    let interval = setInterval(() => {
-      fetchShiftMessages().then((data) =>
-        setGetShiftMessages(data.shiftMessages)
-      );
-    }, 3000);
-    return () => {
-      clearInterval(interval);
-    };
+    fetchShiftMessages().then((data) =>
+      setGetShiftMessages(data.shiftMessages)
+    );
   }, []);
 
   useEffect(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, [shiftDetails]);
-
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [getShiftMessages]);
 
   /////////////////////////
   //post a message
@@ -161,40 +161,58 @@ const ShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
       ShiftId: shiftDetails.ShiftId,
       SchedUserId: shiftDetails.UserUserId,
     };
+
     return axios
       .post("http://localhost:3000/message/PostShiftMessage", {
         newNotificationRecord,
         withCredentials: true,
       })
-      .then(() => {
-        setSendMessage("");
-        //window.location.href = "/ShiftChat/" + match.params.id;
+      .then((response) => {
+        console.log(response);
+        return response.data;
       });
   };
+
+  console.log(sendMessage);
 
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="warning">
+        <IonToolbar color="secondwarning">
           <IonTitle className="title2">Chat</IonTitle>
         </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonHeader collapse="condense">
+          <IonToolbar color="secondwarning">
+            <IonTitle className="title2" size="large">
+              Chat
+            </IonTitle>
+          </IonToolbar>
+        </IonHeader>
+
         <IonToolbar>
           <IonGrid>
             <IonRow>
-              <IonCol>
+              <IonCol size="12">
                 <IonSegment
-                  value="/ShiftChat"
-                  onIonChange={(e: any) => {
-                    window.location.href = "/ShiftDetails/" + match.params.id;
-                  }}
-                >
-                  <IonSegmentButton value="/ShiftDetails">
+                value="/SchedShiftChat/"
+                 onIonChange={(e: any) => {
+                  window.location.href = `${e.detail.value}` + match.params.id;
+                 }}>
+                  <IonSegmentButton value="/SchedShiftDetails/">
                     <IonIcon icon={documentTextOutline} />
                     <IonLabel>
                       <h2>Details</h2>
                     </IonLabel>
                   </IonSegmentButton>
-                  <IonSegmentButton value="/ShiftChat">
+                  <IonSegmentButton value="/SchedShiftWerkers/">
+                    <IonIcon icon={peopleOutline} />
+                    <IonLabel>
+                      <h2>Werkers</h2>
+                    </IonLabel>
+                  </IonSegmentButton>
+                  <IonSegmentButton value="/SchedShiftChat/">
                     <IonIcon icon={chatboxOutline} />
                     <IonLabel>
                       <h2>Chat</h2>
@@ -205,9 +223,6 @@ const ShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
             </IonRow>
           </IonGrid>
         </IonToolbar>
-      </IonHeader>
-      <IonContent>
-       
 
         <IonRow>
           <IonCol className="searchBar">
@@ -217,11 +232,11 @@ const ShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
                   <IonAvatar className="avatario" slot="start">
                     <img src={"../assets/profilePic.png"} />
                   </IonAvatar>
-                  {/* <IonDatetime
+                  <IonDatetime
                     slot="end"
                     displayFormat="THH:mm"
                     value={getShiftMessage.createdAt}
-                  ></IonDatetime> */}
+                  ></IonDatetime>
                   <IonLabel className="ion-text-wrap">
                     <p>{getShiftMessage.MessageAuthor}</p>
                     {getShiftMessage.MessageBox}
@@ -232,21 +247,19 @@ const ShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
             </IonList>
           </IonCol>
         </IonRow>
-        <div ref={bottomRef} />
       </IonContent>
       <IonItemDivider>Send Message</IonItemDivider>
       <IonRow>
         <IonCol>
           <IonItem>
             <IonInput
-              value={sendMessage}
               placeholder="Send Message..."
               onIonChange={(e) => setSendMessage(e.detail.value!)}
             ></IonInput>
           </IonItem>
         </IonCol>
         <IonCol size="2">
-          <IonButton type="submit" onClick={postMessage} fill="clear">
+          <IonButton onClick={postMessage} fill="clear">
             <IonIcon size="large" icon={paperPlaneOutline} />
           </IonButton>
         </IonCol>
@@ -255,4 +268,4 @@ const ShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
   );
 };
 
-export default ShiftChat;
+export default SchedShiftChat;

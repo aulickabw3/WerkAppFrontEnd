@@ -67,6 +67,47 @@ export const Main: React.FC = () => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
+  // Search Users/////////////////////
+  ///////////////////////////////////////////////////////
+  interface UsersData {
+    UserId: number;
+    FirstName: string;
+    LastName: string;
+    Email: string;
+    IsScheduler: boolean;
+    Company: string;
+    Occupation: string;
+    ProfilePicURL: string;
+  }
+
+  const [users, setUsers] = React.useState<UsersData[]>([
+    {
+      UserId: 0,
+      FirstName: "",
+      LastName: "",
+      Email: "",
+      IsScheduler: false,
+      Company: "",
+      Occupation: "",
+      ProfilePicURL: "",
+    },
+  ]);
+
+  const fetchUsers = () => {
+    return axios
+      .get("http://localhost:3000/user/Search/" + profile.UserId, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        return response.data;
+      });
+  };
+
+  React.useEffect(() => {
+    fetchUsers().then((data) => setUsers(data.personArray));
+  }, [profile]);
+
   // Available Jobs Segment
   //////////////////////////////////////
   interface AvailableJobData {
@@ -132,7 +173,6 @@ export const Main: React.FC = () => {
             </IonItem>
             <IonCardContent>
               <IonGrid>
-              
                 <IonRow>
                   <IonCol>Date:</IonCol>
                   <IonDatetime
@@ -224,7 +264,7 @@ export const Main: React.FC = () => {
             </IonItem>
             <IonCardContent>
               <IonGrid>
-              <IonRow>
+                <IonRow>
                   <IonCol>Date:</IonCol>
                   <IonDatetime
                     className=""
@@ -313,7 +353,7 @@ export const Main: React.FC = () => {
             </IonItem>
             <IonCardContent>
               <IonGrid>
-              <IonRow>
+                <IonRow>
                   <IonCol>Date:</IonCol>
                   <IonDatetime
                     className=""
@@ -350,7 +390,7 @@ export const Main: React.FC = () => {
   const SelectAJobList: React.FC = () => {
     return (
       <React.Fragment>
-      <IonRow>
+        <IonRow>
           <IonCol></IonCol>
           <IonCol>
             <IonIcon slot="" size="large" icon={arrowUp} />
@@ -372,7 +412,7 @@ export const Main: React.FC = () => {
           </IonCol>
           <IonCol></IonCol>
         </IonRow>
-    </React.Fragment>
+      </React.Fragment>
     );
   };
 
@@ -398,7 +438,7 @@ export const Main: React.FC = () => {
     if (mainSegment == "available") {
       return <AvailableJobsSegment />;
     }
-    return <SelectAJobList />
+    return <SelectAJobList />;
   };
 
   const [checked, setChecked] = React.useState<boolean>(false);
@@ -406,10 +446,6 @@ export const Main: React.FC = () => {
   const handleToggle = () => {
     if (!checked) window.location.href = "/SchedulerView";
     return;
-  };
-
-  const handleSearch = () => {
-    window.location.href = "/Search";
   };
 
   const [searchText, setSearchText] = useState("");
@@ -446,18 +482,59 @@ export const Main: React.FC = () => {
               </IonCol>
               <IonCol size="8">
                 <IonSearchbar
-                  className="srchbr"
                   value={searchText}
-                  onIonChange={handleSearch}
+                  onIonChange={(e) => setSearchText(e.detail.value!)}
                   animated
+                  className="srchbr"
                 ></IonSearchbar>
               </IonCol>
               <IonCol size="1">
-                <IonAvatar slot="" className="tinyavatar">
+                {/* <IonButton fill="clear" href=""> */}
+                <IonAvatar className="tinyavatar">
                   <img src={profile.ProfilePicURL} />
                 </IonAvatar>
+                {/* </IonButton> */}
               </IonCol>
             </IonRow>
+           
+              <IonList className="searchBar">
+                {users
+                  .filter((value) => {
+                    if (searchText == "") {
+                      return "";
+                    } else if (
+                      value.FirstName.toLowerCase().includes(
+                        searchText.toLowerCase()
+                      )
+                    ) {
+                      return value;
+                    } else if (
+                      value.LastName.toLowerCase().includes(
+                        searchText.toLowerCase()
+                      )
+                    ) {
+                      return value;
+                    }
+                  })
+                  .map((user) => (
+                    <IonItem
+                      href={`/AssociateProfile/${user.UserId}`}
+                      key={user.UserId}
+                    >
+                      <IonAvatar className="avatario" slot="start">
+                        <img src={user.ProfilePicURL} />
+                      </IonAvatar>
+                      <IonLabel className="labelo">
+                        <h1>
+                          {user.FirstName} {user.LastName}
+                        </h1>
+                        <p>{user.Company}</p>
+                      </IonLabel>
+                      <br></br>
+                    </IonItem>
+                  ))}
+              </IonList>
+         
             <IonRow>
               <IonCol size="12">
                 <IonSegment
@@ -487,9 +564,8 @@ export const Main: React.FC = () => {
             </IonRow>
           </IonGrid>
         </IonToolbar>
-        
-        <MainSegmentActions />
 
+        <MainSegmentActions />
       </IonContent>
     </IonPage>
   );

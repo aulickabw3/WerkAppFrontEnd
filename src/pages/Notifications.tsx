@@ -18,7 +18,13 @@ import {
   IonDatetime,
 } from "@ionic/react";
 import axios from "axios";
-import { person, arrowBackCircle, arrowBack } from "ionicons/icons";
+import {
+  person,
+  arrowBackCircle,
+  arrowBack,
+  mailUnreadOutline,
+  mailOpenOutline,
+} from "ionicons/icons";
 import { Link, RouteComponentProps } from "react-router-dom";
 import "./Main.css";
 import "./Search.css";
@@ -44,30 +50,33 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
     id: number;
     IsRead: boolean;
     UserActionTakenUserProfilePicURL: string;
-    UserActionTakenUserActionTyped: string
+    UserActionTakenUserActionTyped: string;
     UserActionTakenUserActionTypeDescription: string;
     UserActionTakenUserName: string;
     createdAt: string;
-    UserActionTakenAppLink: string
+    UserActionTakenAppLink: string;
   }
 
-  const [notifications, setNotifications] = React.useState<NotificationsDate[]>([
-    {
-      id: 0,
-      IsRead: false,
-      UserActionTakenUserProfilePicURL: "../assets/profilePic.png",
-      UserActionTakenUserActionTyped: "No Notifications",
-      UserActionTakenUserActionTypeDescription: "Here Yet! Go do stuff!",
-      UserActionTakenUserName: "",
-      createdAt: "Yet!",
-      UserActionTakenAppLink: ""
-    },
-  ]);
+  const [notifications, setNotifications] = React.useState<NotificationsDate[]>(
+    [
+      {
+        id: 0,
+        IsRead: false,
+        UserActionTakenUserProfilePicURL: "../assets/profilePic.png",
+        UserActionTakenUserActionTyped: "No Notifications",
+        UserActionTakenUserActionTypeDescription: "Here Yet! Go do stuff!",
+        UserActionTakenUserName: "",
+        createdAt: "Yet!",
+        UserActionTakenAppLink: "",
+      },
+    ]
+  );
 
   const fetchRequests = () => {
     return axios
       .get(
-        "http://localhost:3000/notifications/ListOfNotifications/" + profile.UserId,
+        "http://localhost:3000/notifications/ListOfNotifications/" +
+          profile.UserId,
         {
           withCredentials: true,
         }
@@ -81,8 +90,6 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
   React.useEffect(() => {
     fetchRequests().then((data) => setNotifications(data.listOfNotifications));
   }, [profile]);
-
-
 
   return (
     <IonPage>
@@ -103,20 +110,43 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
         <br></br>
         <br></br>
         <IonList>
-          {notifications.map((notification) => (
+          {notifications.reverse().map((notification) => (
             <Fragment>
               <br></br>
-            <IonItem href={`${notification.UserActionTakenAppLink}`} key={notification.id}>
-                <IonAvatar className="avatario" slot="start" >
-                  <img src={notification.UserActionTakenUserProfilePicURL}  /> 
+              <IonItem
+                onClick={(e: any) => {
+                  const ReadData = {
+                    IsRead: true,
+                  };
+                  return axios
+                    .put(
+                      "http://localhost:3000/notifications/MarkRead/" +
+                        notification.id,
+                      {
+                        ReadData,
+                        withCredentials: true,
+                      }
+                    )
+                    .then((response) => {
+                      console.log(response);
+                    });
+                }}
+                className={`${notification.IsRead ? "read" : "unread"}`}
+                href={`${notification.UserActionTakenAppLink}`}
+                key={notification.id}
+              >
+                <IonAvatar className="avatario" slot="start">
+                  <img src={notification.UserActionTakenUserProfilePicURL} />
                 </IonAvatar>
-              {notification.UserActionTakenUserName} {notification.UserActionTakenUserActionTypeDescription}
-              <IonDatetime
-                slot="end"
-                displayFormat="DD-MMM-YY"
-                value={notification.createdAt}
-              ></IonDatetime>
-            </IonItem>
+                {notification.UserActionTakenUserName}{" "}
+                {notification.UserActionTakenUserActionTypeDescription}
+                <IonDatetime
+                  className="nill"
+                  slot="end"
+                  displayFormat="DD-MMM-YY"
+                  value={notification.createdAt}
+                ></IonDatetime>
+              </IonItem>
             </Fragment>
           ))}
         </IonList>

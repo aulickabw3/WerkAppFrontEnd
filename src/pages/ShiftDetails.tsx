@@ -30,7 +30,13 @@ import {
   IonSegmentButton,
   IonList,
 } from "@ionic/react";
-import { person, arrowBackCircle, documentTextOutline, peopleOutline, chatboxOutline } from "ionicons/icons";
+import {
+  person,
+  arrowBackCircle,
+  documentTextOutline,
+  peopleOutline,
+  chatboxOutline,
+} from "ionicons/icons";
 import "./AvailableJob.css";
 import axios from "axios";
 import GetUser from "../components/GetUser";
@@ -41,7 +47,6 @@ interface ShiftDetailsProps
   }> {}
 
 const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
-
   interface ShiftDetailsData {
     ShiftId: number;
     ShiftIdentifier: string;
@@ -103,7 +108,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     const werkJob = {
       UserId: profile.UserId,
       ShiftId: shiftDetails.ShiftId,
-      SchedID: shiftDetails.UserUserId
+      SchedID: shiftDetails.UserUserId,
     };
 
     axios
@@ -134,7 +139,6 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           </IonCol>
           <IonCol></IonCol>
         </IonRow>
-        
       </React.Fragment>
     );
   };
@@ -286,22 +290,42 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           <IonGrid>
             <IonRow>
               <IonCol>
-                <IonSegment value="/ShiftDetails" onIonChange={(e: any) => {
-                  window.location.href = "/ShiftChat/" + match.params.id;
-                }}>
-                  <IonSegmentButton  value="/ShiftDetails">
+
+                {/* <IonTabBar>
+                  <IonTabButton href="/ShiftDetails">
+                    <IonIcon icon={documentTextOutline} />
+                    <IonLabel>
+                      <h2>Details</h2>
+                    </IonLabel>
+                  </IonTabButton>
+                  <IonTabButton href="/ShiftChat">
+                  <IonIcon icon={chatboxOutline} />
+                    <IonLabel>
+                      <h2>Chat</h2>
+                    </IonLabel>
+                  </IonTabButton>
+                </IonTabBar> */}
+
+                <IonSegment
+                  value="/ShiftDetails/"
+                  onIonChange={(e: any) => {
+                    window.location.href = `${e.detail.value}` + match.params.id;
+                  }}
+                >
+                  <IonSegmentButton value="/ShiftDetails/">
                     <IonIcon icon={documentTextOutline} />
                     <IonLabel>
                       <h2>Details</h2>
                     </IonLabel>
                   </IonSegmentButton>
-                  <IonSegmentButton value="/ShiftChat">
+                  <IonSegmentButton value="/ShiftChat/">
                     <IonIcon icon={chatboxOutline} />
                     <IonLabel>
                       <h2>Chat</h2>
                     </IonLabel>
                   </IonSegmentButton>
                 </IonSegment>
+                
               </IonCol>
             </IonRow>
           </IonGrid>
@@ -349,7 +373,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             <h2>{shiftDetails.Pay}</h2>
             <IonCol size="1"></IonCol>
           </IonRow>
-          
+
           <IonRow>
             <IonCol size="1"></IonCol>
             <IonCol>Company:</IonCol>
@@ -381,8 +405,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           <br></br>
         </IonGrid>
       </IonContent>
-      <JobSummaryActions/>
-       
+      <JobSummaryActions />
     </IonPage>
   );
 };

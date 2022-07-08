@@ -54,7 +54,7 @@ interface ShiftDetailsProps
     id: string;
   }> {}
 
-const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
+const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
   interface ProfileData {
     UserId: number;
   }
@@ -141,140 +141,9 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     });
   }, [profile]);
 
-  // Button for available job summary
-  //////////////////////////////////////////
-  const handleSchedCancel = () => {
-    const werkJob = {
-      UserId: profile.UserId,
-    };
+  
 
-    axios
-      .put("http://localhost:3000/shifts/SchedCancel/" + schedJob.ShiftId, {
-        werkJob,
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log(response);
-        window.location.href = "/SchedShiftDetails/" + schedJob.ShiftId;
-      });
-  };
-
-  const SchedAvailableJobButton: React.FC = () => {
-    return (
-      <React.Fragment>
-        <IonRow>
-          <IonCol></IonCol>
-          <IonCol size="11">
-            <IonButton
-              onClick={handleSchedCancel}
-              color="secondwarning"
-              fill="solid"
-              expand="block"
-            >
-              Cancel Job
-            </IonButton>
-          </IonCol>
-          <IonCol></IonCol>
-        </IonRow>
-        <IonRow>
-          <IonCol></IonCol>
-          <IonCol size="11">
-            <IonButton
-              //onClick={}
-              color="medium"
-              fill="solid"
-              expand="block"
-            >
-              Edit Job
-            </IonButton>
-          </IonCol>
-          <IonCol></IonCol>
-        </IonRow>
-      </React.Fragment>
-    );
-  };
-
-  const SchedScheduledJobButton: React.FC = () => {
-    return (
-      <React.Fragment>
-        <IonRow>
-          <IonCol></IonCol>
-          <IonCol size="11">
-            <IonButton
-              onClick={handleSchedCancel}
-              color="secondwarning"
-              fill="solid"
-              expand="block"
-            >
-              Cancel Job
-            </IonButton>
-          </IonCol>
-          <IonCol></IonCol>
-        </IonRow>
-        <IonRow>
-          <IonCol></IonCol>
-          <IonCol size="11">
-            <IonButton
-              //onClick={}
-              color="medium"
-              fill="solid"
-              expand="block"
-            >
-              Edit Job
-            </IonButton>
-          </IonCol>
-          <IonCol></IonCol>
-        </IonRow>
-      </React.Fragment>
-    );
-  };
-
-  // Button for past job summary
-  ///////////////////////////////////////////
-  const handlePaid = () => {
-    const JobPaid = {
-      UserId: profile.UserId,
-    };
-
-    axios
-      .put("http://localhost:3000/shifts/Paid/" + schedJob.ShiftId, { JobPaid })
-      .then((response) => {
-        console.log(response);
-      });
-  };
-
-  const SchedPastJobButton: React.FC = () => {
-    return (
-      <React.Fragment>
-        <IonRow>
-          <IonCol></IonCol>
-          <IonCol size="11">
-            <IonButton
-              onClick={handlePaid}
-              color="secondwarning"
-              fill="solid"
-              expand="block"
-            >
-              Mark Closed
-            </IonButton>
-          </IonCol>
-          <IonCol></IonCol>
-        </IonRow>
-      </React.Fragment>
-    );
-  };
-
-  // Conditionally render action buttons
-  ///////////////////////////////////////
-  const JobSummaryActions: React.FC = () => {
-    if (openShifts.ShiftStatus == "Open") {
-      return <SchedAvailableJobButton />;
-    }
-    if (openShifts.ShiftStatus == "Scheduled") {
-      return <SchedScheduledJobButton />;
-    }
-    return <SchedPastJobButton />;
-  };
+ 
 
   return (
     <IonPage>
@@ -297,7 +166,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             <IonRow>
               <IonCol size="12">
                 <IonSegment
-                value="/SchedShiftDetails/"
+                value="/SchedShiftWerkers/"
                  onIonChange={(e: any) => {
                   window.location.href = `${e.detail.value}` + match.params.id;
                  }}>
@@ -341,61 +210,9 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           </IonRow>
         </IonGrid>
         <IonGrid>
-          <IonRow>
-            <IonCol size="1"></IonCol>
-            <IonCol>Date:</IonCol>
-            <IonDatetime
-              displayFormat="DD-MMM-YY"
-              value={schedJob.DateDay}
-            ></IonDatetime>
-            <IonCol size="1"></IonCol>{" "}
-          </IonRow>
-          <IonRow>
-            <IonCol size="1"></IonCol>
-            <IonCol>Start Time:</IonCol>
-            <IonDatetime
-              displayFormat="HH:mm"
-              value={schedJob.StartDateTime}
-            ></IonDatetime>
-            <IonCol size="1"></IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol size="1"></IonCol>
-            <IonCol>Finish Time:</IonCol>
-            <IonDatetime
-              displayFormat="HH:mm"
-              value={schedJob.FinishDateTime}
-            ></IonDatetime>
-            <IonCol size="1"></IonCol>
-          </IonRow>
-          <br></br>
-          <IonRow>
-            <IonCol size="1"></IonCol>
-            <IonCol>Pay:</IonCol>
-            <h1>{schedJob.Pay}</h1>
-            <IonCol size="1"></IonCol>
-          </IonRow>
-          <br></br>
-          <IonRow>
-            <IonCol size="1"></IonCol>
-            <IonCol>Company:</IonCol>
-            {schedJob.Company}
-            <IonCol size="1"></IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol size="1"></IonCol>
-            <IonCol>Location:</IonCol>
-            {schedJob.Location}
-            <IonCol size="1"></IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol size="1"></IonCol>
-            <IonCol>Job#:</IonCol>
-            {schedJob.ShiftIdentifier}
-            <IonCol size="1"></IonCol>
-          </IonRow>
+         
 
-          {/* <IonRow>
+          <IonRow>
             <IonCol size="4">
               <h3>Werkers:</h3>
             </IonCol>
@@ -430,27 +247,17 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
               <h3>{openShifts.unfilledshifts} More Needed</h3>
             </IonCol>
             <IonCol></IonCol>
-          </IonRow> */}
+          </IonRow>
 
           <br></br>
 
-          <IonRow>
-            <IonCol size="1"></IonCol>
-            <IonCol>Notes:</IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol size="2"></IonCol>
-            <IonCol size="9">{schedJob.ShiftNotes}</IonCol>
-            <IonCol size="1"></IonCol>
-          </IonRow>
-          <br></br>
+          
         </IonGrid>
       </IonContent>
       <br></br>
 
-      <JobSummaryActions />
     </IonPage>
   );
 };
 
-export default SchedShiftDetails;
+export default SchedShiftWerkers;

@@ -24,6 +24,7 @@ import {
   IonDatetime,
   IonTabBar,
   IonTabButton,
+  IonList,
 } from "@ionic/react";
 import "./Main.css";
 import axios from "axios";
@@ -56,6 +57,47 @@ export const SchedulerView: React.FC = () => {
   useIonViewDidEnter(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
+
+  // Search Users/////////////////////
+  ///////////////////////////////////////////////////////
+  interface UsersData {
+    UserId: number;
+    FirstName: string;
+    LastName: string;
+    Email: string;
+    IsScheduler: boolean;
+    Company: string;
+    Occupation: string;
+    ProfilePicURL: string;
+  }
+
+  const [users, setUsers] = React.useState<UsersData[]>([
+    {
+      UserId: 0,
+      FirstName: "",
+      LastName: "",
+      Email: "",
+      IsScheduler: false,
+      Company: "",
+      Occupation: "",
+      ProfilePicURL: "",
+    },
+  ]);
+
+  const fetchUsers = () => {
+    return axios
+      .get("http://localhost:3000/user/Search/" + profile.UserId, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        return response.data;
+      });
+  };
+
+  React.useEffect(() => {
+    fetchUsers().then((data) => setUsers(data.personArray));
+  }, [profile]);
 
   // Available Jobs Segment
   //////////////////////////////////////
@@ -105,7 +147,9 @@ export const SchedulerView: React.FC = () => {
                 <img src={profile.ProfilePicURL} />
               </IonAvatar>
               <IonLabel>
-                <h2>{profile.FirstName} {profile.LastName}</h2>
+                <h2>
+                  {profile.FirstName} {profile.LastName}
+                </h2>
               </IonLabel>
               <IonButton
                 href={`/SchedShiftDetails/${availableJob.ShiftId}`}
@@ -199,7 +243,9 @@ export const SchedulerView: React.FC = () => {
                 <img src={profile.ProfilePicURL} />
               </IonAvatar>
               <IonLabel>
-                <h2>{profile.FirstName} {profile.LastName}</h2>
+                <h2>
+                  {profile.FirstName} {profile.LastName}
+                </h2>
               </IonLabel>
               <IonButton
                 href={`/SchedShiftDetails/${schedScheduledJob.ShiftId}`}
@@ -286,7 +332,9 @@ export const SchedulerView: React.FC = () => {
                 <img src={profile.ProfilePicURL} />
               </IonAvatar>
               <IonLabel>
-                <h2>{profile.FirstName} {profile.LastName}</h2>
+                <h2>
+                  {profile.FirstName} {profile.LastName}
+                </h2>
               </IonLabel>
               <IonButton
                 href={`/SchedShiftDetails/${myPastJob.ShiftId}`}
@@ -431,10 +479,10 @@ export const SchedulerView: React.FC = () => {
               </IonCol>
               <IonCol size="8">
                 <IonSearchbar
-                  className="srchbr"
                   value={searchText}
                   onIonChange={(e) => setSearchText(e.detail.value!)}
                   animated
+                  className="srchbr"
                 ></IonSearchbar>
               </IonCol>
               <IonCol size="1">
@@ -443,6 +491,45 @@ export const SchedulerView: React.FC = () => {
                 </IonAvatar>
               </IonCol>
             </IonRow>
+
+            <IonList className="searchBar">
+                {users
+                  .filter((value) => {
+                    if (searchText == "") {
+                      return "";
+                    } else if (
+                      value.FirstName.toLowerCase().includes(
+                        searchText.toLowerCase()
+                      )
+                    ) {
+                      return value;
+                    } else if (
+                      value.LastName.toLowerCase().includes(
+                        searchText.toLowerCase()
+                      )
+                    ) {
+                      return value;
+                    }
+                  })
+                  .map((user) => (
+                    <IonItem
+                      href={`/AssociateProfile/${user.UserId}`}
+                      key={user.UserId}
+                    >
+                      <IonAvatar className="avatario" slot="start">
+                        <img src={user.ProfilePicURL} />
+                      </IonAvatar>
+                      <IonLabel className="labelo">
+                        <h1>
+                          {user.FirstName} {user.LastName}
+                        </h1>
+                        <p>{user.Company}</p>
+                      </IonLabel>
+                      <br></br>
+                    </IonItem>
+                  ))}
+              </IonList>
+
             <IonRow>
               <IonCol size="12">
                 <IonSegment
@@ -473,7 +560,7 @@ export const SchedulerView: React.FC = () => {
             </IonRow>
           </IonGrid>
         </IonToolbar>
-        
+
         {/* Segment Lists */}
         <MainSegmentActions />
         {/* /////////////// */}

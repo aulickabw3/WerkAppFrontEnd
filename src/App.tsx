@@ -45,6 +45,9 @@ import ShiftDetails from "./pages/ShiftDetails";
 import SchedShiftDetails from "./pages/SchedShiftDetails";
 import EditShift from "./pages/EditShift";
 import ShiftChat from "./pages/ShiftChat";
+import SchedShiftWerkers from "./pages/SchedShiftWerkers";
+import SchedShiftChat from "./pages/SchedShiftChat";
+
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -88,7 +91,8 @@ const App: React.FC = () => (
           <Route path="/SchedShiftDetails/:id" component={SchedShiftDetails} />
           <Route path="/EditShift" component={EditProfile} />
           <Route path="/ShiftChat/:id" component={ShiftChat} />
-
+          <Route path="/SchedShiftWerkers/:id" component={SchedShiftWerkers} />
+          <Route path="/SchedShiftChat/:id" component={SchedShiftChat} />
           
           <Route
             path="/"
