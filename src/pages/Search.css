@@ -12,6 +12,7 @@ p {
 
 .unread {
     color: black;
+    font-weight: bold;
 }
 
 .read {

@@ -96,10 +96,7 @@ const Profile: React.FC = () => {
             </IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonGrid>
           <br></br>
-          <br></br>
-        </IonGrid>
         <IonGrid>
           <IonRow className="profileGrid">
             <IonCol>
@@ -124,7 +121,6 @@ const Profile: React.FC = () => {
               <p>{profile.Email}</p>
             </IonCol>
           </IonRow>
-          <br></br>
           <IonRow className="profileGrid">
             <IonCol size="8">
               <Link to="/EditProfile">
@@ -156,13 +152,10 @@ const Profile: React.FC = () => {
               </IonButton>
             </IonCol>
           </IonRow>
-          <br></br>
           <IonRow className="profileGrid">
             <IonCol>{profile.UserBio}</IonCol>
             <IonCol size="1"></IonCol>
           </IonRow>
-          <br></br>
-          <br></br>
           <br></br>
           <br></br>
           <br></br>

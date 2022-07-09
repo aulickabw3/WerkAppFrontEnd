@@ -95,10 +95,9 @@ const Associates: React.FC = () => {
             </IonTitle>
           </IonToolbar>
         </IonHeader>
-
         <IonGrid>
           <IonRow>
-            <IonCol className="listCol">
+            <IonCol>
               <IonSearchbar
                 value={searchText}
                 onIonChange={(e) => setSearchText(e.detail.value!)}
@@ -107,7 +106,6 @@ const Associates: React.FC = () => {
             </IonCol>
           </IonRow>
         </IonGrid>
-
         <IonList>
           {associates
           .filter((value) => {

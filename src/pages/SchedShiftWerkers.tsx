@@ -195,28 +195,6 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
         </IonToolbar>
 
         <IonGrid>
-          <IonRow>
-            <IonCol>
-              <Link to="/SchedulerView">
-                <IonIcon size="large" icon={arrowBackCircle} />
-              </Link>
-            </IonCol>
-            <IonCol></IonCol>
-            <IonCol>
-              {/* <Link to="/EditJob">
-                <IonButton fill="outline" color="danger">Edit Job</IonButton>
-              </Link> */}
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-        <IonGrid>
-         
-
-          <IonRow>
-            <IonCol size="4">
-              <h3>Werkers:</h3>
-            </IonCol>
-          </IonRow>
           <IonRow className="jobGrid">
             <IonCol size="">
               <IonList>
@@ -242,11 +220,11 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
             </IonCol>
           </IonRow>
           <IonRow>
-            <IonCol size="3"></IonCol>
-            <IonCol size="9">
-              <h3>{openShifts.unfilledshifts} More Needed</h3>
+          <IonCol size="1"></IonCol>
+            <IonCol size="10">
+              You have {openShifts.unfilledshifts} vacant spots
             </IonCol>
-            <IonCol></IonCol>
+            <IonCol size="1"></IonCol>
           </IonRow>
 
           <br></br>

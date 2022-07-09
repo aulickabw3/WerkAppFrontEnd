@@ -108,7 +108,6 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
           </IonToolbar>
         </IonHeader>
         <br></br>
-        <br></br>
         <IonList>
           {notifications.reverse().map((notification) => (
             <Fragment>

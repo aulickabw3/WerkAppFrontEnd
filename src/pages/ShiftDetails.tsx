@@ -270,42 +270,13 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     return <AvailableJobButton />;
   };
 
-  return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar color="warning">
-          <IonTitle className="title2">Job Summary</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <IonHeader collapse="condense">
-          <IonToolbar color="warning">
-            <IonTitle className="title2" size="large">
-              Job Summary
-            </IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
+  const ChatToolbar: React.FC = () => {
+    return (
+      <React.Fragment>
         <IonToolbar>
           <IonGrid>
             <IonRow>
               <IonCol>
-
-                {/* <IonTabBar>
-                  <IonTabButton href="/ShiftDetails">
-                    <IonIcon icon={documentTextOutline} />
-                    <IonLabel>
-                      <h2>Details</h2>
-                    </IonLabel>
-                  </IonTabButton>
-                  <IonTabButton href="/ShiftChat">
-                  <IonIcon icon={chatboxOutline} />
-                    <IonLabel>
-                      <h2>Chat</h2>
-                    </IonLabel>
-                  </IonTabButton>
-                </IonTabBar> */}
-
                 <IonSegment
                   value="/ShiftDetails/"
                   onIonChange={(e: any) => {
@@ -325,11 +296,54 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
                     </IonLabel>
                   </IonSegmentButton>
                 </IonSegment>
-                
               </IonCol>
             </IonRow>
           </IonGrid>
         </IonToolbar>
+      </React.Fragment>
+    );
+  };
+
+  const NotChatToolbar: React.FC = () => {
+    return (
+      <React.Fragment>
+        <br></br>
+      </React.Fragment>
+    );
+  };
+
+  //Conditionally render ShiftDetails Toolbar w/ Chat
+  const ShiftDetailsToolbar: React.FC = () => {
+    if (shiftDetails.ShiftStatus == "Scheduled") {
+      return <ChatToolbar />;
+    }
+    if (shiftDetails.ShiftStatus == "Cancelled") {
+      return <ChatToolbar />;
+    }
+    if (shiftDetails.ShiftStatus == "Werked") {
+      return <ChatToolbar />;
+    }
+    return <NotChatToolbar />;
+  };
+
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar color="warning">
+          <IonTitle className="title2">Job Summary</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonHeader collapse="condense">
+          <IonToolbar color="warning">
+            <IonTitle className="title2" size="large">
+              Job Summary
+            </IonTitle>
+          </IonToolbar>
+        </IonHeader>
+
+        <ShiftDetailsToolbar/>
+
         <IonItem>
           <IonAvatar className="avtr" slot="start">
             <img src={"../assets/profilePic.png"} />

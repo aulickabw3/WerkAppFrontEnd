@@ -168,7 +168,6 @@ const ShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
       })
       .then(() => {
         setSendMessage("");
-        //window.location.href = "/ShiftChat/" + match.params.id;
       });
   };
 

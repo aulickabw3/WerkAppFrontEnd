@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Link,
   matchPath,
@@ -146,9 +146,26 @@ const SchedShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
     );
   }, []);
 
+  const bottomRef = useRef<null | HTMLDivElement>(null);
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      fetchShiftMessages().then((data) =>
+        setGetShiftMessages(data.shiftMessages)
+      );
+    }, 3000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   useEffect(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, [shiftDetails]);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [getShiftMessages]);
 
   /////////////////////////
   //post a message
@@ -167,9 +184,8 @@ const SchedShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
         newNotificationRecord,
         withCredentials: true,
       })
-      .then((response) => {
-        console.log(response);
-        return response.data;
+      .then(() => {
+        setSendMessage("");
       });
   };
 
@@ -181,25 +197,17 @@ const SchedShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
         <IonToolbar color="secondwarning">
           <IonTitle className="title2">Chat</IonTitle>
         </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <IonHeader collapse="condense">
-          <IonToolbar color="secondwarning">
-            <IonTitle className="title2" size="large">
-              Chat
-            </IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
         <IonToolbar>
           <IonGrid>
             <IonRow>
               <IonCol size="12">
                 <IonSegment
-                value="/SchedShiftChat/"
-                 onIonChange={(e: any) => {
-                  window.location.href = `${e.detail.value}` + match.params.id;
-                 }}>
+                  value="/SchedShiftChat/"
+                  onIonChange={(e: any) => {
+                    window.location.href =
+                      `${e.detail.value}` + match.params.id;
+                  }}
+                >
                   <IonSegmentButton value="/SchedShiftDetails/">
                     <IonIcon icon={documentTextOutline} />
                     <IonLabel>
@@ -223,7 +231,9 @@ const SchedShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
             </IonRow>
           </IonGrid>
         </IonToolbar>
+      </IonHeader>
 
+      <IonContent>
         <IonRow>
           <IonCol className="searchBar">
             <IonList className="searchBar">
@@ -247,19 +257,21 @@ const SchedShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
             </IonList>
           </IonCol>
         </IonRow>
+        <div ref={bottomRef} />
       </IonContent>
       <IonItemDivider>Send Message</IonItemDivider>
       <IonRow>
         <IonCol>
           <IonItem>
             <IonInput
+              value={sendMessage}
               placeholder="Send Message..."
               onIonChange={(e) => setSendMessage(e.detail.value!)}
             ></IonInput>
           </IonItem>
         </IonCol>
         <IonCol size="2">
-          <IonButton onClick={postMessage} fill="clear">
+          <IonButton type="submit" onClick={postMessage} fill="clear">
             <IonIcon size="large" icon={paperPlaneOutline} />
           </IonButton>
         </IonCol>
