@@ -141,22 +141,51 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
     });
   }, [profile]);
 
-  
+  const handleCancelWerker = () => {
+    axios
+      .put("http://localhost:3000/shifts/SchedCancelWerker/", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        window.location.href = "/SchedShiftDetails/" + match.params.id;
+      });
+  };
 
- 
+  const handleDecrementOpenSpotByOne = () => {
+    axios
+      .put("http://localhost:3000/shifts/DecrementOpenSpotByOne/", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        window.location.href = "/SchedShiftDetails/" + match.params.id;
+      });
+  };
+
+  const incrementNumberOfWerkersNeeded = () => {
+    axios
+      .put("http://localhost:3000/shifts/addOneAdditionalWerkerSlot/", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        window.location.href = "/SchedShiftDetails/" + match.params.id;
+      });
+  };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar color="secondwarning">
-          <IonTitle className="title2">Job Summary</IonTitle>
+          <IonTitle className="title2">Werkers</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar color="secondwarning">
             <IonTitle className="title2" size="large">
-              Job Summary
+              Werkers
             </IonTitle>
           </IonToolbar>
         </IonHeader>
@@ -166,10 +195,12 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
             <IonRow>
               <IonCol size="12">
                 <IonSegment
-                value="/SchedShiftWerkers/"
-                 onIonChange={(e: any) => {
-                  window.location.href = `${e.detail.value}` + match.params.id;
-                 }}>
+                  value="/SchedShiftWerkers/"
+                  onIonChange={(e: any) => {
+                    window.location.href =
+                      `${e.detail.value}` + match.params.id;
+                  }}
+                >
                   <IonSegmentButton value="/SchedShiftDetails/">
                     <IonIcon icon={documentTextOutline} />
                     <IonLabel>
@@ -194,9 +225,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
           </IonGrid>
         </IonToolbar>
 
-        <IonGrid>
-          <IonRow className="jobGrid">
-            <IonCol size="">
+        <h4>Scheduled:</h4>
               <IonList>
                 {werkers.map((werker) => (
                   <IonItem key={werker.UserId}>
@@ -204,11 +233,11 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
                       <img src={werker.ProfilePicURL} />
                     </IonAvatar>
                     <IonLabel className="labelo">
-                      <h1>
-                        {werker.FirstName} {werker.LastName}
-                      </h1>
+                      {werker.FirstName} {werker.LastName}
+                      {/* <p>Status: {werker.werkerShiftStatus}</p> */}
                     </IonLabel>
                     <IonIcon
+                      onClick={handleCancelWerker}
                       className="cancelbox"
                       color="danger"
                       size="large"
@@ -217,23 +246,61 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
                   </IonItem>
                 ))}
               </IonList>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-          <IonCol size="1"></IonCol>
-            <IonCol size="10">
-              You have {openShifts.unfilledshifts} vacant spots
-            </IonCol>
-            <IonCol size="1"></IonCol>
-          </IonRow>
+              <IonList>
+                {[...Array(openShifts.unfilledshifts)].map((openShift, i) => (
+                  <IonItem key={i}>
+                    {/* <IonAvatar className="avatario" slot="start">
+                      <img src="../assets/profilePic.png" />
+                    </IonAvatar> */}
+                    <IonLabel className="labelo">
+                      Open Shift
+                      <p>Shift # {i + 1 + werkers.length}</p>
+                    </IonLabel>
+                    <IonIcon
+                      onClick={handleDecrementOpenSpotByOne}
+                      className="cancelbox"
+                      color="danger"
+                      size="large"
+                      icon={closeCircleOutline}
+                    />
+                  </IonItem>
+                ))}
+              </IonList>
+              <br></br>
+              <h4>Invited:</h4>
 
-          <br></br>
-
-          
-        </IonGrid>
       </IonContent>
+      <React.Fragment>
+        <IonRow>
+          <IonCol></IonCol>
+          <IonCol size="11">
+            <IonButton
+              onClick={incrementNumberOfWerkersNeeded}
+              color="secondwarning"
+              fill="solid"
+              expand="block"
+            >
+              Add Slot +
+            </IonButton>
+          </IonCol>
+          <IonCol></IonCol>
+        </IonRow>
+        {/* <IonRow>
+          <IonCol></IonCol>
+          <IonCol size="11">
+            <IonButton
+              // onClick={republishShift}
+              color="medium"
+              fill="solid"
+              expand="block"
+            >
+              Edit Werkers
+            </IonButton>
+          </IonCol>
+          <IonCol></IonCol>
+        </IonRow> */}
+      </React.Fragment>
       <br></br>
-
     </IonPage>
   );
 };

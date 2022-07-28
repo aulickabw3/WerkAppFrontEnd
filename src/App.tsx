@@ -89,7 +89,7 @@ const App: React.FC = () => (
           <Route path="/PastJob/:id" component={PastJob} />
           <Route path="/ShiftDetails/:id" component={ShiftDetails} />
           <Route path="/SchedShiftDetails/:id" component={SchedShiftDetails} />
-          <Route path="/EditShift" component={EditProfile} />
+          <Route path="/EditShift/:id" component={EditShift} />
           <Route path="/ShiftChat/:id" component={ShiftChat} />
           <Route path="/SchedShiftWerkers/:id" component={SchedShiftWerkers} />
           <Route path="/SchedShiftChat/:id" component={SchedShiftChat} />

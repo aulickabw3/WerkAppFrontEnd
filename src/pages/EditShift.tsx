@@ -4,7 +4,6 @@ import {
   IonLabel,
   IonButton,
   IonInput,
-  IonList,
   IonItem,
   IonIcon,
   IonHeader,
@@ -14,68 +13,122 @@ import {
   IonGrid,
   IonRow,
   IonCol,
-  IonImg,
-  IonCheckbox,
+  IonDatetime,
+  IonTextarea,
   useIonViewDidEnter,
-  IonTabBar,
-  IonTabButton,
 } from "@ionic/react";
-import { person, arrowBackCircle, people,camera, trash, close } from "ionicons/icons";
+import { arrowBackCircle } from "ionicons/icons";
 import axios from "axios";
-import { Link, RouteComponentProps } from "react-router-dom";
+import {
+  Link,
+  matchPath,
+  match,
+  useRouteMatch,
+  RouteComponentProps,
+} from "react-router-dom";
 import "./Profile.css";
-// import "../components/GetUser";
 import GetUser from "../components/GetUser";
 
+interface EditShiftDetailsProps
+  extends RouteComponentProps<{
+    id: string;
+  }> {}
 
-const EditShift: React.FC = () => {
-
-  interface ShiftData {
+const EditShift: React.FC<EditShiftDetailsProps> = ({ match }) => {
+  interface ProfileData {
     UserId: number;
-    FirstName: string;
-    LastName: string;
-    Email: string;
-    Username: string;
-    IsScheduler: boolean;
-    IsDeleted: boolean;
-    Company: string;
-    Occupation: string;
-    ProfilePicURL: string;
-    UserBio: string;
   }
 
-  // const checkboxList = [{ val: "Scheduler", isChecked: true }];
-
-  const [editShift, setEditShift] = React.useState<ShiftData>({
+  const [profile, setProfile] = useState<ProfileData>({
     UserId: 0,
-    FirstName: "",
-    LastName: "",
-    Email: "",
-    Username: "",
-    IsScheduler: false,
-    IsDeleted: false,
-    Company: "",
-    Occupation: "",
-    ProfilePicURL: "",
-    UserBio: "",
   });
 
   useIonViewDidEnter(() => {
-    GetUser().then((data) => {
-        setEditShift(data.personDataFound);
+    GetUser().then((data) => setProfile(data.personDataFound));
+  }, []);
+
+  interface SchedJobData {
+    ShiftId: number;
+    ShiftIdentifier: string;
+    UserUserId: string;
+    DateDay: string;
+    StartDateTime: string;
+    FinishDateTime: string;
+    NumberOfWerkers: number;
+    Company: string;
+    Location: string;
+    Pay: string;
+    ShiftNotes: string;
+  }
+
+  const [editSchedJob, setEditSchedJob] = useState<SchedJobData>({
+    ShiftId: 0,
+    ShiftIdentifier: "",
+    UserUserId: "",
+    DateDay: "",
+    StartDateTime: "",
+    FinishDateTime: "",
+    NumberOfWerkers: 0,
+    Company: "",
+    Location: "",
+    Pay: "",
+    ShiftNotes: "",
+  });
+
+  interface SchedWerkersData {
+    UserId: number;
+    FirstName: string;
+    LastName: string;
+    ProfilePicURL: string;
+  }
+  const [werkers, setWerkers] = useState<SchedWerkersData[]>([
+    {
+      UserId: 0,
+      FirstName: "",
+      LastName: "",
+      ProfilePicURL: "",
+    },
+  ]);
+
+  interface OpenShiftData {
+    unfilledshifts: number;
+    ShiftStatus: string;
+  }
+  const [openShifts, setOpenShifts] = useState<OpenShiftData>({
+    unfilledshifts: 0,
+    ShiftStatus: "",
+  });
+
+  const fetchEditSchedJob = () => {
+    return axios
+      .get(
+        "http://localhost:3000/shifts/SchedShiftDetails/" + match.params.id,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        return response.data;
+      });
+  };
+
+  useIonViewDidEnter(() => {
+    fetchEditSchedJob().then((data) => {
+      setEditSchedJob(data.WerkShift);
+      setWerkers(data.Werkers);
+      setOpenShifts(data.OpenShifts);
     });
   }, []);
 
+  console.log(editSchedJob);
+
   const handleSubmit = () => {
     axios
-      .put(
-        "http://localhost:3000/user/PublicUpdateUserProfile/" +
-        editShift.UserId,
-        {
-          withCredentials: true,
-          editShift,
-        }
-      )
+      .put("http://localhost:3000/shifts/EditSchedShift/", {
+        withCredentials: true,
+        editSchedJob,
+      })
       .then((response) => {
         console.log(response);
       });
@@ -84,200 +137,149 @@ const EditShift: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="warning">
-          <IonTitle className="title2">Edit Profile</IonTitle>
+        <IonToolbar color="secondwarning">
+          <IonTitle className="title2">Edit Job</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonHeader collapse="condense">
-          <IonToolbar color="warning">
+          <IonToolbar color="secondwarning">
             <IonTitle className="title2" size="large">
-              Edit Profile
+              Edit Job
             </IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonGrid>
-          <IonRow>
-            <IonCol>
-              <Link to="/Profile">
-                <IonIcon size="large" icon={arrowBackCircle} />
-              </Link>
-            </IonCol>
-            <IonCol></IonCol>
-            <IonCol></IonCol>
-            <IonCol>
-            <IonButton
-                  href="/Profile"
-                  color="danger"
-                  fill="solid"
-                  onClick={handleSubmit}
-                >
-                  Save
-                </IonButton>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-        <IonGrid>
           <form>
-            {/* <IonRow className="profileGrid">
-              <IonCol>
-                <IonImg src={editProfile.ProfilePicURL}></IonImg>
-              </IonCol>
-            </IonRow>
-            <IonRow className="jobGrid">
-              <IonCol>
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>Name:</h1>
-                  </IonLabel>
-                  <IonRow>
-                    <IonCol>
-                      <IonInput
-                        type="text"
-                        name="FirstName"
-                        value={editProfile.FirstName}
-                        placeholder="First Name"
-                        onIonChange={(e: any) =>
-                          setEditProfile({
-                            ...editProfile,
-                            FirstName: e.target.value,
-                          })
-                        }
-                        clearInput
-                      ></IonInput>
-                    </IonCol>
-                    <IonCol>
-                      <IonInput
-                        type="text"
-                        name="LastName"
-                        value={editProfile.LastName}
-                        placeholder="Last Name"
-                        onIonChange={(e: any) =>
-                          setEditProfile({
-                            ...editProfile,
-                            LastName: e.target.value,
-                          })
-                        }
-                        clearInput
-                      ></IonInput>
-                    </IonCol>
-                  </IonRow>
-                </IonItem>
-              </IonCol>
-            </IonRow>
-            <IonRow className="jobGrid">
-              <IonCol>
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>Email:</h1>
-                  </IonLabel>
-                  <IonInput
-                    type="text"
-                    name="Email"
-                    value={editProfile.Email}
-                    placeholder="Email Address"
-                    onIonChange={(e: any) =>
-                      setEditProfile({ ...editProfile, Email: e.target.value })
-                    }
-                    clearInput
-                  ></IonInput>
-                </IonItem>
-              </IonCol>
-            </IonRow>
-            <IonRow className="jobGrid">
-              <IonCol>
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>Username:</h1>
-                  </IonLabel>
-                  <IonInput
-                    type="text"
-                    name="Username"
-                    value={editProfile.Username}
-                    placeholder="Username"
-                    onIonChange={(e: any) =>
-                      setEditProfile({
-                        ...editProfile,
-                        Username: e.target.value,
-                      })
-                    }
-                    clearInput
-                  ></IonInput>
-                </IonItem>
-              </IonCol>
-            </IonRow>
-
-            <IonRow className="jobGrid">
-              <IonCol>
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>Company/Agency:</h1>
-                  </IonLabel>
-                  <IonInput
-                    type="text"
-                    name="Company"
-                    value={editProfile.Company}
-                    placeholder="Company/Ageny You Work For..."
-                    onIonChange={(e: any) =>
-                      setEditProfile({
-                        ...editProfile,
-                        Company: e.target.value,
-                      })
-                    }
-                    clearInput
-                  ></IonInput>
-                </IonItem>
-              </IonCol>
-            </IonRow>
-            <IonRow className="jobGrid">
-              <IonCol>
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>Occupation:</h1>
-                  </IonLabel>
-                  <IonInput
-                    type="text"
-                    name="Occupation"
-                    value={editProfile.Occupation}
-                    placeholder="Your Occupation..."
-                    onIonChange={(e: any) =>
-                      setEditProfile({
-                        ...editProfile,
-                        Occupation: e.target.value,
-                      })
-                    }
-                    clearInput
-                  ></IonInput>
-                </IonItem>
-              </IonCol>
-            </IonRow>
-            <IonRow className="jobGrid">
-              <IonCol>
-                <IonItem>
-                  <IonLabel position="stacked">
-                    <h1>About:</h1>
-                  </IonLabel>
-                  <IonInput
-                    type="text"
-                    name="Occupation"
-                    value={editProfile.UserBio}
-                    placeholder="About Me..."
-                    onIonChange={(e: any) =>
-                      setEditProfile({
-                        ...editProfile,
-                        UserBio: e.target.value,
-                      })
-                    }
-                    clearInput
-                  ></IonInput>
-                </IonItem>
-              </IonCol>
-            </IonRow> */}
-            <br></br>
+            <IonLabel>
+              <h1>Job ID/#:</h1>
+            </IonLabel>
+            <IonInput
+              type="text"
+              name="ShiftIdentifier"
+              value={editSchedJob.ShiftIdentifier}
+              onIonChange={(e: any) =>
+                setEditSchedJob({
+                  ...editSchedJob,
+                  ShiftIdentifier: e.target.value,
+                })
+              }
+            ></IonInput>
+            <IonLabel>
+              <h1>Date:</h1>
+            </IonLabel>
+            <IonDatetime
+              // displayFormat="DD-MMM-YY"
+              value={editSchedJob.DateDay}
+              name="DateDay"
+              // onIonChange={(e: any) =>
+              //   setEditSchedJob({
+              //     ...editSchedJob,
+              //     DateDay: e.target.value!,
+              //   })
+              // }
+            ></IonDatetime>
+            <IonLabel>
+              <h1>Start:</h1>
+            </IonLabel>
+            <IonDatetime
+              displayFormat="HH:mm"
+              value={editSchedJob.StartDateTime}
+              // onIonChange={(e: any) =>
+              //   setEditSchedJob({
+              //     ...editSchedJob,
+              //     StartDateTime: e.target.value,
+              //   })
+              // }
+            ></IonDatetime>
+            <IonLabel>
+              <h1>End:</h1>
+            </IonLabel>
+            <IonDatetime
+              displayFormat="HH:mm"
+              value={editSchedJob.FinishDateTime}
+              // onIonChange={(e: any) =>
+              //   setEditSchedJob({
+              //     ...editSchedJob,
+              //     FinishDateTime: e.target.value,
+              //   })
+              // }
+            ></IonDatetime>
+            <IonLabel>
+              <h1>Company:</h1>
+            </IonLabel>
+            <IonInput
+              value={editSchedJob.Company}
+              type="text"
+              name="Company"
+              onIonChange={(e: any) =>
+                setEditSchedJob({
+                  ...editSchedJob,
+                  Company: e.target.value,
+                })
+              }
+            ></IonInput>
+            <IonLabel>
+              <h1>Location:</h1>
+            </IonLabel>
+            <IonInput
+              type="text"
+              name="Location"
+              value={editSchedJob.Location}
+              onIonChange={(e: any) =>
+                setEditSchedJob({
+                  ...editSchedJob,
+                  Location: e.target.value,
+                })
+              }
+            ></IonInput>
+            <IonLabel>
+              <h1>Pay: </h1>
+            </IonLabel>
+            <IonInput
+              type="text"
+              name="Pay"
+              value={editSchedJob.Pay}
+              onIonChange={(e: any) =>
+                setEditSchedJob({
+                  ...editSchedJob,
+                  Pay: e.target.value,
+                })
+              }
+            ></IonInput>
+            <IonLabel>
+              <h1>Notes:</h1>
+            </IonLabel>
+            <IonTextarea
+              value={editSchedJob.ShiftNotes}
+              onIonChange={(e: any) =>
+                setEditSchedJob({
+                  ...editSchedJob,
+                  ShiftNotes: e.target.value,
+                })
+              }
+            ></IonTextarea>
           </form>
         </IonGrid>
       </IonContent>
-
+      <IonButton
+        onClick={handleSubmit}
+        color="secondwarning"
+        size="large"
+        fill="solid"
+        expand="block"
+      >
+        Save
+      </IonButton>
+      <IonButton
+        href={`/SchedShiftDetails/${match.params.id}`}
+        color="medium"
+        size="large"
+        fill="solid"
+        expand="block"
+      >
+        Cancel
+      </IonButton>
     </IonPage>
   );
 };

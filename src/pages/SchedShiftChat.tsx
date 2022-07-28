@@ -238,21 +238,28 @@ const SchedShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
           <IonCol className="searchBar">
             <IonList className="searchBar">
               {getShiftMessages.map((getShiftMessage) => (
+                <React.Fragment>
                 <IonItem key={getShiftMessage.id}>
                   <IonAvatar className="avatario" slot="start">
                     <img src={"../assets/profilePic.png"} />
                   </IonAvatar>
-                  <IonDatetime
-                    slot="end"
-                    displayFormat="THH:mm"
-                    value={getShiftMessage.createdAt}
-                  ></IonDatetime>
                   <IonLabel className="ion-text-wrap">
                     <p>{getShiftMessage.MessageAuthor}</p>
-                    {getShiftMessage.MessageBox}
                   </IonLabel>
-                  <br></br>
+                  <IonDatetime
+                    slot="end"
+                    className="td"
+                    id="dynamicDisabled"
+                    displayFormat="h:mm a M/D/YY"
+                    value={getShiftMessage.createdAt}
+                  ></IonDatetime>
                 </IonItem>
+                <IonItem lines="none">
+                  <IonAvatar className="avatario" slot="start"></IonAvatar>
+                  {getShiftMessage.MessageBox}
+                  <IonAvatar></IonAvatar>
+                </IonItem>
+              </React.Fragment>
               ))}
             </IonList>
           </IonCol>

@@ -119,6 +119,8 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     ShiftStatus: "",
   });
 
+  console.log(match.params.id);
+
   const fetchSchedJob = () => {
     return axios
       .get(
@@ -160,6 +162,9 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
   };
 
   const SchedAvailableJobButton: React.FC = () => {
+    
+    const EditThing = schedJob.ShiftId;
+
     return (
       <React.Fragment>
         <IonRow>
@@ -180,7 +185,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           <IonCol></IonCol>
           <IonCol size="11">
             <IonButton
-              //onClick={}
+              href={`/EditShift/${match.params.id}`}
               color="medium"
               fill="solid"
               expand="block"
@@ -215,7 +220,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           <IonCol></IonCol>
           <IonCol size="11">
             <IonButton
-              //onClick={}
+              href={`/EditShift/${schedJob.ShiftId.toString}`}
               color="medium"
               fill="solid"
               expand="block"
@@ -260,6 +265,20 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           </IonCol>
           <IonCol></IonCol>
         </IonRow>
+        <IonRow>
+          <IonCol></IonCol>
+          <IonCol size="11">
+            <IonButton
+              href={`/EditShift/${schedJob.ShiftId.toString}`}
+              color="medium"
+              fill="solid"
+              expand="block"
+            >
+              Edit Job
+            </IonButton>
+          </IonCol>
+          <IonCol></IonCol>
+        </IonRow>
       </React.Fragment>
     );
   };
@@ -275,6 +294,9 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     }
     return <SchedPastJobButton />;
   };
+
+
+
 
   return (
     <IonPage>
@@ -297,10 +319,12 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             <IonRow>
               <IonCol size="12">
                 <IonSegment
-                value="/SchedShiftDetails/"
-                 onIonChange={(e: any) => {
-                  window.location.href = `${e.detail.value}` + match.params.id;
-                 }}>
+                  value="/SchedShiftDetails/"
+                  onIonChange={(e: any) => {
+                    window.location.href =
+                      `${e.detail.value}` + match.params.id;
+                  }}
+                >
                   <IonSegmentButton value="/SchedShiftDetails/">
                     <IonIcon icon={documentTextOutline} />
                     <IonLabel>
@@ -333,11 +357,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
               </Link>
             </IonCol>
             <IonCol></IonCol>
-            <IonCol>
-              {/* <Link to="/EditJob">
-                <IonButton fill="outline" color="danger">Edit Job</IonButton>
-              </Link> */}
-            </IonCol>
+            <IonCol></IonCol>
           </IonRow>
         </IonGrid>
         <IonGrid>
@@ -354,7 +374,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             <IonCol size="1"></IonCol>
             <IonCol>Start Time:</IonCol>
             <IonDatetime
-              displayFormat="HH:mm"
+              displayFormat="h:mm A"
               value={schedJob.StartDateTime}
             ></IonDatetime>
             <IonCol size="1"></IonCol>
@@ -363,7 +383,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             <IonCol size="1"></IonCol>
             <IonCol>Finish Time:</IonCol>
             <IonDatetime
-              displayFormat="HH:mm"
+              displayFormat="h:mm A"
               value={schedJob.FinishDateTime}
             ></IonDatetime>
             <IonCol size="1"></IonCol>
@@ -394,43 +414,6 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             {schedJob.ShiftIdentifier}
             <IonCol size="1"></IonCol>
           </IonRow>
-
-          {/* <IonRow>
-            <IonCol size="4">
-              <h3>Werkers:</h3>
-            </IonCol>
-          </IonRow>
-          <IonRow className="jobGrid">
-            <IonCol size="">
-              <IonList>
-                {werkers.map((werker) => (
-                  <IonItem key={werker.UserId}>
-                    <IonAvatar className="avatario" slot="start">
-                      <img src={werker.ProfilePicURL} />
-                    </IonAvatar>
-                    <IonLabel className="labelo">
-                      <h1>
-                        {werker.FirstName} {werker.LastName}
-                      </h1>
-                    </IonLabel>
-                    <IonIcon
-                      className="cancelbox"
-                      color="danger"
-                      size="large"
-                      icon={closeCircleOutline}
-                    />
-                  </IonItem>
-                ))}
-              </IonList>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol size="3"></IonCol>
-            <IonCol size="9">
-              <h3>{openShifts.unfilledshifts} More Needed</h3>
-            </IonCol>
-            <IonCol></IonCol>
-          </IonRow> */}
 
           <br></br>
 

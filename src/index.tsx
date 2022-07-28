@@ -4,6 +4,12 @@ import { CookiesProvider } from "react-cookie";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en.json'
+import ru from 'javascript-time-ago/locale/ru.json'
+
+TimeAgo.addDefaultLocale(en)
+TimeAgo.addLocale(ru)
 defineCustomElements(window);
 
 ReactDOM.render(

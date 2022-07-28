@@ -58,7 +58,9 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     Location: string;
     Pay: string;
     ShiftNotes: string;
-    ShiftStatus: any;
+    ShiftStatus: string;
+    SchedFirstName: string;
+    SchedLastName: string;
   }
 
   const [shiftDetails, setshiftDetails] = useState<ShiftDetailsData>({
@@ -73,11 +75,13 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     Pay: "",
     ShiftNotes: "",
     ShiftStatus: "",
+    SchedFirstName: "",
+    SchedLastName: ""
   });
 
   const fetchAvailableJob = () => {
     return axios
-      .get("http://localhost:3000/shifts/ShiftDetails/" + match.params.id, {
+      .get("http://localhost:3000/shifts/ShiftDetails/" + match.params.id + "/" + profile.UserId, {
         withCredentials: true,
       })
       .then((response) => {
@@ -94,13 +98,15 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     UserId: 0,
   });
 
-  useIonViewDidEnter(() => {
-    fetchAvailableJob().then((data) => setshiftDetails(data.werkShift));
-  }, []);
-
   useEffect(() => {
+    fetchAvailableJob().then((data) => setshiftDetails(data.werkShift));
+  }, [profile]);
+
+  useIonViewDidEnter(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, [shiftDetails]);
+
+
 
   // Button for available job summary
   //////////////////////////////////////////
@@ -349,7 +355,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             <img src={"../assets/profilePic.png"} />
           </IonAvatar>
           <IonLabel>
-            <h2>Scheduler's Name</h2>
+            {shiftDetails.SchedFirstName} {shiftDetails.SchedLastName}
           </IonLabel>
         </IonItem>
         <br></br>
@@ -367,7 +373,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             <IonCol size="1"></IonCol>
             <IonCol>Start Time:</IonCol>
             <IonDatetime
-              displayFormat="HH:mm"
+              displayFormat="h:mm A"
               value={shiftDetails.StartDateTime}
             ></IonDatetime>
             <IonCol size="1"></IonCol>
@@ -376,7 +382,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             <IonCol size="1"></IonCol>
             <IonCol>Finish Time:</IonCol>
             <IonDatetime
-              displayFormat="HH:mm"
+              displayFormat="h:mm A"
               value={shiftDetails.FinishDateTime}
             ></IonDatetime>
             <IonCol size="1"></IonCol>

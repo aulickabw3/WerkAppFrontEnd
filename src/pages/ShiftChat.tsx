@@ -126,7 +126,9 @@ const ShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
 
   useIonViewDidEnter(() => {
     fetchAvailableJob().then((data) => setshiftDetails(data.werkShift));
-    fetchShiftMessages().then((data) => setGetShiftMessages(data.shiftMessages));
+    fetchShiftMessages().then((data) =>
+      setGetShiftMessages(data.shiftMessages)
+    );
   }, []);
 
   const bottomRef = useRef<null | HTMLDivElement>(null);
@@ -206,27 +208,33 @@ const ShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-       
-
         <IonRow>
           <IonCol className="searchBar">
             <IonList className="searchBar">
               {getShiftMessages.map((getShiftMessage) => (
-                <IonItem key={getShiftMessage.id}>
-                  <IonAvatar className="avatario" slot="start">
-                    <img src={"../assets/profilePic.png"} />
-                  </IonAvatar>
-                  {/* <IonDatetime
-                    slot="end"
-                    displayFormat="THH:mm"
-                    value={getShiftMessage.createdAt}
-                  ></IonDatetime> */}
-                  <IonLabel className="ion-text-wrap">
-                    <p>{getShiftMessage.MessageAuthor}</p>
+                <React.Fragment>
+                  <IonItem key={getShiftMessage.id}>
+                    <IonAvatar className="avatario" slot="start">
+                      <img src={"../assets/profilePic.png"} />
+                    </IonAvatar>
+                    <IonLabel className="ion-text-wrap">
+                      <p>{getShiftMessage.MessageAuthor}</p>
+                      {/* {getShiftMessage.MessageBox} */}
+                    </IonLabel>
+                    <IonDatetime
+                      slot="end"
+                      className="td"
+                      id="dynamicDisabled"
+                      displayFormat="h:mm a M/D/YY"
+                      value={getShiftMessage.createdAt}
+                    ></IonDatetime>
+                  </IonItem>
+                  <IonItem lines="none">
+                    <IonAvatar className="avatario" slot="start"></IonAvatar>
                     {getShiftMessage.MessageBox}
-                  </IonLabel>
-                  <br></br>
-                </IonItem>
+                    <IonAvatar></IonAvatar>
+                  </IonItem>
+                </React.Fragment>
               ))}
             </IonList>
           </IonCol>

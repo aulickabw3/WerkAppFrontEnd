@@ -496,45 +496,46 @@ export const Main: React.FC = () => {
                 {/* </IonButton> */}
               </IonCol>
             </IonRow>
-           
-              <IonList className="searchBar">
-                {users
-                  .filter((value) => {
-                    if (searchText == "") {
-                      return "";
-                    } else if (
-                      value.FirstName.toLowerCase().includes(
-                        searchText.toLowerCase()
-                      )
-                    ) {
-                      return value;
-                    } else if (
-                      value.LastName.toLowerCase().includes(
-                        searchText.toLowerCase()
-                      )
-                    ) {
-                      return value;
-                    }
-                  })
-                  .map((user) => (
-                    <IonItem
-                      href={`/AssociateProfile/${user.UserId}`}
-                      key={user.UserId}
-                    >
-                      <IonAvatar className="avatario" slot="start">
-                        <img src={user.ProfilePicURL} />
-                      </IonAvatar>
-                      <IonLabel className="labelo">
-                        <h1>
-                          {user.FirstName} {user.LastName}
-                        </h1>
-                        <p>{user.Company}</p>
-                      </IonLabel>
-                      <br></br>
-                    </IonItem>
-                  ))}
-              </IonList>
-         
+
+            <IonList className="searchBar">
+              {users
+                .filter((value) => {
+                  if (searchText == "") {
+                    return "";
+                  } else if (
+                    value.FirstName.toLowerCase().includes(
+                      searchText.toLowerCase()
+                    )
+                  ) {
+                    return value;
+                  } else if (
+                    value.LastName.toLowerCase().includes(
+                      searchText.toLowerCase()
+                    )
+                  ) {
+                    return value;
+                  }
+                })
+                .map((user) => (
+                  <IonItem
+                    href={`/AssociateProfile/${user.UserId}`}
+                    key={user.UserId}
+                  >
+                    <IonAvatar className="avatario" slot="start">
+                      <img src={user.ProfilePicURL} />
+                    </IonAvatar>
+                    <IonLabel className="labelo">
+                      <h1>
+                        {user.FirstName} {user.LastName}
+                      </h1>
+                      <p>{user.Company}</p>
+                    </IonLabel>
+                    <br></br>
+                  </IonItem>
+                ))}
+              
+            </IonList>
+
             <IonRow>
               <IonCol size="12">
                 <IonSegment

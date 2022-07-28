@@ -17,7 +17,9 @@ import {
   useIonViewDidEnter,
   IonDatetime,
 } from "@ionic/react";
+import ReactTimeAgo from "react-time-ago";
 import axios from "axios";
+// import TimeAgo from 'react-timeago'
 import {
   person,
   arrowBackCircle,
@@ -53,7 +55,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
     UserActionTakenUserActionTyped: string;
     UserActionTakenUserActionTypeDescription: string;
     UserActionTakenUserName: string;
-    createdAt: string;
+    createdAt: number;
     UserActionTakenAppLink: string;
   }
 
@@ -66,7 +68,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
         UserActionTakenUserActionTyped: "No Notifications",
         UserActionTakenUserActionTypeDescription: "Here Yet! Go do stuff!",
         UserActionTakenUserName: "",
-        createdAt: "Yet!",
+        createdAt: 0,
         UserActionTakenAppLink: "",
       },
     ]
@@ -139,12 +141,13 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
                 </IonAvatar>
                 {notification.UserActionTakenUserName}{" "}
                 {notification.UserActionTakenUserActionTypeDescription}
-                <IonDatetime
-                  className="nill"
+                <ReactTimeAgo
+                  timeStyle="twitter-minute-now"
                   slot="end"
-                  displayFormat="DD-MMM-YY"
-                  value={notification.createdAt}
-                ></IonDatetime>
+                  className="nill"
+                  date={notification.createdAt}
+                  locale="en-US"
+                />
               </IonItem>
             </Fragment>
           ))}
