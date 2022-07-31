@@ -30,6 +30,7 @@ import {
   IonCheckbox,
   IonSegment,
   IonSegmentButton,
+  useIonAlert,
 } from "@ionic/react";
 import {
   person,
@@ -165,7 +166,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
 
   const incrementNumberOfWerkersNeeded = () => {
     axios
-      .put("http://localhost:3000/shifts/addOneAdditionalWerkerSlot/", {
+      .put("http://localhost:3000/shifts/AddOneAdditionalWerkerSlot/", {
         withCredentials: true,
       })
       .then((response) => {
@@ -173,6 +174,8 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
         window.location.href = "/SchedShiftDetails/" + match.params.id;
       });
   };
+
+  const [present] = useIonAlert();
 
   return (
     <IonPage>
@@ -237,7 +240,13 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
                       {/* <p>Status: {werker.werkerShiftStatus}</p> */}
                     </IonLabel>
                     <IonIcon
-                      onClick={handleCancelWerker}
+                      onClick={() =>
+                        present({
+                          header: "Cancel Werker?",
+                          buttons: ["No", { text: "Yes", handler: handleCancelWerker }],
+                          onDidDismiss: (e) => console.log("did dismiss"),
+                        })
+                      }
                       className="cancelbox"
                       color="danger"
                       size="large"
@@ -257,7 +266,13 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
                       <p>Shift # {i + 1 + werkers.length}</p>
                     </IonLabel>
                     <IonIcon
-                      onClick={handleDecrementOpenSpotByOne}
+                      onClick={() =>
+                        present({
+                          header: "Remove Open Shift?",
+                          buttons: ["Cancel", { text: "Ok", handler: handleDecrementOpenSpotByOne }],
+                          onDidDismiss: (e) => console.log("did dismiss"),
+                        })
+                      }
                       className="cancelbox"
                       color="danger"
                       size="large"
@@ -275,7 +290,13 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
           <IonCol></IonCol>
           <IonCol size="11">
             <IonButton
-              onClick={incrementNumberOfWerkersNeeded}
+              onClick={() =>
+                present({
+                  header: "Add Another Slot?",
+                  buttons: ["Cancel", { text: "Ok", handler: incrementNumberOfWerkersNeeded }],
+                  onDidDismiss: (e) => console.log("did dismiss"),
+                })
+              }
               color="secondwarning"
               fill="solid"
               expand="block"

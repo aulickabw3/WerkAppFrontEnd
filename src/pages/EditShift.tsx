@@ -107,9 +107,9 @@ const EditShift: React.FC<EditShiftDetailsProps> = ({ match }) => {
           withCredentials: true,
         }
       )
-      .then((response) => {
-        console.log(response);
-        return response.data;
+      .then((thing) => {
+        console.log(thing);
+        return thing.data;
       });
   };
 
@@ -131,7 +131,43 @@ const EditShift: React.FC<EditShiftDetailsProps> = ({ match }) => {
       })
       .then((response) => {
         console.log(response);
+        window.location.href = "/SchedShiftDetails/" + editSchedJob.ShiftId;
       });
+  };
+
+  const Daterillo: React.FC = () => {
+    return (
+      <React.Fragment>
+        <IonDatetime
+          min="2020-06-04"
+          max="2100-08-23"
+          displayFormat="MMM D, YYYY"
+          value={editSchedJob.DateDay}
+        ></IonDatetime>
+      </React.Fragment>
+    );
+  };
+
+  const StartTimerillo: React.FC = () => {
+    return (
+      <React.Fragment>
+        <IonDatetime
+          displayFormat="h:mm A"
+          value={editSchedJob.StartDateTime}
+        ></IonDatetime>
+      </React.Fragment>
+    );
+  };
+
+  const EndTimerillo: React.FC = () => {
+    return (
+      <React.Fragment>
+        <IonDatetime
+          displayFormat="h:mm A"
+          value={editSchedJob.FinishDateTime}
+        ></IonDatetime>
+      </React.Fragment>
+    );
   };
 
   return (
@@ -151,114 +187,211 @@ const EditShift: React.FC<EditShiftDetailsProps> = ({ match }) => {
         </IonHeader>
         <IonGrid>
           <form>
-            <IonLabel>
-              <h1>Job ID/#:</h1>
-            </IonLabel>
-            <IonInput
-              type="text"
-              name="ShiftIdentifier"
-              value={editSchedJob.ShiftIdentifier}
-              onIonChange={(e: any) =>
-                setEditSchedJob({
-                  ...editSchedJob,
-                  ShiftIdentifier: e.target.value,
-                })
-              }
-            ></IonInput>
-            <IonLabel>
-              <h1>Date:</h1>
-            </IonLabel>
-            <IonDatetime
-              // displayFormat="DD-MMM-YY"
-              value={editSchedJob.DateDay}
-              name="DateDay"
-              // onIonChange={(e: any) =>
-              //   setEditSchedJob({
-              //     ...editSchedJob,
-              //     DateDay: e.target.value!,
-              //   })
-              // }
-            ></IonDatetime>
-            <IonLabel>
-              <h1>Start:</h1>
-            </IonLabel>
-            <IonDatetime
-              displayFormat="HH:mm"
-              value={editSchedJob.StartDateTime}
-              // onIonChange={(e: any) =>
-              //   setEditSchedJob({
-              //     ...editSchedJob,
-              //     StartDateTime: e.target.value,
-              //   })
-              // }
-            ></IonDatetime>
-            <IonLabel>
-              <h1>End:</h1>
-            </IonLabel>
-            <IonDatetime
-              displayFormat="HH:mm"
-              value={editSchedJob.FinishDateTime}
-              // onIonChange={(e: any) =>
-              //   setEditSchedJob({
-              //     ...editSchedJob,
-              //     FinishDateTime: e.target.value,
-              //   })
-              // }
-            ></IonDatetime>
-            <IonLabel>
-              <h1>Company:</h1>
-            </IonLabel>
-            <IonInput
-              value={editSchedJob.Company}
-              type="text"
-              name="Company"
-              onIonChange={(e: any) =>
-                setEditSchedJob({
-                  ...editSchedJob,
-                  Company: e.target.value,
-                })
-              }
-            ></IonInput>
-            <IonLabel>
-              <h1>Location:</h1>
-            </IonLabel>
-            <IonInput
-              type="text"
-              name="Location"
-              value={editSchedJob.Location}
-              onIonChange={(e: any) =>
-                setEditSchedJob({
-                  ...editSchedJob,
-                  Location: e.target.value,
-                })
-              }
-            ></IonInput>
-            <IonLabel>
-              <h1>Pay: </h1>
-            </IonLabel>
-            <IonInput
-              type="text"
-              name="Pay"
-              value={editSchedJob.Pay}
-              onIonChange={(e: any) =>
-                setEditSchedJob({
-                  ...editSchedJob,
-                  Pay: e.target.value,
-                })
-              }
-            ></IonInput>
-            <IonLabel>
-              <h1>Notes:</h1>
-            </IonLabel>
-            <IonTextarea
-              value={editSchedJob.ShiftNotes}
-              onIonChange={(e: any) =>
-                setEditSchedJob({
-                  ...editSchedJob,
-                  ShiftNotes: e.target.value,
-                })
-              }
-            ></IonTextarea>
+            <IonRow>
+              <IonCol>
+                <IonLabel>
+                  <h1>Job ID/#:</h1>
+                </IonLabel>
+              </IonCol>
+              <IonCol></IonCol>
+              <IonCol>
+                <IonInput
+                  type="text"
+                  name="ShiftIdentifier"
+                  value={editSchedJob.ShiftIdentifier}
+                  onIonChange={(e: any) =>
+                    setEditSchedJob({
+                      ...editSchedJob,
+                      ShiftIdentifier: e.target.value,
+                    })
+                  }
+                  clearInput
+                ></IonInput>
+              </IonCol>
+            </IonRow>
+
+            <IonRow>
+              <IonCol>
+                <IonLabel>
+                  <h1>Date:</h1>
+                </IonLabel>
+              </IonCol>
+              <IonCol></IonCol>
+              <IonCol>
+                <IonInput
+                  type="text"
+                  name="DateDay"
+                  onIonChange={(e: any) =>
+                    setEditSchedJob({
+                      ...editSchedJob,
+                      DateDay: e.target.value!,
+                    })
+                  }
+                  clearInput
+                >
+                  <Daterillo></Daterillo>
+                </IonInput>
+              </IonCol>
+            </IonRow>
+
+            <IonRow>
+              <IonCol>
+                <IonLabel>
+                  <h1>Start:</h1>
+                </IonLabel>
+              </IonCol>
+              <IonCol></IonCol>
+              <IonCol>
+                <IonInput
+                  type="text"
+                  name="StartDateTime"
+                  onIonChange={(e: any) =>
+                    setEditSchedJob({
+                      ...editSchedJob,
+                      StartDateTime: e.target.value,
+                    })
+                  }
+                  clearInput
+                >
+                  <StartTimerillo></StartTimerillo>
+                </IonInput>
+              </IonCol>
+            </IonRow>
+
+            <IonRow>
+              <IonCol>
+                <IonLabel>
+                  <h1>End:</h1>
+                </IonLabel>
+              </IonCol>
+              <IonCol></IonCol>
+              <IonCol>
+                <IonInput
+                  type="text"
+                  name="FinishDateTime"
+                  onIonChange={(e: any) =>
+                    setEditSchedJob({
+                      ...editSchedJob,
+                      FinishDateTime: e.target.value,
+                    })
+                  }
+                  clearInput
+                >
+                  <EndTimerillo></EndTimerillo>
+                </IonInput>
+              </IonCol>
+            </IonRow>
+
+            <IonRow>
+              <IonCol>
+                <IonLabel>
+                  <h1>Company:</h1>
+                </IonLabel>
+              </IonCol>
+              <IonCol>
+              
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+              <IonInput
+                  value={editSchedJob.Company}
+                  type="text"
+                  name="Company"
+                  class="ion-text-wrap"
+                  onIonChange={(e: any) =>
+                    setEditSchedJob({
+                      ...editSchedJob,
+                      Company: e.target.value,
+                    })
+                  }
+                  clearInput
+                ></IonInput>
+              </IonCol>
+            </IonRow>
+
+            <IonRow>
+              <IonCol>
+                <IonLabel>
+                  <h1>Location:</h1>
+                </IonLabel>
+              </IonCol>
+              <IonCol>
+              
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+              <IonInput
+                  type="text"
+                  name="Location"
+                  class="ion-text-wrap"
+                  value={editSchedJob.Location}
+                  onIonChange={(e: any) =>
+                    setEditSchedJob({
+                      ...editSchedJob,
+                      Location: e.target.value,
+                    })
+                  }
+                  clearInput
+                ></IonInput>
+              </IonCol>
+            </IonRow>
+
+            <IonRow>
+              <IonCol>
+                <IonLabel>
+                  <h1>Pay: </h1>
+                </IonLabel>
+              </IonCol>
+              <IonCol>
+                
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+              <IonInput
+                  type="text"
+                  name="Pay"
+                  class="ion-text-wrap"
+                  value={editSchedJob.Pay}
+                  onIonChange={(e: any) =>
+                    setEditSchedJob({
+                      ...editSchedJob,
+                      Pay: e.target.value,
+                    })
+                  }
+                  clearInput
+                ></IonInput>
+              </IonCol>
+            </IonRow>
+
+            <IonRow>
+              <IonCol>
+                <IonLabel>
+                  <h1>Notes:</h1>
+                </IonLabel>
+              </IonCol>
+              <IonCol>
+                
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+              <IonInput
+                  type="text"
+                  name="ShiftNotes"
+                  class="ion-text-wrap"
+                  value={editSchedJob.ShiftNotes}
+                  onIonChange={(e: any) =>
+                    setEditSchedJob({
+                      ...editSchedJob,
+                      ShiftNotes: e.target.value,
+                    })
+                  }
+                ></IonInput>
+              </IonCol>
+            </IonRow>
           </form>
         </IonGrid>
       </IonContent>

@@ -125,6 +125,7 @@ const Associates: React.FC = () => {
               return value;
             }
           })
+          // .sort((a, b) => {})
           .map((associate) => (
             <IonItem
               href={`/AssociateProfile/${associate.UserId}`}

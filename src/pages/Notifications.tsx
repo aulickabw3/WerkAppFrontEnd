@@ -74,6 +74,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
     ]
   );
 
+
   const fetchRequests = () => {
     return axios
       .get(
@@ -90,8 +91,12 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
   };
 
   React.useEffect(() => {
-    fetchRequests().then((data) => setNotifications(data.listOfNotifications));
+    fetchRequests().then((data) => {
+      setNotifications(data.listOfNotifications);
+    });
   }, [profile]);
+
+  console.log(notifications);
 
   return (
     <IonPage>
@@ -112,7 +117,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
         <br></br>
         <IonList>
           {notifications.reverse().map((notification) => (
-            <Fragment>
+            <Fragment key={notification.id}>
               <br></br>
               <IonItem
                 onClick={(e: any) => {
@@ -134,12 +139,11 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
                 }}
                 className={`${notification.IsRead ? "read" : "unread"}`}
                 href={`${notification.UserActionTakenAppLink}`}
-                key={notification.id}
               >
                 <IonAvatar className="avatario" slot="start">
                   <img src={notification.UserActionTakenUserProfilePicURL} />
                 </IonAvatar>
-                {notification.UserActionTakenUserName}{" "}
+                {notification.UserActionTakenUserName}
                 {notification.UserActionTakenUserActionTypeDescription}
                 <ReactTimeAgo
                   timeStyle="twitter-minute-now"

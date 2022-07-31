@@ -16,7 +16,7 @@ import {
   IonCheckbox,
   IonButton,
   IonAvatar,
-  // useIonActionSheet,
+  useIonActionSheet,
   IonModal,
   useIonAlert,
 } from "@ionic/react";
@@ -35,8 +35,6 @@ import axios from "axios";
 
 
 const Profile: React.FC = () => {
-
-  const [present] = useIonAlert();
 
   interface ProfileData {
     UserId: number;
@@ -80,6 +78,8 @@ const Profile: React.FC = () => {
         window.location.href = "/Login";
       });
   };
+
+  const [present] = useIonAlert();
 
   return (
     <IonPage>

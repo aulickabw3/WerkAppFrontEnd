@@ -29,6 +29,7 @@ import {
   IonSegment,
   IonSegmentButton,
   IonList,
+  useIonAlert,
 } from "@ionic/react";
 import {
   person,
@@ -128,6 +129,8 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
       });
   };
 
+  const [present] = useIonAlert();
+
   const AvailableJobButton: React.FC = () => {
     return (
       <React.Fragment>
@@ -135,7 +138,13 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           <IonCol></IonCol>
           <IonCol size="11">
             <IonButton
-              onClick={handleWerk}
+              onClick={() =>
+                present({
+                  header: "Werk This Job?",
+                  buttons: ["Cancel", { text: "Ok", handler: handleWerk }],
+                  onDidDismiss: (e) => console.log("did dismiss"),
+                })
+              }
               color="warning"
               fill="solid"
               expand="block"
@@ -191,7 +200,13 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           <IonCol></IonCol>
           <IonCol size="11">
             <IonButton
-              onClick={handleWerked}
+              onClick={() =>
+                present({
+                  header: `Mark as "Werked"?`,
+                  buttons: ["Cancel", { text: "Ok", handler: handleWerked }],
+                  onDidDismiss: (e) => console.log("did dismiss"),
+                })
+              }
               color="warning"
               fill="solid"
               expand="block"
@@ -205,7 +220,13 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           <IonCol></IonCol>
           <IonCol size="11">
             <IonButton
-              onClick={handleCancel}
+              onClick={() =>
+                present({
+                  header: "Cancel Job?",
+                  buttons: ["Cancel", { text: "Ok", handler: handleCancel }],
+                  onDidDismiss: (e) => console.log("did dismiss"),
+                })
+              }
               color="medium"
               fill="solid"
               expand="block"
@@ -246,7 +267,13 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           <IonCol></IonCol>
           <IonCol size="11">
             <IonButton
-              onClick={handlePaid}
+              onClick={() =>
+                present({
+                  header: "Mark as Paid?",
+                  buttons: ["Cancel", { text: "Ok", handler: handlePaid }],
+                  onDidDismiss: (e) => console.log("did dismiss"),
+                })
+              }
               color="warning"
               fill="solid"
               expand="block"
@@ -364,7 +391,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             <IonCol size="1"></IonCol>
             <IonCol>Date:</IonCol>
             <IonDatetime
-              displayFormat="DD-MMM-YY"
+              displayFormat="MMM D, YYYY"
               value={shiftDetails.DateDay}
             ></IonDatetime>
             <IonCol size="1"></IonCol>{" "}

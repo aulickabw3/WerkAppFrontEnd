@@ -30,6 +30,7 @@ import {
   IonCheckbox,
   IonSegment,
   IonSegmentButton,
+  useIonAlert,
 } from "@ionic/react";
 import {
   person,
@@ -162,16 +163,19 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
   };
 
   const SchedAvailableJobButton: React.FC = () => {
-    
-    const EditThing = schedJob.ShiftId;
-
     return (
       <React.Fragment>
         <IonRow>
           <IonCol></IonCol>
           <IonCol size="11">
             <IonButton
-              onClick={handleSchedCancel}
+              onClick={() =>
+                present({
+                  header: "Cancel Job?",
+                  buttons: ["No", { text: "Yes", handler: handleSchedCancel }],
+                  onDidDismiss: (e) => console.log("did dismiss"),
+                })
+              }
               color="secondwarning"
               fill="solid"
               expand="block"
@@ -206,7 +210,13 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           <IonCol></IonCol>
           <IonCol size="11">
             <IonButton
-              onClick={handleSchedCancel}
+              onClick={() =>
+                present({
+                  header: "Cancel Job?",
+                  buttons: ["No", { text: "Yes", handler: handleSchedCancel }],
+                  onDidDismiss: (e) => console.log("did dismiss"),
+                })
+              }
               color="secondwarning"
               fill="solid"
               expand="block"
@@ -255,7 +265,13 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           <IonCol></IonCol>
           <IonCol size="11">
             <IonButton
-              onClick={handlePaid}
+              // onClick={() =>
+              //   present({
+              //     header: "Do This Thing?",
+              //     buttons: ["Cancel", { text: "Ok", handler: handleWhatever }],
+              //     onDidDismiss: (e) => console.log("did dismiss"),
+              //   })
+              // }
               color="secondwarning"
               fill="solid"
               expand="block"
@@ -295,8 +311,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     return <SchedPastJobButton />;
   };
 
-
-
+  const [present] = useIonAlert();
 
   return (
     <IonPage>
@@ -365,7 +380,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
             <IonCol size="1"></IonCol>
             <IonCol>Date:</IonCol>
             <IonDatetime
-              displayFormat="DD-MMM-YY"
+              displayFormat="MMM D, YYYY"
               value={schedJob.DateDay}
             ></IonDatetime>
             <IonCol size="1"></IonCol>{" "}
