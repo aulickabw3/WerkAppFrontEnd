@@ -134,12 +134,41 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
       });
   };
 
+  interface InvitedWerkersData {
+    UserId: number;
+    FirstName: string;
+    LastName: string;
+    ProfilePicURL: string;
+  }
+  const [invitedWerkers, setInvitedWerkers] = useState<InvitedWerkersData[]>([
+    {
+      UserId: 0,
+      FirstName: "",
+      LastName: "",
+      ProfilePicURL: "",
+    },
+  ]);
+
+  const fetchInvitedWerkers = () => {
+    return axios
+      .get("http://localhost:3000/shifts/InvitedWerkers/" + match.params.id, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        return response.data;
+      });
+  };
+
   useEffect(() => {
     fetchSchedJob().then((data) => {
       setSchedJob(data.WerkShift);
       setWerkers(data.Werkers);
       setOpenShifts(data.OpenShifts);
     });
+    fetchInvitedWerkers().then((invitedData) =>
+      setInvitedWerkers(invitedData.invitedWerkerList)
+    );
   }, [profile]);
 
   const handleCancelWerker = () => {
@@ -155,23 +184,23 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
 
   const handleDecrementOpenSpotByOne = () => {
     axios
-      .put("http://localhost:3000/shifts/DecrementOpenSpotByOne/", {
+      .put("http://localhost:3000/shifts/AddRemoveShiftSlot/" + match.params.id + "/Remove", {
         withCredentials: true,
       })
       .then((response) => {
         console.log(response);
-        window.location.href = "/SchedShiftDetails/" + match.params.id;
+        window.location.href = "/SchedShiftWerkers/" + match.params.id;
       });
   };
 
   const incrementNumberOfWerkersNeeded = () => {
     axios
-      .put("http://localhost:3000/shifts/AddOneAdditionalWerkerSlot/", {
+      .put("http://localhost:3000/shifts/AddRemoveShiftSlot/" + match.params.id + "/Add", {
         withCredentials: true,
       })
       .then((response) => {
         console.log(response);
-        window.location.href = "/SchedShiftDetails/" + match.params.id;
+        window.location.href = "/SchedShiftWerkers/" + match.params.id;
       });
   };
 
@@ -229,61 +258,94 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
         </IonToolbar>
 
         <h4>Scheduled:</h4>
-              <IonList>
-                {werkers.map((werker) => (
-                  <IonItem key={werker.UserId}>
-                    <IonAvatar className="avatario" slot="start">
-                      <img src={werker.ProfilePicURL} />
-                    </IonAvatar>
-                    <IonLabel className="labelo">
-                      {werker.FirstName} {werker.LastName}
-                      {/* <p>Status: {werker.werkerShiftStatus}</p> */}
-                    </IonLabel>
-                    <IonIcon
-                      onClick={() =>
-                        present({
-                          header: "Cancel Werker?",
-                          buttons: ["No", { text: "Yes", handler: handleCancelWerker }],
-                          onDidDismiss: (e) => console.log("did dismiss"),
-                        })
-                      }
-                      className="cancelbox"
-                      color="danger"
-                      size="large"
-                      icon={closeCircleOutline}
-                    />
-                  </IonItem>
-                ))}
-              </IonList>
-              <IonList>
-                {[...Array(openShifts.unfilledshifts)].map((openShift, i) => (
-                  <IonItem key={i}>
-                    {/* <IonAvatar className="avatario" slot="start">
+        <IonList>
+          {werkers.map((werker) => (
+            <IonItem key={werker.UserId}>
+              <IonAvatar className="avatario" slot="start">
+                <img src={werker.ProfilePicURL} />
+              </IonAvatar>
+              <IonLabel className="labelo">
+                {werker.FirstName} {werker.LastName}
+                {/* <p>Status: {werker.werkerShiftStatus}</p> */}
+              </IonLabel>
+              <IonIcon
+                onClick={() =>
+                  present({
+                    header: "Cancel Werker?",
+                    buttons: [
+                      "No",
+                      { text: "Yes", handler: handleCancelWerker },
+                    ],
+                    onDidDismiss: (e) => console.log("did dismiss"),
+                  })
+                }
+                className="cancelbox"
+                color="danger"
+                size="large"
+                icon={closeCircleOutline}
+              />
+            </IonItem>
+          ))}
+        </IonList>
+        <IonList>
+          {[...Array(openShifts.unfilledshifts)].map((openShift, i) => (
+            <IonItem key={i}>
+              {/* <IonAvatar className="avatario" slot="start">
                       <img src="../assets/profilePic.png" />
                     </IonAvatar> */}
-                    <IonLabel className="labelo">
-                      Open Shift
-                      <p>Shift # {i + 1 + werkers.length}</p>
-                    </IonLabel>
-                    <IonIcon
-                      onClick={() =>
-                        present({
-                          header: "Remove Open Shift?",
-                          buttons: ["Cancel", { text: "Ok", handler: handleDecrementOpenSpotByOne }],
-                          onDidDismiss: (e) => console.log("did dismiss"),
-                        })
-                      }
-                      className="cancelbox"
-                      color="danger"
-                      size="large"
-                      icon={closeCircleOutline}
-                    />
-                  </IonItem>
-                ))}
-              </IonList>
-              <br></br>
-              <h4>Invited:</h4>
-
+              <IonLabel className="labelo">
+                Open Shift
+                <p>Shift # {i + 1 + werkers.length}</p>
+              </IonLabel>
+              <IonIcon
+                onClick={() =>
+                  present({
+                    header: "Remove Open Shift?",
+                    buttons: [
+                      "Cancel",
+                      { text: "Ok", handler: handleDecrementOpenSpotByOne },
+                    ],
+                    onDidDismiss: (e) => console.log("did dismiss"),
+                  })
+                }
+                className="cancelbox"
+                color="danger"
+                size="large"
+                icon={closeCircleOutline}
+              />
+            </IonItem>
+          ))}
+        </IonList>
+        <br></br>
+        <h4>Invited:</h4>
+        <IonList>
+          {invitedWerkers.map((invitedWerker) => (
+            <IonItem key={invitedWerker.UserId}>
+              <IonAvatar className="avatario" slot="start">
+                <img src={invitedWerker.ProfilePicURL} />
+              </IonAvatar>
+              <IonLabel className="labelo">
+                {invitedWerker.FirstName} {invitedWerker.LastName}
+              </IonLabel>
+              <IonIcon
+                // onClick={() =>
+                //   present({
+                //     header: "Cancel Werker?",
+                //     buttons: [
+                //       "No",
+                //       { text: "Yes", handler: handleCancelWerker },
+                //     ],
+                //     onDidDismiss: (e) => console.log("did dismiss"),
+                //   })
+                // }
+                className="cancelbox"
+                color="danger"
+                size="large"
+                // icon={closeCircleOutline}
+              />
+            </IonItem>
+          ))}
+        </IonList>
       </IonContent>
       <React.Fragment>
         <IonRow>
@@ -293,7 +355,10 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
               onClick={() =>
                 present({
                   header: "Add Another Slot?",
-                  buttons: ["Cancel", { text: "Ok", handler: incrementNumberOfWerkersNeeded }],
+                  buttons: [
+                    "Cancel",
+                    { text: "Ok", handler: incrementNumberOfWerkersNeeded },
+                  ],
                   onDidDismiss: (e) => console.log("did dismiss"),
                 })
               }

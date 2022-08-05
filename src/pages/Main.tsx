@@ -165,8 +165,8 @@ export const Main: React.FC = () => {
               </IonLabel>
               <IonButton
                 href={`/ShiftDetails/${availableJob.JJobId}`}
-                color="medium"
                 slot="end"
+                fill="outline"
               >
                 View
               </IonButton>
@@ -256,8 +256,8 @@ export const Main: React.FC = () => {
               </IonLabel>
               <IonButton
                 href={`/ShiftDetails/${myScheduledJob.ShiftShiftId}`}
-                color="medium"
                 slot="end"
+                fill="outline"
               >
                 View
               </IonButton>
@@ -345,7 +345,7 @@ export const Main: React.FC = () => {
               </IonLabel>
               <IonButton
                 href={`/ShiftDetails/${myPastJob.ShiftShiftId}`}
-                color="medium"
+                fill="outline"
                 slot="end"
               >
                 View
@@ -516,6 +516,7 @@ export const Main: React.FC = () => {
                     return value;
                   }
                 })
+                .sort((a, b) => a.FirstName.localeCompare(b.FirstName))
                 .map((user) => (
                   <IonItem
                     href={`/AssociateProfile/${user.UserId}`}

@@ -107,6 +107,8 @@ const Associates: React.FC = () => {
           </IonRow>
         </IonGrid>
         <IonList>
+          {/* Need to rewrite this so the ".filter" and ".sort" methods are not
+                being called on render... */}
           {associates
           .filter((value) => {
             if (searchText == "") {
@@ -125,7 +127,7 @@ const Associates: React.FC = () => {
               return value;
             }
           })
-          // .sort((a, b) => {})
+          .sort((a, b) => a.FirstName.localeCompare(b.FirstName))
           .map((associate) => (
             <IonItem
               href={`/AssociateProfile/${associate.UserId}`}

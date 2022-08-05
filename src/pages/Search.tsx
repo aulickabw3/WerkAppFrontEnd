@@ -68,7 +68,7 @@ export const Search: React.FC<RouteComponentProps> = ({ match }) => {
       IsScheduler: false,
       Company: "",
       Occupation: "",
-      ProfilePicURL: ""
+      ProfilePicURL: "",
     },
   ]);
 
@@ -120,6 +120,8 @@ export const Search: React.FC<RouteComponentProps> = ({ match }) => {
           <IonRow>
             <IonCol className="searchBar">
               <IonList className="searchBar">
+                {/* Need to rewrite this so the ".filter" and ".sort" methods are not
+                being called on render... */}
                 {users
                   .filter((value) => {
                     if (searchText == "") {
@@ -138,6 +140,7 @@ export const Search: React.FC<RouteComponentProps> = ({ match }) => {
                       return value;
                     }
                   })
+                  .sort((a, b) => a.FirstName.localeCompare(b.FirstName))
                   .map((user) => (
                     <IonItem
                       href={`/AssociateProfile/${user.UserId}`}

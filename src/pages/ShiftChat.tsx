@@ -131,7 +131,6 @@ const ShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
     );
   }, []);
 
-
   useIonViewDidEnter(() => {
     let interval = setInterval(() => {
       fetchShiftMessages().then((data) =>
@@ -147,6 +146,8 @@ const ShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, [shiftDetails]);
 
+  /////////////////////////////////
+  ///// Scroll to bottom /////////////
   const bottomRef = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -212,8 +213,8 @@ const ShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
           <IonCol className="searchBar">
             <IonList className="searchBar">
               {getShiftMessages.map((getShiftMessage) => (
-                <React.Fragment>
-                  <IonItem lines="none" key={getShiftMessage.id}>
+                <React.Fragment key={getShiftMessage.id}>
+                  <IonItem lines="none">
                     <IonAvatar className="avatario" slot="start">
                       <img src={"../assets/profilePic.png"} />
                     </IonAvatar>
@@ -228,7 +229,7 @@ const ShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
                       value={getShiftMessage.createdAt}
                     ></IonDatetime>
                   </IonItem>
-                  <IonItem >
+                  <IonItem>
                     <IonAvatar className="avatario" slot="start"></IonAvatar>
                     {getShiftMessage.MessageBox}
                     <IonAvatar></IonAvatar>
