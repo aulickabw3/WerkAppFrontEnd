@@ -174,14 +174,6 @@ export const Main: React.FC = () => {
             <IonCardContent>
               <IonGrid>
                 <IonRow>
-                  <IonCol>Date:</IonCol>
-                  <IonDatetime
-                    className=""
-                    displayFormat="DD-MMM-YY"
-                    value={availableJob.Date}
-                  ></IonDatetime>
-                </IonRow>
-                <IonRow>
                   <IonCol>Job#:</IonCol>
                   <IonCol>{availableJob.dentifier}</IonCol>
                 </IonRow>
@@ -196,6 +188,14 @@ export const Main: React.FC = () => {
                 <IonRow>
                   <IonCol>Pay:</IonCol>
                   <IonCol>{availableJob.Pay}</IonCol>
+                </IonRow>
+                <IonRow>
+                  <IonCol>Date:</IonCol>
+                  <IonDatetime
+                    className=""
+                    displayFormat="DD-MMM-YY"
+                    value={availableJob.Date}
+                  ></IonDatetime>
                 </IonRow>
               </IonGrid>
             </IonCardContent>
@@ -265,14 +265,6 @@ export const Main: React.FC = () => {
             <IonCardContent>
               <IonGrid>
                 <IonRow>
-                  <IonCol>Date:</IonCol>
-                  <IonDatetime
-                    className=""
-                    displayFormat="DD-MMM-YY"
-                    value={myScheduledJob.Date}
-                  ></IonDatetime>
-                </IonRow>
-                <IonRow>
                   <IonCol>Job#:</IonCol>
                   <IonCol>{myScheduledJob.ShiftIdentifier}</IonCol>
                 </IonRow>
@@ -287,6 +279,14 @@ export const Main: React.FC = () => {
                 <IonRow>
                   <IonCol>Pay:</IonCol>
                   <IonCol>{myScheduledJob.Pay}</IonCol>
+                </IonRow>
+                <IonRow>
+                  <IonCol>Date:</IonCol>
+                  <IonDatetime
+                    className=""
+                    displayFormat="DD-MMM-YY"
+                    value={myScheduledJob.Date}
+                  ></IonDatetime>
                 </IonRow>
               </IonGrid>
             </IonCardContent>
@@ -354,14 +354,6 @@ export const Main: React.FC = () => {
             <IonCardContent>
               <IonGrid>
                 <IonRow>
-                  <IonCol>Date:</IonCol>
-                  <IonDatetime
-                    className=""
-                    displayFormat="DD-MMM-YY"
-                    value={myPastJob.Date}
-                  ></IonDatetime>
-                </IonRow>
-                <IonRow>
                   <IonCol>Job#:</IonCol>
                   <IonCol>{myPastJob.ShiftIdentifier}</IonCol>
                 </IonRow>
@@ -376,6 +368,14 @@ export const Main: React.FC = () => {
                 <IonRow>
                   <IonCol>Pay:</IonCol>
                   <IonCol>{myPastJob.Pay}</IonCol>
+                </IonRow>
+                <IonRow>
+                  <IonCol>Date:</IonCol>
+                  <IonDatetime
+                    className=""
+                    displayFormat="DD-MMM-YY"
+                    value={myPastJob.Date}
+                  ></IonDatetime>
                 </IonRow>
               </IonGrid>
             </IonCardContent>
@@ -489,11 +489,11 @@ export const Main: React.FC = () => {
                 ></IonSearchbar>
               </IonCol>
               <IonCol size="1">
-                {/* <IonButton fill="clear" href=""> */}
-                <IonAvatar className="tinyavatar">
-                  <img src={profile.ProfilePicURL} />
-                </IonAvatar>
-                {/* </IonButton> */}
+                <Link to={"/Profile"}>
+                  <IonAvatar className="tinyavatar">
+                    <img src={profile.ProfilePicURL} />
+                  </IonAvatar>
+                </Link>
               </IonCol>
             </IonRow>
 
@@ -534,7 +534,6 @@ export const Main: React.FC = () => {
                     <br></br>
                   </IonItem>
                 ))}
-              
             </IonList>
 
             <IonRow>

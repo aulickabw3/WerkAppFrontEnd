@@ -19,6 +19,7 @@ import {
   useIonActionSheet,
   IonModal,
   useIonAlert,
+  IonTabButton,
 } from "@ionic/react";
 import {
   person,
@@ -33,9 +34,7 @@ import "./Profile.css";
 import GetUser from "../components/GetUser";
 import axios from "axios";
 
-
 const Profile: React.FC = () => {
-
   interface ProfileData {
     UserId: number;
     FirstName: string;
@@ -81,6 +80,44 @@ const Profile: React.FC = () => {
 
   const [present] = useIonAlert();
 
+  // Get Array Of All My Associates
+  interface AssociatesData {
+    UserId: number;
+    FirstName: string;
+    LastName: string;
+    Company: string;
+    Occupation: string;
+    ProfilePicURL: string;
+  }
+
+  const [associates, setAssociates] = React.useState<AssociatesData[]>([
+    {
+      UserId: 0,
+      FirstName: "",
+      LastName: "",
+      Company: "",
+      Occupation: "",
+      ProfilePicURL: "../assets/profilePic.png",
+    },
+  ]);
+
+  const fetchAssociates = () => {
+    return axios
+      .get(
+        "http://localhost:3000/businessassociate/ListOfAssociates/" +
+          profile.UserId,
+        {}
+      )
+      .then((response) => {
+        console.log(response);
+        return response.data;
+      });
+  };
+
+  React.useEffect(() => {
+    fetchAssociates().then((data) => setAssociates(data.listOfAssociates2));
+  }, [profile]);
+
   return (
     <IonPage>
       <IonHeader>
@@ -96,7 +133,7 @@ const Profile: React.FC = () => {
             </IonTitle>
           </IonToolbar>
         </IonHeader>
-          <br></br>
+        <br></br>
         <IonGrid>
           <IonRow className="profileGrid">
             <IonCol>
@@ -158,11 +195,35 @@ const Profile: React.FC = () => {
           </IonRow>
           <br></br>
           <br></br>
-          <br></br>
-          <br></br>
-          <IonRow className="profileGrid">
-            <IonCol></IonCol>
-          </IonRow>
+          <IonTabButton tab="Associates" href="/Associates">
+            <IonIcon size="large" icon={people} />
+            <IonLabel>
+              <h4>Associates</h4>
+            </IonLabel>
+          </IonTabButton>
+          <IonList>
+            {/* Need to rewrite this so the ".filter" and ".sort" methods are not
+                being called on render... */}
+            {associates
+              .sort((a, b) => a.FirstName.localeCompare(b.FirstName))
+              .map((associate) => (
+                <IonItem
+                  href={`/AssociateProfile/${associate.UserId}`}
+                  key={associate.UserId}
+                >
+                  <IonAvatar className="avatario" slot="start">
+                    <img src={associate.ProfilePicURL} />
+                  </IonAvatar>
+                  <IonLabel className="labelo">
+                    <h1>
+                      {associate.FirstName} {associate.LastName}
+                    </h1>
+                    <p>{associate.Company}</p>
+                  </IonLabel>
+                  <br></br>
+                </IonItem>
+              ))}
+          </IonList>
         </IonGrid>
       </IonContent>
     </IonPage>

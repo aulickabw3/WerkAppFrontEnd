@@ -339,9 +339,43 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     );
   };
 
-  const BackButton: React.FC = () => {
-    return <p>"/Associates"</p>;
-  };
+ // Get Array Of All My Associates
+ interface AssociatesData {
+  UserId: number;
+  FirstName: string;
+  LastName: string;
+  Company: string;
+  Occupation: string;
+  ProfilePicURL: string;
+}
+
+const [associates, setAssociates] = React.useState<AssociatesData[]>([
+  {
+    UserId: 0,
+    FirstName: "",
+    LastName: "",
+    Company: "",
+    Occupation: "",
+    ProfilePicURL: "../assets/profilePic.png",
+  },
+]);
+
+const fetchAssociates = () => {
+  return axios
+    .get(
+      "http://localhost:3000/businessassociate/ListOfAssociates/" + ListProfile.UserId,
+      {}
+    )
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    });
+};
+
+React.useEffect(() => {
+  fetchAssociates().then((data) => setAssociates(data.listOfAssociates2));
+}, [Self]);
+
 
   // Render Conditional Associate Profile Action Button
   const AssociateProfileActions: React.FC = () => {
@@ -437,6 +471,37 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
             </IonCol>
             <IonCol size="1"></IonCol>
           </IonRow>
+          <br></br>
+          <br></br>
+          <IonTabButton>
+            <IonIcon size="large" icon={people} />
+            <IonLabel>
+              <h4>Associates</h4>
+            </IonLabel>
+          </IonTabButton>
+          <IonList>
+            {/* Need to rewrite this so the ".filter" and ".sort" methods are not
+                being called on render... */}
+            {associates
+              .sort((a, b) => a.FirstName.localeCompare(b.FirstName))
+              .map((associate) => (
+                <IonItem
+                  href={`/AssociateProfile/${associate.UserId}`}
+                  key={associate.UserId}
+                >
+                  <IonAvatar className="avatario" slot="start">
+                    <img src={associate.ProfilePicURL} />
+                  </IonAvatar>
+                  <IonLabel className="labelo">
+                    <h1>
+                      {associate.FirstName} {associate.LastName}
+                    </h1>
+                    <p>{associate.Company}</p>
+                  </IonLabel>
+                  <br></br>
+                </IonItem>
+              ))}
+          </IonList>
         </IonGrid>
       </IonContent>
 
