@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Link,
-  matchPath,
-  match,
-  useRouteMatch,
-  RouteComponentProps,
-} from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import {
   IonContent,
   IonHeader,
@@ -18,33 +12,20 @@ import {
   IonButton,
   IonIcon,
   IonLabel,
-  IonTabButton,
   IonItem,
   useIonViewDidEnter,
-  IonDatetime,
-  IonTabBar,
-  IonCard,
   IonAvatar,
-  IonCardContent,
   IonList,
-  IonCheckbox,
   IonSegment,
   IonSegmentButton,
   useIonAlert,
 } from "@ionic/react";
 import {
-  person,
-  arrowBackCircle,
-  closeOutline,
   closeCircleOutline,
-  closeCircle,
-  chatbubbleOutline,
-  people,
-  document,
-  documentOutline,
   documentTextOutline,
   peopleOutline,
   chatboxOutline,
+  checkmarkCircleOutline,
 } from "ionicons/icons";
 import "./AvailableJob.css";
 import axios from "axios";
@@ -56,6 +37,9 @@ interface ShiftDetailsProps
   }> {}
 
 const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
+  const [present] = useIonAlert();
+
+  /////////////////////////////////////////
   interface ProfileData {
     UserId: number;
   }
@@ -68,6 +52,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
+  //////////////////////////////////////////////////
   interface SchedJobData {
     ShiftId: number;
     ShiftIdentifier: string;
@@ -96,6 +81,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
     ShiftNotes: "",
   });
 
+  //////////////////////////
   interface SchedWerkersData {
     UserId: number;
     FirstName: string;
@@ -111,6 +97,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
     },
   ]);
 
+  //////////////////////////
   interface OpenShiftData {
     unfilledshifts: number;
     ShiftStatus: string;
@@ -134,6 +121,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
       });
   };
 
+  //////////////////////////////////////////////////////////////////////////////
   interface InvitedWerkersData {
     UserId: number;
     FirstName: string;
@@ -160,6 +148,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
       });
   };
 
+  //////////////////////////////////////////////////////////
   useEffect(() => {
     fetchSchedJob().then((data) => {
       setSchedJob(data.WerkShift);
@@ -171,40 +160,59 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
     );
   }, [profile]);
 
+  ///////////////////////////////////////////////////////////////
+  const [cancelWerker, setCancelWerker] = useState<number>(0);
+
   const handleCancelWerker = () => {
     axios
-      .put("http://localhost:3000/shifts/SchedCancelWerker/", {
-        withCredentials: true,
-      })
+      .delete(
+        "http://localhost:3000/shifts/RemoveWerkerFromShift/" +
+          cancelWerker + "/" +
+          match.params.id +
+          "/Scheduler/" +
+          profile.UserId,
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         console.log(response);
-        window.location.href = "/SchedShiftDetails/" + match.params.id;
+        window.location.href = "/SchedShiftWerker/" + match.params.id;
       });
   };
 
+  ////////////////////////////////////////////////////////////////////////////
   const handleDecrementOpenSpotByOne = () => {
     axios
-      .put("http://localhost:3000/shifts/AddRemoveShiftSlot/" + match.params.id + "/Remove", {
-        withCredentials: true,
-      })
+      .put(
+        "http://localhost:3000/shifts/AddRemoveShiftSlot/" +
+          match.params.id + "/Remove",
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         console.log(response);
         window.location.href = "/SchedShiftWerkers/" + match.params.id;
       });
   };
 
+  ////////////////////////////////////////////////////////////////////////////////
   const incrementNumberOfWerkersNeeded = () => {
     axios
-      .put("http://localhost:3000/shifts/AddRemoveShiftSlot/" + match.params.id + "/Add", {
-        withCredentials: true,
-      })
+      .put(
+        "http://localhost:3000/shifts/AddRemoveShiftSlot/" +
+          match.params.id + "/Add",
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         console.log(response);
         window.location.href = "/SchedShiftWerkers/" + match.params.id;
       });
   };
 
-  const [present] = useIonAlert();
 
   return (
     <IonPage>
@@ -266,23 +274,24 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
               </IonAvatar>
               <IonLabel className="labelo">
                 {werker.FirstName} {werker.LastName}
-                {/* <p>Status: {werker.werkerShiftStatus}</p> */}
               </IonLabel>
               <IonIcon
-                onClick={() =>
-                  present({
-                    header: "Cancel Werker?",
-                    buttons: [
-                      "No",
-                      { text: "Yes", handler: handleCancelWerker },
-                    ],
-                    onDidDismiss: (e) => console.log("did dismiss"),
-                  })
-                }
+                onClick={() => {
+                  if (openShifts.ShiftStatus !== "Past") {
+                    setCancelWerker(werker.UserId); 
+                    present({
+                      header: "Cancel Werker?",
+                      buttons: [
+                        "No", { text: "Yes", handler: handleCancelWerker },
+                      ],
+                      onDidDismiss: (e) => console.log("did dismiss"),
+                    });
+                  } return null
+                }}
                 className="cancelbox"
-                color="danger"
+                color={openShifts.ShiftStatus == "Past" ? "" : "danger"}
                 size="large"
-                icon={closeCircleOutline}
+                icon={openShifts.ShiftStatus == "Past" ? checkmarkCircleOutline : closeCircleOutline}
               />
             </IonItem>
           ))}
@@ -290,9 +299,6 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
         <IonList>
           {[...Array(openShifts.unfilledshifts)].map((openShift, i) => (
             <IonItem key={i}>
-              {/* <IonAvatar className="avatario" slot="start">
-                      <img src="../assets/profilePic.png" />
-                    </IonAvatar> */}
               <IonLabel className="labelo">
                 Open Shift
                 <p>Shift # {i + 1 + werkers.length}</p>
@@ -328,20 +334,9 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
                 {invitedWerker.FirstName} {invitedWerker.LastName}
               </IonLabel>
               <IonIcon
-                // onClick={() =>
-                //   present({
-                //     header: "Cancel Werker?",
-                //     buttons: [
-                //       "No",
-                //       { text: "Yes", handler: handleCancelWerker },
-                //     ],
-                //     onDidDismiss: (e) => console.log("did dismiss"),
-                //   })
-                // }
                 className="cancelbox"
                 color="danger"
                 size="large"
-                // icon={closeCircleOutline}
               />
             </IonItem>
           ))}

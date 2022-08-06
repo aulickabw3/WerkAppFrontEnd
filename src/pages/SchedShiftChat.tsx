@@ -151,7 +151,7 @@ const SchedShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
       fetchShiftMessages().then((data) =>
         setGetShiftMessages(data.shiftMessages)
       );
-    }, 3000);
+    }, 30000);
     return () => {
       clearInterval(interval);
     };

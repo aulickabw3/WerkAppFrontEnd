@@ -62,6 +62,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     ShiftStatus: string;
     SchedFirstName: string;
     SchedLastName: string;
+    IsPaid: boolean;
   }
 
   const [shiftDetails, setshiftDetails] = useState<ShiftDetailsData>({
@@ -77,14 +78,21 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     ShiftNotes: "",
     ShiftStatus: "",
     SchedFirstName: "",
-    SchedLastName: ""
+    SchedLastName: "",
+    IsPaid: false,
   });
 
   const fetchAvailableJob = () => {
     return axios
-      .get("http://localhost:3000/shifts/ShiftDetails/" + match.params.id + "/" + profile.UserId, {
-        withCredentials: true,
-      })
+      .get(
+        "http://localhost:3000/shifts/ShiftDetails/" +
+          match.params.id +
+          "/" +
+          profile.UserId,
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         console.log(response);
         return response.data;
@@ -106,8 +114,6 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
   useIonViewDidEnter(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, [shiftDetails]);
-
-
 
   // Button for available job summary
   //////////////////////////////////////////
@@ -256,35 +262,51 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
       })
       .then((response) => {
         console.log(response);
-        // window.location.href = "/PastJob/" + myPastJob.ShiftId;
+        window.location.href = "/ShiftDetails/" + shiftDetails.ShiftId;
       });
   };
 
-  const PastJobButton: React.FC = () => {
+  const PaidJobButton: React.FC = () => {
     return (
       <React.Fragment>
-        <IonRow>
-          <IonCol></IonCol>
-          <IonCol size="11">
-            <IonButton
-              onClick={() =>
-                present({
-                  header: "Mark as Paid?",
-                  buttons: ["Cancel", { text: "Ok", handler: handlePaid }],
-                  onDidDismiss: (e) => console.log("did dismiss"),
-                })
-              }
-              color="warning"
-              fill="solid"
-              expand="block"
-            >
-              Mark Paid
-            </IonButton>
-          </IonCol>
-          <IonCol></IonCol>
-        </IonRow>
-      </React.Fragment>
+          <IonRow>
+            <IonCol></IonCol>
+            <IonCol size="11">
+              <h3>Paid</h3>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+        </React.Fragment>
     );
+  };
+
+  // const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
+
+  const PastJobButton: React.FC = () => {
+      return (
+        <React.Fragment>
+          <IonRow>
+            <IonCol></IonCol>
+            <IonCol size="11">
+              <IonButton
+                onClick={() =>
+                  present({
+                    header: "Mark as Paid?",
+                    buttons: ["Cancel", { text: "Ok", handler: handlePaid }],
+                    onDidDismiss: (e) => console.log("did dismiss"),
+                  })
+                }
+                color="warning"
+                fill="solid"
+                expand="block"
+              >
+                Mark Paid
+              </IonButton>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+        </React.Fragment>
+      );
   };
 
   console.log(shiftDetails.ShiftStatus);
@@ -300,6 +322,9 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     if (shiftDetails.ShiftStatus == "Werked") {
       return <PastJobButton />;
     }
+    if (shiftDetails.ShiftStatus == "Paid") {
+      return <PaidJobButton />;
+    }
     return <AvailableJobButton />;
   };
 
@@ -313,7 +338,8 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
                 <IonSegment
                   value="/ShiftDetails/"
                   onIonChange={(e: any) => {
-                    window.location.href = `${e.detail.value}` + match.params.id;
+                    window.location.href =
+                      `${e.detail.value}` + match.params.id;
                   }}
                 >
                   <IonSegmentButton value="/ShiftDetails/">
@@ -375,7 +401,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           </IonToolbar>
         </IonHeader>
 
-        <ShiftDetailsToolbar/>
+        <ShiftDetailsToolbar />
 
         <IonItem>
           <IonAvatar className="avtr" slot="start">
