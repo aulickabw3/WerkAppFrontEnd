@@ -340,7 +340,6 @@ export const SchedulerView: React.FC = () => {
                 href={`/SchedShiftDetails/${myPastJob.ShiftId}`}
                 fill="outline"
                 slot="end"
-                color="medium"
               >
                 View
               </IonButton>

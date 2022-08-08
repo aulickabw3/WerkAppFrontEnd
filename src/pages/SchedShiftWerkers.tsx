@@ -289,7 +289,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
                   } return null
                 }}
                 className="cancelbox"
-                color={openShifts.ShiftStatus == "Past" ? "" : "danger"}
+                color={openShifts.ShiftStatus == "Past" ? "success" : "danger"}
                 size="large"
                 icon={openShifts.ShiftStatus == "Past" ? checkmarkCircleOutline : closeCircleOutline}
               />

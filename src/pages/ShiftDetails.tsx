@@ -269,13 +269,13 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
   const PaidJobButton: React.FC = () => {
     return (
       <React.Fragment>
-          <IonRow>
-            <IonCol></IonCol>
-            <IonCol size="11">
-              <h3>Paid</h3>
+          {/* <IonRow>
+            <IonCol size="5"></IonCol>
+            <IonCol size="">
+              <h2>Paid</h2>
             </IonCol>
             <IonCol></IonCol>
-          </IonRow>
+          </IonRow> */}
         </React.Fragment>
     );
   };
@@ -363,27 +363,27 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     );
   };
 
-  const NotChatToolbar: React.FC = () => {
-    return (
-      <React.Fragment>
-        <br></br>
-      </React.Fragment>
-    );
-  };
+  // const NotChatToolbar: React.FC = () => {
+  //   return (
+  //     <React.Fragment>
+  //       <br></br>
+  //     </React.Fragment>
+  //   );
+  // };
 
-  //Conditionally render ShiftDetails Toolbar w/ Chat
-  const ShiftDetailsToolbar: React.FC = () => {
-    if (shiftDetails.ShiftStatus == "Scheduled") {
-      return <ChatToolbar />;
-    }
-    if (shiftDetails.ShiftStatus == "Cancelled") {
-      return <ChatToolbar />;
-    }
-    if (shiftDetails.ShiftStatus == "Werked") {
-      return <ChatToolbar />;
-    }
-    return <NotChatToolbar />;
-  };
+  // //Conditionally render ShiftDetails Toolbar w/ Chat
+  // const ShiftDetailsToolbar: React.FC = () => {
+  //   if (shiftDetails.ShiftStatus == "Scheduled") {
+  //     return <ChatToolbar />;
+  //   }
+  //   if (shiftDetails.ShiftStatus == "Cancelled") {
+  //     return <ChatToolbar />;
+  //   }
+  //   if (shiftDetails.ShiftStatus == "Werked") {
+  //     return <ChatToolbar />;
+  //   }
+  //   return <NotChatToolbar />;
+  // };
 
   return (
     <IonPage>
@@ -401,7 +401,8 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
           </IonToolbar>
         </IonHeader>
 
-        <ShiftDetailsToolbar />
+        <ChatToolbar/>
+        {/* <ShiftDetailsToolbar /> */}
 
         <IonItem>
           <IonAvatar className="avtr" slot="start">
