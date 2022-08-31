@@ -73,7 +73,7 @@ const PublishJob: React.FC<PublishJobProps> = ({ match }) => {
   const fetchAssociates = () => {
     return axios
       .get(
-        "http://localhost:3000/businessassociate/ListOfAssociates/" +
+        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/businessassociate/ListOfAssociates/" +
           myProfile.UserId,
         {}
       )
@@ -97,7 +97,7 @@ const PublishJob: React.FC<PublishJobProps> = ({ match }) => {
       JobJobID: match.params,
     };
     axios
-      .post("http://localhost:3000/shifts/PublishJob", { MyCrew })
+      .post("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/PublishJob", { MyCrew })
       .then((data) => {
         console.log(data);
         window.location.href = "/SchedulerView"

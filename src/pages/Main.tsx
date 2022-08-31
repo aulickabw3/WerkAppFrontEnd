@@ -95,7 +95,7 @@ export const Main: React.FC = () => {
 
   const fetchUsers = () => {
     return axios
-      .get("http://localhost:3000/user/Search/" + profile.UserId, {
+      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/user/Search/" + profile.UserId, {
         withCredentials: true,
       })
       .then((response) => {
@@ -140,7 +140,7 @@ export const Main: React.FC = () => {
 
   const fetchAvailableJobs = () => {
     return axios
-      .get("http://localhost:3000/shifts/AvailableShifts/" + profile.UserId, {
+      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/AvailableShifts/" + profile.UserId, {
         withCredentials: true,
       })
       .then((response) => {
@@ -235,7 +235,7 @@ export const Main: React.FC = () => {
 
   const fetchScheduledJobs = () => {
     return axios
-      .get("http://localhost:3000/shifts/MyScheduledJobs/" + profile.UserId, {})
+      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/MyScheduledJobs/" + profile.UserId, {})
       .then((response) => {
         console.log(response);
         return response.data;
@@ -324,7 +324,7 @@ export const Main: React.FC = () => {
 
   const fetchPastJobs = () => {
     return axios
-      .get("http://localhost:3000/shifts/MyPastJobs/" + profile.UserId, {})
+      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/MyPastJobs/" + profile.UserId, {})
       .then((response) => {
         console.log(response);
         return response.data;

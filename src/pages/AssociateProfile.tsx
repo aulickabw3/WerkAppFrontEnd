@@ -95,7 +95,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
 
   const fetchProfile = () => {
     return axios
-      .get("http://localhost:3000/user/AssociateProfile/" + match.params.id, {
+      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/user/AssociateProfile/" + match.params.id, {
         withCredentials: true,
       })
       .then((response) => {
@@ -118,7 +118,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
     console.log(listProfile, self);
     return axios
       .post(
-        "http://localhost:3000/businessassociate/AssociateRelationshipStatus",
+        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/businessassociate/AssociateRelationshipStatus",
         {
           withCredentials: true,
           self,
@@ -150,7 +150,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   const handleAssociateRequest = () => {
     axios
       .post(
-        "http://localhost:3000/businessassociate/AssociateProfile/" +
+        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/businessassociate/AssociateProfile/" +
           match.params.id,
         { withCredentials: true, Self, ListProfile }
       )
@@ -192,7 +192,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   const handleAcceptRequest = () => {
     requestResponse = { RequestStatus: "RequestAccepted" };
     axios
-      .put("http://localhost:3000/businessassociate/UpdateRequest", {
+      .put("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/businessassociate/UpdateRequest", {
         Self,
         ListProfile,
         requestResponse,
@@ -206,7 +206,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   const handleDeclineRequest = () => {
     requestResponse = { RequestStatus: "RequestDeclined" };
     axios
-      .put("http://localhost:3000/businessassociate/UpdateRequest", {
+      .put("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/businessassociate/UpdateRequest", {
         Self,
         ListProfile,
         requestResponse,
@@ -249,7 +249,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   const handleCancelRequest = () => {
     requestResponse = { RequestStatus: "Cancelled" };
     axios
-      .put("http://localhost:3000/businessassociate/UpdateRequest", {
+      .put("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/businessassociate/UpdateRequest", {
         Self,
         ListProfile,
         requestResponse,
@@ -296,7 +296,7 @@ const AssociateProfile: React.FC<AssociateProfileProps> = ({ match }) => {
   const handleFireAssociate = () => {
     requestResponse = { RequestStatus: "Fired" };
     axios
-      .put("http://localhost:3000/businessassociate/UpdateRequest", {
+      .put("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/businessassociate/UpdateRequest", {
         Self,
         ListProfile,
         requestResponse,
@@ -363,7 +363,7 @@ const [associates, setAssociates] = React.useState<AssociatesData[]>([
 const fetchAssociates = () => {
   return axios
     .get(
-      "http://localhost:3000/businessassociate/ListOfAssociates/" + ListProfile.UserId,
+      "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/businessassociate/ListOfAssociates/" + ListProfile.UserId,
       {}
     )
     .then((response) => {
