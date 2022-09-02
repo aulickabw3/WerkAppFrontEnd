@@ -29,7 +29,7 @@ const Login: React.FC = () => {
       Password: password,
     };
     axios
-      .post("http://localhost:3000/user/Login", {
+      .post("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/user/Login", {
         logProfile,
         withCredentials: true,
       })

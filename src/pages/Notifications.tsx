@@ -78,7 +78,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
   const fetchRequests = () => {
     return axios
       .get(
-        "http://localhost:3000/notifications/ListOfNotifications/" +
+        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/notifications/ListOfNotifications/" +
           profile.UserId,
         {
           withCredentials: true,
@@ -126,7 +126,7 @@ export const Notifications: React.FC<RouteComponentProps> = ({ match }) => {
                   };
                   return axios
                     .put(
-                      "http://localhost:3000/notifications/MarkRead/" +
+                      "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/notifications/MarkRead/" +
                         notification.id,
                       {
                         ReadData,

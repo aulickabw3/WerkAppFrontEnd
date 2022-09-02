@@ -69,7 +69,7 @@ const Profile: React.FC = () => {
 
   const handleLogout = () => {
     axios
-      .get("http://localhost:3000/user/Logout", {
+      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/user/Logout", {
         withCredentials: true,
       })
       .then((response) => {
@@ -104,7 +104,7 @@ const Profile: React.FC = () => {
   const fetchAssociates = () => {
     return axios
       .get(
-        "http://localhost:3000/businessassociate/ListOfAssociates/" +
+        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/businessassociate/ListOfAssociates/" +
           profile.UserId,
         {}
       )

@@ -110,7 +110,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
   const fetchSchedJob = () => {
     return axios
       .get(
-        "http://localhost:3000/shifts/SchedShiftDetails/" + match.params.id,
+        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/SchedShiftDetails/" + match.params.id,
         {
           withCredentials: true,
         }
@@ -139,7 +139,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
 
   const fetchInvitedWerkers = () => {
     return axios
-      .get("http://localhost:3000/shifts/InvitedWerkers/" + match.params.id, {
+      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/InvitedWerkers/" + match.params.id, {
         withCredentials: true,
       })
       .then((response) => {
@@ -166,7 +166,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
   const handleCancelWerker = () => {
     axios
       .delete(
-        "http://localhost:3000/shifts/RemoveWerkerFromShift/" +
+        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/RemoveWerkerFromShift/" +
           cancelWerker + "/" +
           match.params.id +
           "/Scheduler/" +
@@ -185,7 +185,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
   const handleDecrementOpenSpotByOne = () => {
     axios
       .put(
-        "http://localhost:3000/shifts/AddRemoveShiftSlot/" +
+        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/AddRemoveShiftSlot/" +
           match.params.id + "/Remove",
         {
           withCredentials: true,
@@ -201,7 +201,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
   const incrementNumberOfWerkersNeeded = () => {
     axios
       .put(
-        "http://localhost:3000/shifts/AddRemoveShiftSlot/" +
+        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/AddRemoveShiftSlot/" +
           match.params.id + "/Add",
         {
           withCredentials: true,

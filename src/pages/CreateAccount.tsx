@@ -41,7 +41,7 @@ const CreateAccount: React.FC = () => {
     };
 
     axios
-      .post("http://localhost:3000/user/CreateAccount", { newProfile })
+      .post("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/user/CreateAccount", { newProfile })
       .then((response) => {
         console.log(response);
       });
