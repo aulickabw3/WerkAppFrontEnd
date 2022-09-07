@@ -66,7 +66,7 @@ const ScheduleJob: React.FC = () => {
     };
 
     axios
-      .post("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/CreateShift", { newShift })
+      .post("https://werkapp-server.com/shifts/CreateShift", { newShift })
       .then((response) => { 
         console.log(response);
         return response.data

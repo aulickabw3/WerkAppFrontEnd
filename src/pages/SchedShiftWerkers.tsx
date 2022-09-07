@@ -110,7 +110,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
   const fetchSchedJob = () => {
     return axios
       .get(
-        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/SchedShiftDetails/" + match.params.id,
+        "https://werkapp-server.com/shifts/SchedShiftDetails/" + match.params.id,
         {
           withCredentials: true,
         }
@@ -139,7 +139,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
 
   const fetchInvitedWerkers = () => {
     return axios
-      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/InvitedWerkers/" + match.params.id, {
+      .get("https://werkapp-server.com/shifts/InvitedWerkers/" + match.params.id, {
         withCredentials: true,
       })
       .then((response) => {
@@ -166,7 +166,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
   const handleCancelWerker = () => {
     axios
       .delete(
-        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/RemoveWerkerFromShift/" +
+        "https://werkapp-server.com/shifts/RemoveWerkerFromShift/" +
           cancelWerker + "/" +
           match.params.id +
           "/Scheduler/" +
@@ -185,7 +185,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
   const handleDecrementOpenSpotByOne = () => {
     axios
       .put(
-        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/AddRemoveShiftSlot/" +
+        "https://werkapp-server.com/shifts/AddRemoveShiftSlot/" +
           match.params.id + "/Remove",
         {
           withCredentials: true,
@@ -201,7 +201,7 @@ const SchedShiftWerkers: React.FC<ShiftDetailsProps> = ({ match }) => {
   const incrementNumberOfWerkersNeeded = () => {
     axios
       .put(
-        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/AddRemoveShiftSlot/" +
+        "https://werkapp-server.com/shifts/AddRemoveShiftSlot/" +
           match.params.id + "/Add",
         {
           withCredentials: true,

@@ -85,7 +85,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
   const fetchAvailableJob = () => {
     return axios
       .get(
-        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/ShiftDetails/" +
+        "https://werkapp-server.com/shifts/ShiftDetails/" +
           match.params.id +
           "/" +
           profile.UserId,
@@ -125,7 +125,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     };
 
     axios
-      .post("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/WerkShift/", {
+      .post("https://werkapp-server.com/shifts/WerkShift/", {
         werkJob,
         withCredentials: true,
       })
@@ -174,7 +174,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
       SchedID: shiftDetails.UserUserId,
     };
     axios
-      .put("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/ShiftStatusUpdate/", {
+      .put("https://werkapp-server.com/shifts/ShiftStatusUpdate/", {
         updateWerkerShiftStatus,
       })
       .then((response) => {
@@ -190,7 +190,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
       UpdateStatus: "Cancelled",
     };
     axios
-      .put("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/ShiftStatusUpdate/", {
+      .put("https://werkapp-server.com/shifts/ShiftStatusUpdate/", {
         updateWerkerShiftStatus,
       })
       .then((response) => {
@@ -257,7 +257,7 @@ const ShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     };
 
     axios
-      .put("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/WerkerIsPaid/", {
+      .put("https://werkapp-server.com/shifts/WerkerIsPaid/", {
         updateWerkerShiftStatus,
       })
       .then((response) => {

@@ -4,7 +4,7 @@ import axios from "axios";
 export default function GetUser() {
 
     return axios
-      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/user/Profile", {
+      .get("https://werkapp-server.com/user/Profile", {
         withCredentials: true,
       })
       .then((response) => {

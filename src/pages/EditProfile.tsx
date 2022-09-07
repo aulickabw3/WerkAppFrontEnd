@@ -69,7 +69,7 @@ const EditProfile: React.FC = () => {
   const handleSubmit = () => {
     axios
       .put(
-        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/user/PublicUpdateUserProfile/" +
+        "https://werkapp-server.com/user/PublicUpdateUserProfile/" +
           editProfile.UserId,
         {
           withCredentials: true,

@@ -86,7 +86,7 @@ export const SchedulerView: React.FC = () => {
 
   const fetchUsers = () => {
     return axios
-      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/user/Search/" + profile.UserId, {
+      .get("https://werkapp-server.com/user/Search/" + profile.UserId, {
         withCredentials: true,
       })
       .then((response) => {
@@ -128,7 +128,7 @@ export const SchedulerView: React.FC = () => {
   const fetchAvailableJobs = () => {
     return axios
       .get(
-        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/SchedAvailableShifts/" + profile.UserId,
+        "https://werkapp-server.com/shifts/SchedAvailableShifts/" + profile.UserId,
         {}
       )
       .then((response) => {
@@ -222,7 +222,7 @@ export const SchedulerView: React.FC = () => {
   const fetchScheduledJobs = () => {
     return axios
       .get(
-        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/SchedScheduledShifts/" + profile.UserId,
+        "https://werkapp-server.com/shifts/SchedScheduledShifts/" + profile.UserId,
         {
           withCredentials: true,
         }
@@ -315,7 +315,7 @@ export const SchedulerView: React.FC = () => {
 
   const fetchPastJobs = () => {
     return axios
-      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/SchedPastShifts/" + profile.UserId, {})
+      .get("https://werkapp-server.com/shifts/SchedPastShifts/" + profile.UserId, {})
       .then((response) => {
         console.log(response);
         return response.data;
