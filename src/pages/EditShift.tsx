@@ -102,7 +102,7 @@ const EditShift: React.FC<EditShiftDetailsProps> = ({ match }) => {
   const fetchEditSchedJob = () => {
     return axios
       .get(
-        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/SchedShiftDetails/" + match.params.id,
+        "https://werkapp-server.com/shifts/SchedShiftDetails/" + match.params.id,
         {
           withCredentials: true,
         }
@@ -125,7 +125,7 @@ const EditShift: React.FC<EditShiftDetailsProps> = ({ match }) => {
 
   const handleSubmit = () => {
     axios
-      .put("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/EditSchedShift/", {
+      .put("https://werkapp-server.com/shifts/EditSchedShift/", {
         withCredentials: true,
         editSchedJob,
       })

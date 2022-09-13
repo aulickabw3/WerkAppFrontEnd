@@ -125,7 +125,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
   const fetchSchedJob = () => {
     return axios
       .get(
-        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/SchedShiftDetails/" + match.params.id,
+        "https://werkapp-server.com/shifts/SchedShiftDetails/" + match.params.id,
         {
           withCredentials: true,
         }
@@ -152,7 +152,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     };
 
     axios
-      .put("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/SchedCancel/" + schedJob.ShiftId, {
+      .put("https://werkapp-server.com/shifts/SchedCancel/" + schedJob.ShiftId, {
         werkJob,
         withCredentials: true,
       })
@@ -252,7 +252,7 @@ const SchedShiftDetails: React.FC<ShiftDetailsProps> = ({ match }) => {
     };
 
     axios
-      .put("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/Paid/" + schedJob.ShiftId, { JobPaid })
+      .put("https://werkapp-server.com/shifts/Paid/" + schedJob.ShiftId, { JobPaid })
       .then((response) => {
         console.log(response);
       });

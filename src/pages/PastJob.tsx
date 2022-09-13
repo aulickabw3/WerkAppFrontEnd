@@ -76,7 +76,7 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
 
   const fetchMyPastJob = () => {
     return axios
-      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/ShiftDetails/" + match.params.id, {})
+      .get("https://werkapp-server.com/shifts/ShiftDetails/" + match.params.id, {})
       .then((response) => {
         console.log(response);
         return response.data;
@@ -95,7 +95,7 @@ const PastJob: React.FC<PastJobProps> = ({match}) => {
     };
 
     axios
-      .put("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/WerkerIsPaid/", { updateWerkerShiftStatus })
+      .put("https://werkapp-server.com/shifts/WerkerIsPaid/", { updateWerkerShiftStatus })
       .then((response) => {
         console.log(response);
         // window.location.href = "/PastJob/" + myPastJob.ShiftId;

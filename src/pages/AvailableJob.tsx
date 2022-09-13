@@ -65,7 +65,7 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
 
   const fetchAvailableJob = () => {
     return axios
-      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/ShiftDetails/" + match.params.id, {
+      .get("https://werkapp-server.com/shifts/ShiftDetails/" + match.params.id, {
         withCredentials: true,
       })
       .then((response) => {
@@ -97,7 +97,7 @@ const AvailableJob: React.FC<AvailableJobProps> = ({ match }) => {
     };
 
     axios
-      .post("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/WerkShift/", {
+      .post("https://werkapp-server.com/shifts/WerkShift/", {
         werkJob,
         withCredentials: true,
       })

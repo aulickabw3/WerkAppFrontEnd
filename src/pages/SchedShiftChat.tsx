@@ -82,7 +82,7 @@ const SchedShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
 
   const fetchAvailableJob = () => {
     return axios
-      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/shifts/ShiftDetails/" + match.params.id, {
+      .get("https://werkapp-server.com/shifts/ShiftDetails/" + match.params.id, {
         withCredentials: true,
       })
       .then((response) => {
@@ -120,7 +120,7 @@ const SchedShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
   const fetchShiftMessages = () => {
     return axios
       .get(
-        "http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/message/GetShiftMessages/" + match.params.id,
+        "https://werkapp-server.com/message/GetShiftMessages/" + match.params.id,
         {
           withCredentials: true,
         }
@@ -180,7 +180,7 @@ const SchedShiftChat: React.FC<ShiftChatProps> = ({ match }) => {
     };
 
     return axios
-      .post("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/message/PostShiftMessage", {
+      .post("https://werkapp-server.com/message/PostShiftMessage", {
         newNotificationRecord,
         withCredentials: true,
       })

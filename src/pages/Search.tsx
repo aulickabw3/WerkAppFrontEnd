@@ -74,7 +74,7 @@ export const Search: React.FC<RouteComponentProps> = ({ match }) => {
 
   const fetchUsers = () => {
     return axios
-      .get("http://werkappserver-env.eba-qyjsvfm3.us-east-1.elasticbeanstalk.com/user/Search/" + profile.UserId, {
+      .get("https://werkapp-server.com/user/Search/" + profile.UserId, {
         withCredentials: true,
       })
       .then((response) => {
