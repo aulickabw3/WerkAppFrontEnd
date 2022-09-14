@@ -63,7 +63,7 @@ export const Main: React.FC = () => {
     ProfilePicURL: "",
   });
 
-  useIonViewDidEnter(() => {
+  useEffect(() => {
     GetUser().then((data) => setProfile(data.personDataFound));
   }, []);
 
