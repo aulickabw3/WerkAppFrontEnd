@@ -35,7 +35,7 @@ const Login: React.FC = () => {
       })
       .then((response) => {
         if (response.data !== "Person not found" || "Wrong Password" || "" ) {
-          setCookie("jwt", response.data, { path: "/" });
+        //   setCookie("jwt", response.data, { path: "/" });
           window.location.href = "/Main";
         }
         if (response.data == "Wrong Password") {
